@@ -1,9 +1,9 @@
 {
-  "name": "yd-toy",
+  "name": "bluemarvel ",
   "version": "1.0.0",
   "private": true,
   "main": "src/main.ts",
-  "repository": "https://github.com/YedramKim/yd-toy.git",
+  "repository": "https://github.com/YedramKim/bluemarvel .git",
   "author": "yedarm <oncoder@naver.com>",
   "license": "MIT",
   "scripts": {
