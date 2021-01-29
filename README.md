@@ -1,4 +1,4 @@
-# bluemarvel 
+# bluemarvel
 
 ## Project setup
 
@@ -47,5 +47,5 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
 - App 컴포넌트의 nav 영역을 컴포넌트로 분리
 - router, store 설정
   - 부루마블에 대한 store module 추가
-	- `/` 페이지에 부루마블 컴포넌트를 렌더링 하도록 추가
+  - `/` 페이지에 부루마블 컴포넌트를 렌더링 하도록 추가
 - unit 테스트 파일 비우기
