@@ -1,10 +1,19 @@
 import { Module } from 'vuex';
-import { GameState } from "@/shared/policy";
+import {GameInterfaceState, RootState} from "../../@types";
+import GameState from "../../../shared/policy";
 
-const store: Module<BlueMarbleState, RootState> = {
+const store: Module<GameInterfaceState, RootState> = {
 	namespaced: true,
 
-	state: {},
+	state: {
+		currentState: GameState.BEFORE_USER_CREATE
+	},
+
+	mutations: {
+		change(state, value) {
+			state.currentState = value;
+		}
+	}
 };
 
 export default store;
