@@ -19,6 +19,7 @@ module.exports = {
 			SwitchCase: 1,
 			VariableDeclarator: 1,
 		}],
+		'import/extensions': 'off'
 	},
 	overrides: [
 		{
