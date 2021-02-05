@@ -1,4 +1,4 @@
-enum GameState {
+export enum GameState {
 	BEFORE_USER_CREATE = 'BEFORE_USER_CREATE',
 	USER_CREATED = 'USER_CREATED',
 	BEFORE_USER_COMMAND = 'BEFORE_USER_COMMAND',
@@ -12,7 +12,3 @@ enum GameState {
 	TRADE_WITH_USER = 'TRADE_WITH_USER',
 	BEFORE_END = 'BEFORE_END'
 }
-
-export {
-	GameState
-};
