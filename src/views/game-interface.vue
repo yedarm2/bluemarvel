@@ -1,21 +1,17 @@
 <template>
-	<div class="blue-marble">
+	<div class="game-interface">
 		{{ helloWorld }}
-		<game-interface />
 	</div>
 </template>
 
 <script lang="ts">
 import { defineComponent, ref } from 'vue';
-import GameInterface from './game-interface.vue';
 
 export default defineComponent({
-	name: 'BlueMarble',
-	components: {
-		GameInterface
-	},
+	name: 'GameInterface',
+
 	setup() {
-		const helloWorld = ref('Hello, world!');
+		const helloWorld = ref('test!');
 
 		return {
 			helloWorld,
