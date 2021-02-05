@@ -1,9 +1,9 @@
 import { createStore } from 'vuex';
 
-import blueMarble from './modules/blueMarble';
+import gameInterface from './modules/game-interface';
 
 export default createStore({
 	modules: {
-		blueMarble,
+		gameInterface,
 	},
 });
