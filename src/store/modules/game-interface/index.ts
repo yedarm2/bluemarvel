@@ -1,8 +1,8 @@
 import { Module } from 'vuex';
-import {GameInterfaceState, RootState} from "../../@types";
-import { GameState } from "../../../shared/policy";
+import { GameState } from '@/shared/policy';
+import { GameInterfaceState } from "@/store/states";
 
-const store: Module<GameInterfaceState, RootState> = {
+const store: Module<GameInterfaceState, object> = {
 	namespaced: true,
 
 	state: {
