@@ -35,19 +35,14 @@ export class TradableArea extends BaseTile {
 }
 
 export class CityArea extends TradableArea {
-	buildingPriceInfo: PriceInfo;
-	paymentInfo: PriceInfo;
-
 	constructor(
 		id: TradableAreaIdEnum,
 		name: string,
 		description: string,
-		buildingPriceInfo: PriceInfo,
-		paymentInfo: PriceInfo,
+		public buildingPriceInfo: PriceInfo,
+		public paymentInfo: PriceInfo,
 	) {
 		super(TileType.CITY, id, name, description);
-		this.buildingPriceInfo = buildingPriceInfo;
-		this.paymentInfo = paymentInfo;
 	}
 }
 
