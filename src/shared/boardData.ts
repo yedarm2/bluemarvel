@@ -30,7 +30,7 @@ export class TradableArea extends BaseTile {
 	}
 
 	get englishName() {
-		return TradableAreaIdEnum[this.id].replace('_', ' ');
+		return this.id as string;
 	}
 }
 
@@ -59,35 +59,35 @@ export class SpecialArea extends TradableArea {
 }
 
 export enum TradableAreaIdEnum {
-	TAIPEI,
-	BEIJING,
-	MANILA,
-	JEJU_ISLAND,
-	SINGAPORE,
-	CAIRO,
-	ISTANBUL,
-	ATHENES,
-	COPENHAGEN,
-	STOCKHOLM,
-	CONCORDE,
-	BERN,
-	BERLIN,
-	OTAWA,
-	BUENOSAIRES,
-	SAO_PAULO,
-	SYDNEY,
-	BUSAN,
-	HAWAII,
-	LISBON,
-	QUEEN_ELIZABETH,
-	MADRID,
-	TOKYO,
-	COLUMBIA,
-	PARIS,
-	ROME,
-	LONDON,
-	NEW_YORK,
-	SEOUL,
+	TAIPEI = 'TAIPEI',
+	BEIJING = 'BEIJING',
+	MANILA = 'MANILA',
+	JEJU_ISLAND = 'JEJU ISLAND',
+	SINGAPORE = 'SINGAPORE',
+	CAIRO = 'CAIRO',
+	ISTANBUL = 'ISTANBUL',
+	ATHENES = 'ATHENES',
+	COPENHAGEN = 'COPENHAGEN',
+	STOCKHOLM = 'STOCKHOLM',
+	CONCORDE = 'CONCORDE',
+	BERN = 'BERN',
+	BERLIN = 'BERLIN',
+	OTAWA = 'OTAWA',
+	BUENOSAIRES = 'BUENOSAIRES',
+	SAO_PAULO = 'SAO PAULO',
+	SYDNEY = 'SYDNEY',
+	BUSAN = 'BUSAN',
+	HAWAII = 'HAWAII',
+	LISBON = 'LISBON',
+	QUEEN_ELIZABETH = 'QUEEN ELIZABETH',
+	MADRID = 'MADRID',
+	TOKYO = 'TOKYO',
+	COLUMBIA = 'COLUMBIA',
+	PARIS = 'PARIS',
+	ROME = 'ROME',
+	LONDON = 'LONDON',
+	NEW_YORK = 'NEW YORK',
+	SEOUL = 'SEOUL',
 }
 
 export interface PriceInfo {
@@ -96,9 +96,6 @@ export interface PriceInfo {
 	buildingPrice: number;
 	hotelPrice: number;
 }
-
-export const getTradableAreaEnglishName = (areaId: TradableAreaIdEnum) =>
-	TradableAreaIdEnum[areaId].replace('_', ' ');
 
 export const cityAreaMap: Map<TradableAreaIdEnum, CityArea> = new Map([
 	[
