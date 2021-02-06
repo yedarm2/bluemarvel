@@ -1,6 +1,6 @@
 export enum TileType {
 	STARTING_POINT,
-	COUNTRY,
+	CITY,
 	SPECIAL_AREA,
 	GOLDEN_KEY,
 	DESERT_ISLAND,
@@ -21,7 +21,7 @@ export class GoldenKey extends BaseTile {
 
 export class TradableArea extends BaseTile {
 	constructor(
-		type: TileType.COUNTRY | TileType.SPECIAL_AREA,
+		type: TileType.CITY | TileType.SPECIAL_AREA,
 		public id: TradableAreaIdEnum,
 		public name: string,
 		public description: string,
@@ -45,7 +45,7 @@ export class CityArea extends TradableArea {
 		buildingPriceInfo: PriceInfo,
 		paymentInfo: PriceInfo,
 	) {
-		super(TileType.COUNTRY, id, name, description);
+		super(TileType.CITY, id, name, description);
 		this.buildingPriceInfo = buildingPriceInfo;
 		this.paymentInfo = paymentInfo;
 	}
