@@ -19,10 +19,10 @@ export class GoldenKey extends BaseTile {
 	}
 }
 
-export class TradingArea extends BaseTile {
+export class TradableArea extends BaseTile {
 	constructor(
 		type: TileType.COUNTRY | TileType.SPECIAL_AREA,
-		public id: TradingAreaIdEnum,
+		public id: TradableAreaIdEnum,
 		public name: string,
 		public description: string,
 	) {
@@ -30,16 +30,16 @@ export class TradingArea extends BaseTile {
 	}
 
 	get englishName() {
-		return TradingAreaIdEnum[this.id].replace('_', ' ');
+		return TradableAreaIdEnum[this.id].replace('_', ' ');
 	}
 }
 
-export class CityArea extends TradingArea {
+export class CityArea extends TradableArea {
 	buildingPriceInfo: PriceInfo;
 	paymentInfo: PriceInfo;
 
 	constructor(
-		id: TradingAreaIdEnum,
+		id: TradableAreaIdEnum,
 		name: string,
 		description: string,
 		buildingPriceInfo: PriceInfo,
@@ -51,9 +51,9 @@ export class CityArea extends TradingArea {
 	}
 }
 
-export class SpecialArea extends TradingArea {
+export class SpecialArea extends TradableArea {
 	constructor(
-		id: TradingAreaIdEnum,
+		id: TradableAreaIdEnum,
 		name: string,
 		description: string,
 		public price: number,
@@ -63,7 +63,7 @@ export class SpecialArea extends TradingArea {
 	}
 }
 
-export enum TradingAreaIdEnum {
+export enum TradableAreaIdEnum {
 	TAIPEI,
 	BEIJING,
 	MANILA,
@@ -102,14 +102,14 @@ export interface PriceInfo {
 	hotelPrice: number;
 }
 
-export const getTradingAreaEnglishName = (areaId: TradingAreaIdEnum) =>
-	TradingAreaIdEnum[areaId].replace('_', ' ');
+export const getTradableAreaEnglishName = (areaId: TradableAreaIdEnum) =>
+	TradableAreaIdEnum[areaId].replace('_', ' ');
 
-export const cityAreaMap: Map<TradingAreaIdEnum, CityArea> = new Map([
+export const cityAreaMap: Map<TradableAreaIdEnum, CityArea> = new Map([
 	[
-		TradingAreaIdEnum.TAIPEI,
+		TradableAreaIdEnum.TAIPEI,
 		new CityArea(
-			TradingAreaIdEnum.BEIJING,
+			TradableAreaIdEnum.BEIJING,
 			'타이페이',
 			'타이완(대만)의 수도',
 			{
@@ -127,9 +127,9 @@ export const cityAreaMap: Map<TradingAreaIdEnum, CityArea> = new Map([
 		),
 	],
 	[
-		TradingAreaIdEnum.BEIJING,
+		TradableAreaIdEnum.BEIJING,
 		new CityArea(
-			TradingAreaIdEnum.BEIJING,
+			TradableAreaIdEnum.BEIJING,
 			'베이징',
 			'중국의 수도',
 			{
@@ -147,9 +147,9 @@ export const cityAreaMap: Map<TradingAreaIdEnum, CityArea> = new Map([
 		),
 	],
 	[
-		TradingAreaIdEnum.MANILA,
+		TradableAreaIdEnum.MANILA,
 		new CityArea(
-			TradingAreaIdEnum.MANILA,
+			TradableAreaIdEnum.MANILA,
 			'마닐라',
 			'필리핀의 수도',
 			{
@@ -167,9 +167,9 @@ export const cityAreaMap: Map<TradingAreaIdEnum, CityArea> = new Map([
 		),
 	],
 	[
-		TradingAreaIdEnum.SINGAPORE,
+		TradableAreaIdEnum.SINGAPORE,
 		new CityArea(
-			TradingAreaIdEnum.SINGAPORE,
+			TradableAreaIdEnum.SINGAPORE,
 			'싱가포르',
 			'싱가포르의 수도',
 			{
@@ -187,9 +187,9 @@ export const cityAreaMap: Map<TradingAreaIdEnum, CityArea> = new Map([
 		),
 	],
 	[
-		TradingAreaIdEnum.CAIRO,
+		TradableAreaIdEnum.CAIRO,
 		new CityArea(
-			TradingAreaIdEnum.CAIRO,
+			TradableAreaIdEnum.CAIRO,
 			'카이로',
 			'이집트의 수도',
 			{
@@ -207,9 +207,9 @@ export const cityAreaMap: Map<TradingAreaIdEnum, CityArea> = new Map([
 		),
 	],
 	[
-		TradingAreaIdEnum.ISTANBUL,
+		TradableAreaIdEnum.ISTANBUL,
 		new CityArea(
-			TradingAreaIdEnum.ISTANBUL,
+			TradableAreaIdEnum.ISTANBUL,
 			'이스탄불',
 			'동서양의 교차로',
 			{
@@ -227,9 +227,9 @@ export const cityAreaMap: Map<TradingAreaIdEnum, CityArea> = new Map([
 		),
 	],
 	[
-		TradingAreaIdEnum.ATHENES,
+		TradableAreaIdEnum.ATHENES,
 		new CityArea(
-			TradingAreaIdEnum.ATHENES,
+			TradableAreaIdEnum.ATHENES,
 			'아테네',
 			'그리스의 수도',
 			{
@@ -247,9 +247,9 @@ export const cityAreaMap: Map<TradingAreaIdEnum, CityArea> = new Map([
 		),
 	],
 	[
-		TradingAreaIdEnum.COPENHAGEN,
+		TradableAreaIdEnum.COPENHAGEN,
 		new CityArea(
-			TradingAreaIdEnum.COPENHAGEN,
+			TradableAreaIdEnum.COPENHAGEN,
 			'코펜하겐',
 			'덴마크의 수도',
 			{
@@ -267,9 +267,9 @@ export const cityAreaMap: Map<TradingAreaIdEnum, CityArea> = new Map([
 		),
 	],
 	[
-		TradingAreaIdEnum.STOCKHOLM,
+		TradableAreaIdEnum.STOCKHOLM,
 		new CityArea(
-			TradingAreaIdEnum.STOCKHOLM,
+			TradableAreaIdEnum.STOCKHOLM,
 			'스톡홀름',
 			'스웨덴의 수도',
 			{
@@ -287,9 +287,9 @@ export const cityAreaMap: Map<TradingAreaIdEnum, CityArea> = new Map([
 		),
 	],
 	[
-		TradingAreaIdEnum.BERN,
+		TradableAreaIdEnum.BERN,
 		new CityArea(
-			TradingAreaIdEnum.BERN,
+			TradableAreaIdEnum.BERN,
 			'베른',
 			'스위스의 수도',
 			{
@@ -307,9 +307,9 @@ export const cityAreaMap: Map<TradingAreaIdEnum, CityArea> = new Map([
 		),
 	],
 	[
-		TradingAreaIdEnum.BERLIN,
+		TradableAreaIdEnum.BERLIN,
 		new CityArea(
-			TradingAreaIdEnum.BERLIN,
+			TradableAreaIdEnum.BERLIN,
 			'베를린',
 			'독일의 수도',
 			{
@@ -327,9 +327,9 @@ export const cityAreaMap: Map<TradingAreaIdEnum, CityArea> = new Map([
 		),
 	],
 	[
-		TradingAreaIdEnum.OTAWA,
+		TradableAreaIdEnum.OTAWA,
 		new CityArea(
-			TradingAreaIdEnum.OTAWA,
+			TradableAreaIdEnum.OTAWA,
 			'오타와',
 			'캐나다의 수도',
 			{
@@ -347,9 +347,9 @@ export const cityAreaMap: Map<TradingAreaIdEnum, CityArea> = new Map([
 		),
 	],
 	[
-		TradingAreaIdEnum.BUENOSAIRES,
+		TradableAreaIdEnum.BUENOSAIRES,
 		new CityArea(
-			TradingAreaIdEnum.BUENOSAIRES,
+			TradableAreaIdEnum.BUENOSAIRES,
 			'부에노스 아이레스',
 			'아르헨티나의 수도',
 			{
@@ -367,9 +367,9 @@ export const cityAreaMap: Map<TradingAreaIdEnum, CityArea> = new Map([
 		),
 	],
 	[
-		TradingAreaIdEnum.SAO_PAULO,
+		TradableAreaIdEnum.SAO_PAULO,
 		new CityArea(
-			TradingAreaIdEnum.SAO_PAULO,
+			TradableAreaIdEnum.SAO_PAULO,
 			'상파울로',
 			'브라질의 수도',
 			{
@@ -387,9 +387,9 @@ export const cityAreaMap: Map<TradingAreaIdEnum, CityArea> = new Map([
 		),
 	],
 	[
-		TradingAreaIdEnum.SYDNEY,
+		TradableAreaIdEnum.SYDNEY,
 		new CityArea(
-			TradingAreaIdEnum.SYDNEY,
+			TradableAreaIdEnum.SYDNEY,
 			'시드니',
 			'호주의 수도',
 			{
@@ -407,9 +407,9 @@ export const cityAreaMap: Map<TradingAreaIdEnum, CityArea> = new Map([
 		),
 	],
 	[
-		TradingAreaIdEnum.HAWAII,
+		TradableAreaIdEnum.HAWAII,
 		new CityArea(
-			TradingAreaIdEnum.HAWAII,
+			TradableAreaIdEnum.HAWAII,
 			'하와이',
 			'미국의 휴양지',
 			{
@@ -427,9 +427,9 @@ export const cityAreaMap: Map<TradingAreaIdEnum, CityArea> = new Map([
 		),
 	],
 	[
-		TradingAreaIdEnum.LISBON,
+		TradableAreaIdEnum.LISBON,
 		new CityArea(
-			TradingAreaIdEnum.LISBON,
+			TradableAreaIdEnum.LISBON,
 			'리스본',
 			'포르투갈의 수도',
 			{
@@ -447,9 +447,9 @@ export const cityAreaMap: Map<TradingAreaIdEnum, CityArea> = new Map([
 		),
 	],
 	[
-		TradingAreaIdEnum.MADRID,
+		TradableAreaIdEnum.MADRID,
 		new CityArea(
-			TradingAreaIdEnum.MADRID,
+			TradableAreaIdEnum.MADRID,
 			'마드리드',
 			'스페인의 수도',
 			{
@@ -467,9 +467,9 @@ export const cityAreaMap: Map<TradingAreaIdEnum, CityArea> = new Map([
 		),
 	],
 	[
-		TradingAreaIdEnum.TOKYO,
+		TradableAreaIdEnum.TOKYO,
 		new CityArea(
-			TradingAreaIdEnum.TOKYO,
+			TradableAreaIdEnum.TOKYO,
 			'도쿄',
 			'일본의 수도',
 			{
@@ -487,9 +487,9 @@ export const cityAreaMap: Map<TradingAreaIdEnum, CityArea> = new Map([
 		),
 	],
 	[
-		TradingAreaIdEnum.PARIS,
+		TradableAreaIdEnum.PARIS,
 		new CityArea(
-			TradingAreaIdEnum.PARIS,
+			TradableAreaIdEnum.PARIS,
 			'파리',
 			'프랑스의 수도',
 			{
@@ -507,9 +507,9 @@ export const cityAreaMap: Map<TradingAreaIdEnum, CityArea> = new Map([
 		),
 	],
 	[
-		TradingAreaIdEnum.ROME,
+		TradableAreaIdEnum.ROME,
 		new CityArea(
-			TradingAreaIdEnum.ROME,
+			TradableAreaIdEnum.ROME,
 			'로마',
 			'이탈리아의 수도',
 			{
@@ -527,9 +527,9 @@ export const cityAreaMap: Map<TradingAreaIdEnum, CityArea> = new Map([
 		),
 	],
 	[
-		TradingAreaIdEnum.LONDON,
+		TradableAreaIdEnum.LONDON,
 		new CityArea(
-			TradingAreaIdEnum.LONDON,
+			TradableAreaIdEnum.LONDON,
 			'런던',
 			'영국의 수도',
 			{
@@ -547,9 +547,9 @@ export const cityAreaMap: Map<TradingAreaIdEnum, CityArea> = new Map([
 		),
 	],
 	[
-		TradingAreaIdEnum.NEW_YORK,
+		TradableAreaIdEnum.NEW_YORK,
 		new CityArea(
-			TradingAreaIdEnum.NEW_YORK,
+			TradableAreaIdEnum.NEW_YORK,
 			'뉴욕',
 			'미국 최대의 도시',
 			{
@@ -568,11 +568,11 @@ export const cityAreaMap: Map<TradingAreaIdEnum, CityArea> = new Map([
 	],
 ]);
 
-export const specialAreaMap: Map<TradingAreaIdEnum, SpecialArea> = new Map([
+export const specialAreaMap: Map<TradableAreaIdEnum, SpecialArea> = new Map([
 	[
-		TradingAreaIdEnum.JEJU_ISLAND,
+		TradableAreaIdEnum.JEJU_ISLAND,
 		new SpecialArea(
-			TradingAreaIdEnum.JEJU_ISLAND,
+			TradableAreaIdEnum.JEJU_ISLAND,
 			'제주',
 			'대한민국의 휴양지',
 			200000,
@@ -580,9 +580,9 @@ export const specialAreaMap: Map<TradingAreaIdEnum, SpecialArea> = new Map([
 		),
 	],
 	[
-		TradingAreaIdEnum.CONCORDE,
+		TradableAreaIdEnum.CONCORDE,
 		new SpecialArea(
-			TradingAreaIdEnum.CONCORDE,
+			TradableAreaIdEnum.CONCORDE,
 			'콩코드여객기',
 			'초음속여객기',
 			200000,
@@ -590,9 +590,9 @@ export const specialAreaMap: Map<TradingAreaIdEnum, SpecialArea> = new Map([
 		),
 	],
 	[
-		TradingAreaIdEnum.BUSAN,
+		TradableAreaIdEnum.BUSAN,
 		new SpecialArea(
-			TradingAreaIdEnum.BUSAN,
+			TradableAreaIdEnum.BUSAN,
 			'부산',
 			'대한민국의 제1의 항구도시',
 			500000,
@@ -600,9 +600,9 @@ export const specialAreaMap: Map<TradingAreaIdEnum, SpecialArea> = new Map([
 		),
 	],
 	[
-		TradingAreaIdEnum.QUEEN_ELIZABETH,
+		TradableAreaIdEnum.QUEEN_ELIZABETH,
 		new SpecialArea(
-			TradingAreaIdEnum.QUEEN_ELIZABETH,
+			TradableAreaIdEnum.QUEEN_ELIZABETH,
 			'퀸 엘리자베스호',
 			'호화 여객선',
 			300000,
@@ -610,9 +610,9 @@ export const specialAreaMap: Map<TradingAreaIdEnum, SpecialArea> = new Map([
 		),
 	],
 	[
-		TradingAreaIdEnum.COLUMBIA,
+		TradableAreaIdEnum.COLUMBIA,
 		new SpecialArea(
-			TradingAreaIdEnum.COLUMBIA,
+			TradableAreaIdEnum.COLUMBIA,
 			'컬럼비아호',
 			'유인 우주 왕복선',
 			450000,
@@ -620,9 +620,9 @@ export const specialAreaMap: Map<TradingAreaIdEnum, SpecialArea> = new Map([
 		),
 	],
 	[
-		TradingAreaIdEnum.SEOUL,
+		TradableAreaIdEnum.SEOUL,
 		new SpecialArea(
-			TradingAreaIdEnum.SEOUL,
+			TradableAreaIdEnum.SEOUL,
 			'서울',
 			'대한민국의 수도',
 			1000000,
@@ -634,50 +634,50 @@ export const specialAreaMap: Map<TradingAreaIdEnum, SpecialArea> = new Map([
 export const boardMatrix: BaseTile[][] = [
 	[
 		new BaseTile(TileType.STARTING_POINT),
-		cityAreaMap.get(TradingAreaIdEnum.TAIPEI) as CityArea,
+		cityAreaMap.get(TradableAreaIdEnum.TAIPEI) as CityArea,
 		new GoldenKey(1),
-		cityAreaMap.get(TradingAreaIdEnum.BEIJING) as CityArea,
-		cityAreaMap.get(TradingAreaIdEnum.MANILA) as CityArea,
-		specialAreaMap.get(TradingAreaIdEnum.JEJU_ISLAND) as SpecialArea,
-		cityAreaMap.get(TradingAreaIdEnum.SINGAPORE) as CityArea,
+		cityAreaMap.get(TradableAreaIdEnum.BEIJING) as CityArea,
+		cityAreaMap.get(TradableAreaIdEnum.MANILA) as CityArea,
+		specialAreaMap.get(TradableAreaIdEnum.JEJU_ISLAND) as SpecialArea,
+		cityAreaMap.get(TradableAreaIdEnum.SINGAPORE) as CityArea,
 		new GoldenKey(2),
-		cityAreaMap.get(TradingAreaIdEnum.CAIRO) as CityArea,
-		cityAreaMap.get(TradingAreaIdEnum.ISTANBUL) as CityArea,
+		cityAreaMap.get(TradableAreaIdEnum.CAIRO) as CityArea,
+		cityAreaMap.get(TradableAreaIdEnum.ISTANBUL) as CityArea,
 	],
 	[
 		new BaseTile(TileType.DESERT_ISLAND),
-		cityAreaMap.get(TradingAreaIdEnum.ATHENES) as CityArea,
+		cityAreaMap.get(TradableAreaIdEnum.ATHENES) as CityArea,
 		new GoldenKey(3),
-		cityAreaMap.get(TradingAreaIdEnum.COPENHAGEN) as CityArea,
-		cityAreaMap.get(TradingAreaIdEnum.STOCKHOLM) as CityArea,
-		specialAreaMap.get(TradingAreaIdEnum.CONCORDE) as SpecialArea,
-		cityAreaMap.get(TradingAreaIdEnum.BERN) as CityArea,
+		cityAreaMap.get(TradableAreaIdEnum.COPENHAGEN) as CityArea,
+		cityAreaMap.get(TradableAreaIdEnum.STOCKHOLM) as CityArea,
+		specialAreaMap.get(TradableAreaIdEnum.CONCORDE) as SpecialArea,
+		cityAreaMap.get(TradableAreaIdEnum.BERN) as CityArea,
 		new GoldenKey(4),
-		cityAreaMap.get(TradingAreaIdEnum.BERLIN) as CityArea,
-		cityAreaMap.get(TradingAreaIdEnum.OTAWA) as CityArea,
+		cityAreaMap.get(TradableAreaIdEnum.BERLIN) as CityArea,
+		cityAreaMap.get(TradableAreaIdEnum.OTAWA) as CityArea,
 	],
 	[
 		new BaseTile(TileType.GET_WELFARE),
-		cityAreaMap.get(TradingAreaIdEnum.BUENOSAIRES) as CityArea,
+		cityAreaMap.get(TradableAreaIdEnum.BUENOSAIRES) as CityArea,
 		new GoldenKey(5),
-		cityAreaMap.get(TradingAreaIdEnum.SAO_PAULO) as CityArea,
-		cityAreaMap.get(TradingAreaIdEnum.SYDNEY) as CityArea,
-		specialAreaMap.get(TradingAreaIdEnum.BUSAN) as SpecialArea,
-		cityAreaMap.get(TradingAreaIdEnum.HAWAII) as CityArea,
-		cityAreaMap.get(TradingAreaIdEnum.LISBON) as CityArea,
-		specialAreaMap.get(TradingAreaIdEnum.QUEEN_ELIZABETH) as SpecialArea,
-		cityAreaMap.get(TradingAreaIdEnum.MADRID) as CityArea,
+		cityAreaMap.get(TradableAreaIdEnum.SAO_PAULO) as CityArea,
+		cityAreaMap.get(TradableAreaIdEnum.SYDNEY) as CityArea,
+		specialAreaMap.get(TradableAreaIdEnum.BUSAN) as SpecialArea,
+		cityAreaMap.get(TradableAreaIdEnum.HAWAII) as CityArea,
+		cityAreaMap.get(TradableAreaIdEnum.LISBON) as CityArea,
+		specialAreaMap.get(TradableAreaIdEnum.QUEEN_ELIZABETH) as SpecialArea,
+		cityAreaMap.get(TradableAreaIdEnum.MADRID) as CityArea,
 	],
 	[
 		new BaseTile(TileType.SPACE_TRAVEL),
-		cityAreaMap.get(TradingAreaIdEnum.TOKYO) as CityArea,
-		specialAreaMap.get(TradingAreaIdEnum.COLUMBIA) as SpecialArea,
-		cityAreaMap.get(TradingAreaIdEnum.PARIS) as CityArea,
-		cityAreaMap.get(TradingAreaIdEnum.ROME) as CityArea,
+		cityAreaMap.get(TradableAreaIdEnum.TOKYO) as CityArea,
+		specialAreaMap.get(TradableAreaIdEnum.COLUMBIA) as SpecialArea,
+		cityAreaMap.get(TradableAreaIdEnum.PARIS) as CityArea,
+		cityAreaMap.get(TradableAreaIdEnum.ROME) as CityArea,
 		new GoldenKey(6),
-		cityAreaMap.get(TradingAreaIdEnum.LONDON) as CityArea,
-		cityAreaMap.get(TradingAreaIdEnum.NEW_YORK) as CityArea,
+		cityAreaMap.get(TradableAreaIdEnum.LONDON) as CityArea,
+		cityAreaMap.get(TradableAreaIdEnum.NEW_YORK) as CityArea,
 		new BaseTile(TileType.GET_WELFARE),
-		specialAreaMap.get(TradingAreaIdEnum.SEOUL) as SpecialArea,
+		specialAreaMap.get(TradableAreaIdEnum.SEOUL) as SpecialArea,
 	],
 ];
