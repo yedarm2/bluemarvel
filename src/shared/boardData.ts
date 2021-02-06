@@ -1,4 +1,4 @@
-export enum AreaType {
+export enum TileType {
 	STARTING_POINT,
 	COUNTRY,
 	SPECIAL_AREA,
@@ -9,19 +9,19 @@ export enum AreaType {
 	SPACE_TRAVEL,
 }
 
-export class BaseArea {
-	constructor(public type: AreaType) {}
+export class BaseTile {
+	constructor(public type: TileType) {}
 }
 
-export class GoldenKey extends BaseArea {
+export class GoldenKey extends BaseTile {
 	constructor(public number: number) {
-		super(AreaType.GOLDEN_KEY);
+		super(TileType.GOLDEN_KEY);
 	}
 }
 
-export class TradingArea extends BaseArea {
+export class TradingArea extends BaseTile {
 	constructor(
-		type: AreaType.COUNTRY | AreaType.SPECIAL_AREA,
+		type: TileType.COUNTRY | TileType.SPECIAL_AREA,
 		public id: TradingAreaIdEnum,
 		public name: string,
 		public description: string,
@@ -45,7 +45,7 @@ export class CityArea extends TradingArea {
 		buildingPriceInfo: PriceInfo,
 		paymentInfo: PriceInfo,
 	) {
-		super(AreaType.COUNTRY, id, name, description);
+		super(TileType.COUNTRY, id, name, description);
 		this.buildingPriceInfo = buildingPriceInfo;
 		this.paymentInfo = paymentInfo;
 	}
@@ -59,7 +59,7 @@ export class SpecialArea extends TradingArea {
 		public price: number,
 		public payment: number,
 	) {
-		super(AreaType.SPECIAL_AREA, id, name, description);
+		super(TileType.SPECIAL_AREA, id, name, description);
 	}
 }
 
@@ -631,9 +631,9 @@ export const specialAreaMap: Map<TradingAreaIdEnum, SpecialArea> = new Map([
 	],
 ]);
 
-export const boardMatrix: BaseArea[][] = [
+export const boardMatrix: BaseTile[][] = [
 	[
-		new BaseArea(AreaType.STARTING_POINT),
+		new BaseTile(TileType.STARTING_POINT),
 		cityAreaMap.get(TradingAreaIdEnum.TAIPEI) as CityArea,
 		new GoldenKey(1),
 		cityAreaMap.get(TradingAreaIdEnum.BEIJING) as CityArea,
@@ -645,7 +645,7 @@ export const boardMatrix: BaseArea[][] = [
 		cityAreaMap.get(TradingAreaIdEnum.ISTANBUL) as CityArea,
 	],
 	[
-		new BaseArea(AreaType.DESERT_ISLAND),
+		new BaseTile(TileType.DESERT_ISLAND),
 		cityAreaMap.get(TradingAreaIdEnum.ATHENES) as CityArea,
 		new GoldenKey(3),
 		cityAreaMap.get(TradingAreaIdEnum.COPENHAGEN) as CityArea,
@@ -657,7 +657,7 @@ export const boardMatrix: BaseArea[][] = [
 		cityAreaMap.get(TradingAreaIdEnum.OTAWA) as CityArea,
 	],
 	[
-		new BaseArea(AreaType.GET_WELFARE),
+		new BaseTile(TileType.GET_WELFARE),
 		cityAreaMap.get(TradingAreaIdEnum.BUENOSAIRES) as CityArea,
 		new GoldenKey(5),
 		cityAreaMap.get(TradingAreaIdEnum.SAO_PAULO) as CityArea,
@@ -669,7 +669,7 @@ export const boardMatrix: BaseArea[][] = [
 		cityAreaMap.get(TradingAreaIdEnum.MADRID) as CityArea,
 	],
 	[
-		new BaseArea(AreaType.SPACE_TRAVEL),
+		new BaseTile(TileType.SPACE_TRAVEL),
 		cityAreaMap.get(TradingAreaIdEnum.TOKYO) as CityArea,
 		specialAreaMap.get(TradingAreaIdEnum.COLUMBIA) as SpecialArea,
 		cityAreaMap.get(TradingAreaIdEnum.PARIS) as CityArea,
@@ -677,7 +677,7 @@ export const boardMatrix: BaseArea[][] = [
 		new GoldenKey(6),
 		cityAreaMap.get(TradingAreaIdEnum.LONDON) as CityArea,
 		cityAreaMap.get(TradingAreaIdEnum.NEW_YORK) as CityArea,
-		new BaseArea(AreaType.GET_WELFARE),
+		new BaseTile(TileType.GET_WELFARE),
 		specialAreaMap.get(TradingAreaIdEnum.SEOUL) as SpecialArea,
 	],
 ];
