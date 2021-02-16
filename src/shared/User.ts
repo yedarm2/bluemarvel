@@ -1,25 +1,28 @@
-import { CityArea, SpecialArea, TradableAreaIdEnum, PriceInfo } from '@/shared/boardData';
+import { CityArea, SpecialArea, TradableAreaIdEnum } from '@/shared/boardData';
 import { propertyType } from '@/shared/policy';
 
 type tradableArea = CityArea | SpecialArea;
 type propertySkeleton = {
-	tile: tradableArea,
+	tile: tradableArea;
 	properties: {
 		[property in propertyType]: number
-	}
+	};
 }
 type tileSkeleton = {
-	[id in TradableAreaIdEnum]?: propertySkeleton
+	[id in TradableAreaIdEnum]?: propertySkeleton;
 };
 
 export class User {
-	name: string;
-	remainedMoney: number = 0;
-	items: Array<any> = []; // TODO 현재는 any의 배열이나 추후 황금열쇠 객체가 될 듯.
+	id: number;
+
+	remainedMoney = 0;
+
+	items = []; // TODO 현재는 any의 배열이나 추후 황금열쇠 객체가 될 듯.
+
 	tiles: tileSkeleton = {};
 
-	constructor(name: string) {
-		this.name = name;
+	constructor(id: number) {
+		this.id = id;
 	}
 
 	setMoney(value: number) {
@@ -35,9 +38,9 @@ export class User {
 		return value;
 	}
 
-	setItems(item: any) {
-		this.items.push(item);
-	}
+	// setItems(item: any) { // TODO 타입 에러 남 황금열쇠 객체나 타입 만들어지면 주석 해제 필요
+	// 	this.items.push(item);
+	// }
 
 	useItem(index: number) {
 		this.items.splice(index, 1);
@@ -61,7 +64,7 @@ export class User {
 	setProperties(tile: tradableArea, property: propertyType) {
 		const selectedTile = this.tiles[tile.id];
 		if (selectedTile) {
-			selectedTile.properties[property]++;
+			selectedTile.properties[property] += 1;
 		}
 	}
 
@@ -75,9 +78,8 @@ export class User {
 			const totalPrice = priceOfVilla + priceOfBuilding + priceOfHotel;
 
 			return totalPrice === 0 ? selectedTile.tile.buildingPriceInfo.areaPrice : totalPrice;
-		} else {
-			return selectedTile.tile.price;
 		}
+		return selectedTile.tile.price;
 	}
 
 	getSpecificPropertyPrice(tile: tradableArea, properties: Array<propertyType>): number {
@@ -85,6 +87,7 @@ export class User {
 		if (!selectedTile) return 0;
 		if (!(selectedTile.tile instanceof SpecialArea)) {
 			if (properties.length > 0) {
+				/* eslint-disable no-param-reassign */
 				return properties.reduce((prev, curr) => {
 					switch (curr) {
 						case propertyType.VILLA:
@@ -98,15 +101,16 @@ export class User {
 						case propertyType.HOTEL:
 							prev += selectedTile.tile instanceof CityArea ? selectedTile.tile.buildingPriceInfo.hotelPrice : 0;
 							break;
+						default:
+							break;
 					}
 					return prev;
 				}, 0);
-			} else {
-				return selectedTile.tile.buildingPriceInfo.areaPrice
+				/* eslint-enable no-param-reassign */
 			}
-		} else {
-			return selectedTile.tile.price;
+			return selectedTile.tile.buildingPriceInfo.areaPrice;
 		}
+		return selectedTile.tile.price;
 	}
 
 	getTolls(tile: tradableArea): number {
@@ -119,9 +123,8 @@ export class User {
 			const totalPrice = priceOfVilla + priceOfBuilding + priceOfHotel;
 
 			return totalPrice === 0 ? selectedTile.tile.paymentInfo.areaPrice : totalPrice;
-		} else {
-			return selectedTile.tile.payment;
 		}
+		return selectedTile.tile.payment;
 	}
 
 }
