@@ -23,3 +23,11 @@ export default defineComponent({
 	},
 });
 </script>
+
+<style lang="scss">
+.blue-marble {
+	position: relative;
+	z-index: 1;
+	background-color: white;
+}
+</style>
