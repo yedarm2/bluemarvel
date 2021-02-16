@@ -75,7 +75,7 @@ export class User {
 			const priceOfVilla = selectedTile.properties.VILLA * selectedTile.tile.buildingPriceInfo.villaPrice;
 			const priceOfBuilding = selectedTile.properties.BUILDING * selectedTile.tile.buildingPriceInfo.buildingPrice;
 			const priceOfHotel = selectedTile.properties.HOTEL * selectedTile.tile.buildingPriceInfo.hotelPrice;
-			const totalPrice = priceOfVilla + priceOfBuilding + priceOfHotel;
+			const totalPrice = priceOfVilla + priceOfBuilding + priceOfHotel + selectedTile.tile.buildingPriceInfo.areaPrice;
 
 			return totalPrice === 0 ? selectedTile.tile.buildingPriceInfo.areaPrice : totalPrice;
 		}
