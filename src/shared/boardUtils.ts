@@ -17,7 +17,10 @@ export const getBoardLineNumberByTile = (tile: BaseTile) =>
 /**
  * @description 목표까지의 타일 목록을 반환
  */
-export const getTileListToTarget = (fromTile: BaseTile, toTile: BaseTile) => {
+export const getTileListBetweenFromtAndTo = (
+	fromTile: BaseTile,
+	toTile: BaseTile,
+) => {
 	let startIndex = tileList.indexOf(fromTile);
 	if (startIndex === tileList.length - 1) startIndex = 0;
 
