@@ -49,10 +49,8 @@ export default defineComponent({
 	setup(props) {
 		const { tile } = toRefs(props);
 
-		const { tileName } = getTileContext(tile);
-
 		return {
-			tileName,
+			...getTileContext(tile),
 		};
 	},
 });
