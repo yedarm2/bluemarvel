@@ -20,7 +20,11 @@ module.exports = {
 			VariableDeclarator: 1,
 		}],
 		'import/extensions': 'off',
-		'import/prefer-default-export': 'off'
+		'import/prefer-default-export': 'off',
+		'import/no-unresolved': 'off',
+		'max-classes-per-file': 'off',
+		'no-useless-constructor': 'off',
+		'@typescript-eslint/no-useless-constructor': 'error',
 	},
 	overrides: [
 		{
