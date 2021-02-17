@@ -1,10 +1,12 @@
-$tile-width: 70px;
+$tile-width: 80px;
 $tile-height: $tile-width * 2;
-$board-line-width: $tile-width * 8 + $tile-height;
 
+$board-line-width: $tile-width * 9 + $tile-height;
 $board-size: $board-line-width + $tile-height;
 
 @mixin tile-style($is-corner) {
+	box-sizing: border-box;
+
 	width: if($is-corner, $tile-height, $tile-width);
 	height: $tile-height;
 	border: 1px solid #000;

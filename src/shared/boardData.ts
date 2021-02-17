@@ -11,6 +11,15 @@ export enum TileType {
 
 export class BaseTile {
 	constructor(public type: TileType) {}
+
+	isCornerTile() {
+		return [
+			TileType.STARTING_POINT,
+			TileType.DESERT_ISLAND,
+			TileType.GET_WELFARE,
+			TileType.SPACE_TRAVEL,
+		].includes(this.type);
+	}
 }
 
 export class GoldenKey extends BaseTile {
@@ -623,7 +632,7 @@ export const specialAreaMap: Map<TradableAreaIdEnum, SpecialArea> = new Map([
 	],
 ]);
 
-export const boardMatrix: BaseTile[][] = [
+export const tileMatrix: BaseTile[][] = [
 	[
 		new BaseTile(TileType.STARTING_POINT),
 		cityAreaMap.get(TradableAreaIdEnum.TAIPEI) as CityArea,
@@ -669,7 +678,7 @@ export const boardMatrix: BaseTile[][] = [
 		new GoldenKey(6),
 		cityAreaMap.get(TradableAreaIdEnum.LONDON) as CityArea,
 		cityAreaMap.get(TradableAreaIdEnum.NEW_YORK) as CityArea,
-		new BaseTile(TileType.GET_WELFARE),
+		new BaseTile(TileType.PAY_WELFARE),
 		specialAreaMap.get(TradableAreaIdEnum.SEOUL) as SpecialArea,
 	],
 ];

@@ -3,9 +3,11 @@
 </template>
 
 <script>
-export default {
+import { defineComponent } from 'vue';
+
+export default defineComponent({
 	name: 'board-corner-tile',
-};
+});
 </script>
 
 <style lang="scss" scoped>
