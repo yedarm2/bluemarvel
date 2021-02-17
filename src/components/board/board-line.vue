@@ -7,15 +7,7 @@
 <script lang="ts">
 import { computed, defineComponent, PropType, toRefs } from 'vue';
 
-type LineNumber = 0 | 1 | 2 | 3;
-
-const getStringByNumber = (number: LineNumber) =>
-	({
-		0: 'first',
-		1: 'second',
-		2: 'third',
-		3: 'fourth',
-	}[number]);
+import { getStringByNumber, LineNumber } from '@/shared/boardUtils';
 
 export default defineComponent({
 	name: 'board-line',
