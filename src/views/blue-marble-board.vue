@@ -6,14 +6,14 @@
 			:line-number="lineIndex"
 		>
 			<template v-for="(tile, tileIndex) in tileList" :key="tileIndex">
-				<board-corner-tile v-if="tile.isCornerTile()" />
-				<board-tile v-else />
+				<board-corner-tile v-if="tile.isCornerTile()" :tile="tile" />
+				<board-tile v-else :tile="tile" />
 			</template>
 		</board-line>
 	</div>
 </template>
 
-<script>
+<script lang="ts">
 import { defineComponent } from 'vue';
 
 import { tileMatrix } from '@/shared/boardData';

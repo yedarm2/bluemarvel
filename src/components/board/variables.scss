@@ -11,4 +11,6 @@ $board-size: $board-line-width + $tile-height;
 	height: $tile-height;
 	border: 1px solid #000;
 	border-radius: 3px;
+
+	position: relative;
 }
