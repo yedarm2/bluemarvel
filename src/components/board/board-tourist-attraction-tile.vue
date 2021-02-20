@@ -17,9 +17,9 @@
 
 <script lang="ts">
 import { computed, defineComponent, PropType, Ref, toRefs } from 'vue';
-import { TouristAttraction } from '@/shared/boardData';
+import { TouristAttractionTile } from '@/shared/boardData';
 
-const getTouristAttractionContext = (tile: Ref<TouristAttraction>) => ({
+const getTouristAttractionContext = (tile: Ref<TouristAttractionTile>) => ({
 	name: computed(() => tile.value.name),
 	englishName: computed(() => tile.value.englishName),
 	price: computed(() => `${tile.value.price / 10000}만원`),
@@ -31,7 +31,7 @@ export default defineComponent({
 
 	props: {
 		tile: {
-			type: Object as PropType<TouristAttraction>,
+			type: Object as PropType<TouristAttractionTile>,
 			required: true,
 		},
 	},

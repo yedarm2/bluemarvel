@@ -28,10 +28,10 @@ export class GoldenKeyTile extends BaseTile {
 	}
 }
 
-export class TradableArea extends BaseTile {
+export class TradableTile extends BaseTile {
 	constructor(
 		type: TileType.CITY | TileType.TOURIST_ATTRACTION,
-		public id: TradableAreaIdEnum,
+		public id: TradableTileIdEnum,
 		public name: string,
 		public description: string,
 	) {
@@ -43,9 +43,9 @@ export class TradableArea extends BaseTile {
 	}
 }
 
-export class CityArea extends TradableArea {
+export class CityTile extends TradableTile {
 	constructor(
-		id: TradableAreaIdEnum,
+		id: TradableTileIdEnum,
 		name: string,
 		description: string,
 		public buildingPriceInfo: PriceInfo,
@@ -55,9 +55,9 @@ export class CityArea extends TradableArea {
 	}
 }
 
-export class TouristAttraction extends TradableArea {
+export class TouristAttractionTile extends TradableTile {
 	constructor(
-		id: TradableAreaIdEnum,
+		id: TradableTileIdEnum,
 		name: string,
 		description: string,
 		public price: number,
@@ -67,7 +67,7 @@ export class TouristAttraction extends TradableArea {
 	}
 }
 
-export enum TradableAreaIdEnum {
+export enum TradableTileIdEnum {
 	TAIPEI = 'TAIPEI',
 	BEIJING = 'BEIJING',
 	MANILA = 'MANILA',
@@ -106,11 +106,11 @@ export interface PriceInfo {
 	hotelPrice: number;
 }
 
-export const cityAreaMap: Map<TradableAreaIdEnum, CityArea> = new Map([
+export const CityTileMap: Map<TradableTileIdEnum, CityTile> = new Map([
 	[
-		TradableAreaIdEnum.TAIPEI,
-		new CityArea(
-			TradableAreaIdEnum.BEIJING,
+		TradableTileIdEnum.TAIPEI,
+		new CityTile(
+			TradableTileIdEnum.BEIJING,
 			'타이페이',
 			'타이완(대만)의 수도',
 			{
@@ -128,9 +128,9 @@ export const cityAreaMap: Map<TradableAreaIdEnum, CityArea> = new Map([
 		),
 	],
 	[
-		TradableAreaIdEnum.BEIJING,
-		new CityArea(
-			TradableAreaIdEnum.BEIJING,
+		TradableTileIdEnum.BEIJING,
+		new CityTile(
+			TradableTileIdEnum.BEIJING,
 			'베이징',
 			'중국의 수도',
 			{
@@ -148,9 +148,9 @@ export const cityAreaMap: Map<TradableAreaIdEnum, CityArea> = new Map([
 		),
 	],
 	[
-		TradableAreaIdEnum.MANILA,
-		new CityArea(
-			TradableAreaIdEnum.MANILA,
+		TradableTileIdEnum.MANILA,
+		new CityTile(
+			TradableTileIdEnum.MANILA,
 			'마닐라',
 			'필리핀의 수도',
 			{
@@ -168,9 +168,9 @@ export const cityAreaMap: Map<TradableAreaIdEnum, CityArea> = new Map([
 		),
 	],
 	[
-		TradableAreaIdEnum.SINGAPORE,
-		new CityArea(
-			TradableAreaIdEnum.SINGAPORE,
+		TradableTileIdEnum.SINGAPORE,
+		new CityTile(
+			TradableTileIdEnum.SINGAPORE,
 			'싱가포르',
 			'싱가포르의 수도',
 			{
@@ -188,9 +188,9 @@ export const cityAreaMap: Map<TradableAreaIdEnum, CityArea> = new Map([
 		),
 	],
 	[
-		TradableAreaIdEnum.CAIRO,
-		new CityArea(
-			TradableAreaIdEnum.CAIRO,
+		TradableTileIdEnum.CAIRO,
+		new CityTile(
+			TradableTileIdEnum.CAIRO,
 			'카이로',
 			'이집트의 수도',
 			{
@@ -208,9 +208,9 @@ export const cityAreaMap: Map<TradableAreaIdEnum, CityArea> = new Map([
 		),
 	],
 	[
-		TradableAreaIdEnum.ISTANBUL,
-		new CityArea(
-			TradableAreaIdEnum.ISTANBUL,
+		TradableTileIdEnum.ISTANBUL,
+		new CityTile(
+			TradableTileIdEnum.ISTANBUL,
 			'이스탄불',
 			'동서양의 교차로',
 			{
@@ -228,9 +228,9 @@ export const cityAreaMap: Map<TradableAreaIdEnum, CityArea> = new Map([
 		),
 	],
 	[
-		TradableAreaIdEnum.ATHENES,
-		new CityArea(
-			TradableAreaIdEnum.ATHENES,
+		TradableTileIdEnum.ATHENES,
+		new CityTile(
+			TradableTileIdEnum.ATHENES,
 			'아테네',
 			'그리스의 수도',
 			{
@@ -248,9 +248,9 @@ export const cityAreaMap: Map<TradableAreaIdEnum, CityArea> = new Map([
 		),
 	],
 	[
-		TradableAreaIdEnum.COPENHAGEN,
-		new CityArea(
-			TradableAreaIdEnum.COPENHAGEN,
+		TradableTileIdEnum.COPENHAGEN,
+		new CityTile(
+			TradableTileIdEnum.COPENHAGEN,
 			'코펜하겐',
 			'덴마크의 수도',
 			{
@@ -268,9 +268,9 @@ export const cityAreaMap: Map<TradableAreaIdEnum, CityArea> = new Map([
 		),
 	],
 	[
-		TradableAreaIdEnum.STOCKHOLM,
-		new CityArea(
-			TradableAreaIdEnum.STOCKHOLM,
+		TradableTileIdEnum.STOCKHOLM,
+		new CityTile(
+			TradableTileIdEnum.STOCKHOLM,
 			'스톡홀름',
 			'스웨덴의 수도',
 			{
@@ -288,9 +288,9 @@ export const cityAreaMap: Map<TradableAreaIdEnum, CityArea> = new Map([
 		),
 	],
 	[
-		TradableAreaIdEnum.BERN,
-		new CityArea(
-			TradableAreaIdEnum.BERN,
+		TradableTileIdEnum.BERN,
+		new CityTile(
+			TradableTileIdEnum.BERN,
 			'베른',
 			'스위스의 수도',
 			{
@@ -308,9 +308,9 @@ export const cityAreaMap: Map<TradableAreaIdEnum, CityArea> = new Map([
 		),
 	],
 	[
-		TradableAreaIdEnum.BERLIN,
-		new CityArea(
-			TradableAreaIdEnum.BERLIN,
+		TradableTileIdEnum.BERLIN,
+		new CityTile(
+			TradableTileIdEnum.BERLIN,
 			'베를린',
 			'독일의 수도',
 			{
@@ -328,9 +328,9 @@ export const cityAreaMap: Map<TradableAreaIdEnum, CityArea> = new Map([
 		),
 	],
 	[
-		TradableAreaIdEnum.OTAWA,
-		new CityArea(
-			TradableAreaIdEnum.OTAWA,
+		TradableTileIdEnum.OTAWA,
+		new CityTile(
+			TradableTileIdEnum.OTAWA,
 			'오타와',
 			'캐나다의 수도',
 			{
@@ -348,9 +348,9 @@ export const cityAreaMap: Map<TradableAreaIdEnum, CityArea> = new Map([
 		),
 	],
 	[
-		TradableAreaIdEnum.BUENOSAIRES,
-		new CityArea(
-			TradableAreaIdEnum.BUENOSAIRES,
+		TradableTileIdEnum.BUENOSAIRES,
+		new CityTile(
+			TradableTileIdEnum.BUENOSAIRES,
 			'부에노스 아이레스',
 			'아르헨티나의 수도',
 			{
@@ -368,9 +368,9 @@ export const cityAreaMap: Map<TradableAreaIdEnum, CityArea> = new Map([
 		),
 	],
 	[
-		TradableAreaIdEnum.SAO_PAULO,
-		new CityArea(
-			TradableAreaIdEnum.SAO_PAULO,
+		TradableTileIdEnum.SAO_PAULO,
+		new CityTile(
+			TradableTileIdEnum.SAO_PAULO,
 			'상파울로',
 			'브라질의 수도',
 			{
@@ -388,9 +388,9 @@ export const cityAreaMap: Map<TradableAreaIdEnum, CityArea> = new Map([
 		),
 	],
 	[
-		TradableAreaIdEnum.SYDNEY,
-		new CityArea(
-			TradableAreaIdEnum.SYDNEY,
+		TradableTileIdEnum.SYDNEY,
+		new CityTile(
+			TradableTileIdEnum.SYDNEY,
 			'시드니',
 			'호주의 수도',
 			{
@@ -408,9 +408,9 @@ export const cityAreaMap: Map<TradableAreaIdEnum, CityArea> = new Map([
 		),
 	],
 	[
-		TradableAreaIdEnum.HAWAII,
-		new CityArea(
-			TradableAreaIdEnum.HAWAII,
+		TradableTileIdEnum.HAWAII,
+		new CityTile(
+			TradableTileIdEnum.HAWAII,
 			'하와이',
 			'미국의 휴양지',
 			{
@@ -428,9 +428,9 @@ export const cityAreaMap: Map<TradableAreaIdEnum, CityArea> = new Map([
 		),
 	],
 	[
-		TradableAreaIdEnum.LISBON,
-		new CityArea(
-			TradableAreaIdEnum.LISBON,
+		TradableTileIdEnum.LISBON,
+		new CityTile(
+			TradableTileIdEnum.LISBON,
 			'리스본',
 			'포르투갈의 수도',
 			{
@@ -448,9 +448,9 @@ export const cityAreaMap: Map<TradableAreaIdEnum, CityArea> = new Map([
 		),
 	],
 	[
-		TradableAreaIdEnum.MADRID,
-		new CityArea(
-			TradableAreaIdEnum.MADRID,
+		TradableTileIdEnum.MADRID,
+		new CityTile(
+			TradableTileIdEnum.MADRID,
 			'마드리드',
 			'스페인의 수도',
 			{
@@ -468,9 +468,9 @@ export const cityAreaMap: Map<TradableAreaIdEnum, CityArea> = new Map([
 		),
 	],
 	[
-		TradableAreaIdEnum.TOKYO,
-		new CityArea(
-			TradableAreaIdEnum.TOKYO,
+		TradableTileIdEnum.TOKYO,
+		new CityTile(
+			TradableTileIdEnum.TOKYO,
 			'도쿄',
 			'일본의 수도',
 			{
@@ -488,9 +488,9 @@ export const cityAreaMap: Map<TradableAreaIdEnum, CityArea> = new Map([
 		),
 	],
 	[
-		TradableAreaIdEnum.PARIS,
-		new CityArea(
-			TradableAreaIdEnum.PARIS,
+		TradableTileIdEnum.PARIS,
+		new CityTile(
+			TradableTileIdEnum.PARIS,
 			'파리',
 			'프랑스의 수도',
 			{
@@ -508,9 +508,9 @@ export const cityAreaMap: Map<TradableAreaIdEnum, CityArea> = new Map([
 		),
 	],
 	[
-		TradableAreaIdEnum.ROME,
-		new CityArea(
-			TradableAreaIdEnum.ROME,
+		TradableTileIdEnum.ROME,
+		new CityTile(
+			TradableTileIdEnum.ROME,
 			'로마',
 			'이탈리아의 수도',
 			{
@@ -528,9 +528,9 @@ export const cityAreaMap: Map<TradableAreaIdEnum, CityArea> = new Map([
 		),
 	],
 	[
-		TradableAreaIdEnum.LONDON,
-		new CityArea(
-			TradableAreaIdEnum.LONDON,
+		TradableTileIdEnum.LONDON,
+		new CityTile(
+			TradableTileIdEnum.LONDON,
 			'런던',
 			'영국의 수도',
 			{
@@ -548,9 +548,9 @@ export const cityAreaMap: Map<TradableAreaIdEnum, CityArea> = new Map([
 		),
 	],
 	[
-		TradableAreaIdEnum.NEW_YORK,
-		new CityArea(
-			TradableAreaIdEnum.NEW_YORK,
+		TradableTileIdEnum.NEW_YORK,
+		new CityTile(
+			TradableTileIdEnum.NEW_YORK,
 			'뉴욕',
 			'미국 최대의 도시',
 			{
@@ -569,14 +569,14 @@ export const cityAreaMap: Map<TradableAreaIdEnum, CityArea> = new Map([
 	],
 ]);
 
-export const touristAttractionMap: Map<
-	TradableAreaIdEnum,
-	TouristAttraction
+export const touristAttractionTileMap: Map<
+	TradableTileIdEnum,
+	TouristAttractionTile
 > = new Map([
 	[
-		TradableAreaIdEnum.JEJU_ISLAND,
-		new TouristAttraction(
-			TradableAreaIdEnum.JEJU_ISLAND,
+		TradableTileIdEnum.JEJU_ISLAND,
+		new TouristAttractionTile(
+			TradableTileIdEnum.JEJU_ISLAND,
 			'제주',
 			'대한민국의 휴양지',
 			200000,
@@ -584,9 +584,9 @@ export const touristAttractionMap: Map<
 		),
 	],
 	[
-		TradableAreaIdEnum.CONCORDE,
-		new TouristAttraction(
-			TradableAreaIdEnum.CONCORDE,
+		TradableTileIdEnum.CONCORDE,
+		new TouristAttractionTile(
+			TradableTileIdEnum.CONCORDE,
 			'콩코드여객기',
 			'초음속여객기',
 			200000,
@@ -594,9 +594,9 @@ export const touristAttractionMap: Map<
 		),
 	],
 	[
-		TradableAreaIdEnum.BUSAN,
-		new TouristAttraction(
-			TradableAreaIdEnum.BUSAN,
+		TradableTileIdEnum.BUSAN,
+		new TouristAttractionTile(
+			TradableTileIdEnum.BUSAN,
 			'부산',
 			'대한민국의 제1의 항구도시',
 			500000,
@@ -604,9 +604,9 @@ export const touristAttractionMap: Map<
 		),
 	],
 	[
-		TradableAreaIdEnum.QUEEN_ELIZABETH,
-		new TouristAttraction(
-			TradableAreaIdEnum.QUEEN_ELIZABETH,
+		TradableTileIdEnum.QUEEN_ELIZABETH,
+		new TouristAttractionTile(
+			TradableTileIdEnum.QUEEN_ELIZABETH,
 			'퀸 엘리자베스호',
 			'호화 여객선',
 			300000,
@@ -614,9 +614,9 @@ export const touristAttractionMap: Map<
 		),
 	],
 	[
-		TradableAreaIdEnum.COLUMBIA,
-		new TouristAttraction(
-			TradableAreaIdEnum.COLUMBIA,
+		TradableTileIdEnum.COLUMBIA,
+		new TouristAttractionTile(
+			TradableTileIdEnum.COLUMBIA,
 			'컬럼비아호',
 			'유인 우주 왕복선',
 			450000,
@@ -624,9 +624,9 @@ export const touristAttractionMap: Map<
 		),
 	],
 	[
-		TradableAreaIdEnum.SEOUL,
-		new TouristAttraction(
-			TradableAreaIdEnum.SEOUL,
+		TradableTileIdEnum.SEOUL,
+		new TouristAttractionTile(
+			TradableTileIdEnum.SEOUL,
 			'서울',
 			'대한민국의 수도',
 			1000000,
@@ -638,54 +638,62 @@ export const touristAttractionMap: Map<
 export const tileMatrix: BaseTile[][] = [
 	[
 		new BaseTile(TileType.STARTING_POINT),
-		cityAreaMap.get(TradableAreaIdEnum.TAIPEI) as CityArea,
+		CityTileMap.get(TradableTileIdEnum.TAIPEI) as CityTile,
 		new GoldenKeyTile(1),
-		cityAreaMap.get(TradableAreaIdEnum.BEIJING) as CityArea,
-		cityAreaMap.get(TradableAreaIdEnum.MANILA) as CityArea,
-		touristAttractionMap.get(
-			TradableAreaIdEnum.JEJU_ISLAND,
-		) as TouristAttraction,
-		cityAreaMap.get(TradableAreaIdEnum.SINGAPORE) as CityArea,
+		CityTileMap.get(TradableTileIdEnum.BEIJING) as CityTile,
+		CityTileMap.get(TradableTileIdEnum.MANILA) as CityTile,
+		touristAttractionTileMap.get(
+			TradableTileIdEnum.JEJU_ISLAND,
+		) as TouristAttractionTile,
+		CityTileMap.get(TradableTileIdEnum.SINGAPORE) as CityTile,
 		new GoldenKeyTile(2),
-		cityAreaMap.get(TradableAreaIdEnum.CAIRO) as CityArea,
-		cityAreaMap.get(TradableAreaIdEnum.ISTANBUL) as CityArea,
+		CityTileMap.get(TradableTileIdEnum.CAIRO) as CityTile,
+		CityTileMap.get(TradableTileIdEnum.ISTANBUL) as CityTile,
 	],
 	[
 		new BaseTile(TileType.DESERT_ISLAND),
-		cityAreaMap.get(TradableAreaIdEnum.ATHENES) as CityArea,
+		CityTileMap.get(TradableTileIdEnum.ATHENES) as CityTile,
 		new GoldenKeyTile(3),
-		cityAreaMap.get(TradableAreaIdEnum.COPENHAGEN) as CityArea,
-		cityAreaMap.get(TradableAreaIdEnum.STOCKHOLM) as CityArea,
-		touristAttractionMap.get(TradableAreaIdEnum.CONCORDE) as TouristAttraction,
-		cityAreaMap.get(TradableAreaIdEnum.BERN) as CityArea,
+		CityTileMap.get(TradableTileIdEnum.COPENHAGEN) as CityTile,
+		CityTileMap.get(TradableTileIdEnum.STOCKHOLM) as CityTile,
+		touristAttractionTileMap.get(
+			TradableTileIdEnum.CONCORDE,
+		) as TouristAttractionTile,
+		CityTileMap.get(TradableTileIdEnum.BERN) as CityTile,
 		new GoldenKeyTile(4),
-		cityAreaMap.get(TradableAreaIdEnum.BERLIN) as CityArea,
-		cityAreaMap.get(TradableAreaIdEnum.OTAWA) as CityArea,
+		CityTileMap.get(TradableTileIdEnum.BERLIN) as CityTile,
+		CityTileMap.get(TradableTileIdEnum.OTAWA) as CityTile,
 	],
 	[
 		new BaseTile(TileType.GET_WELFARE),
-		cityAreaMap.get(TradableAreaIdEnum.BUENOSAIRES) as CityArea,
+		CityTileMap.get(TradableTileIdEnum.BUENOSAIRES) as CityTile,
 		new GoldenKeyTile(5),
-		cityAreaMap.get(TradableAreaIdEnum.SAO_PAULO) as CityArea,
-		cityAreaMap.get(TradableAreaIdEnum.SYDNEY) as CityArea,
-		touristAttractionMap.get(TradableAreaIdEnum.BUSAN) as TouristAttraction,
-		cityAreaMap.get(TradableAreaIdEnum.HAWAII) as CityArea,
-		cityAreaMap.get(TradableAreaIdEnum.LISBON) as CityArea,
-		touristAttractionMap.get(
-			TradableAreaIdEnum.QUEEN_ELIZABETH,
-		) as TouristAttraction,
-		cityAreaMap.get(TradableAreaIdEnum.MADRID) as CityArea,
+		CityTileMap.get(TradableTileIdEnum.SAO_PAULO) as CityTile,
+		CityTileMap.get(TradableTileIdEnum.SYDNEY) as CityTile,
+		touristAttractionTileMap.get(
+			TradableTileIdEnum.BUSAN,
+		) as TouristAttractionTile,
+		CityTileMap.get(TradableTileIdEnum.HAWAII) as CityTile,
+		CityTileMap.get(TradableTileIdEnum.LISBON) as CityTile,
+		touristAttractionTileMap.get(
+			TradableTileIdEnum.QUEEN_ELIZABETH,
+		) as TouristAttractionTile,
+		CityTileMap.get(TradableTileIdEnum.MADRID) as CityTile,
 	],
 	[
 		new BaseTile(TileType.SPACE_TRAVEL),
-		cityAreaMap.get(TradableAreaIdEnum.TOKYO) as CityArea,
-		touristAttractionMap.get(TradableAreaIdEnum.COLUMBIA) as TouristAttraction,
-		cityAreaMap.get(TradableAreaIdEnum.PARIS) as CityArea,
-		cityAreaMap.get(TradableAreaIdEnum.ROME) as CityArea,
+		CityTileMap.get(TradableTileIdEnum.TOKYO) as CityTile,
+		touristAttractionTileMap.get(
+			TradableTileIdEnum.COLUMBIA,
+		) as TouristAttractionTile,
+		CityTileMap.get(TradableTileIdEnum.PARIS) as CityTile,
+		CityTileMap.get(TradableTileIdEnum.ROME) as CityTile,
 		new GoldenKeyTile(6),
-		cityAreaMap.get(TradableAreaIdEnum.LONDON) as CityArea,
-		cityAreaMap.get(TradableAreaIdEnum.NEW_YORK) as CityArea,
+		CityTileMap.get(TradableTileIdEnum.LONDON) as CityTile,
+		CityTileMap.get(TradableTileIdEnum.NEW_YORK) as CityTile,
 		new BaseTile(TileType.PAY_WELFARE),
-		touristAttractionMap.get(TradableAreaIdEnum.SEOUL) as TouristAttraction,
+		touristAttractionTileMap.get(
+			TradableTileIdEnum.SEOUL,
+		) as TouristAttractionTile,
 	],
 ];

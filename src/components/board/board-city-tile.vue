@@ -19,13 +19,13 @@
 <script lang="ts">
 import { computed, defineComponent, PropType, Ref, toRefs } from 'vue';
 
-import { CityArea } from '@/shared/boardData';
+import { CityTile } from '@/shared/boardData';
 import {
 	getBoardLineNumberByTile,
 	getStringByNumber,
 } from '@/shared/boardUtils';
 
-const getCityContext = (tile: Ref<CityArea>) => ({
+const getCityContext = (tile: Ref<CityTile>) => ({
 	name: computed(() => tile.value.name),
 	englishName: computed(() => tile.value.englishName),
 	price: computed(
@@ -39,7 +39,7 @@ export default defineComponent({
 
 	props: {
 		tile: {
-			type: Object as PropType<CityArea>,
+			type: Object as PropType<CityTile>,
 			required: true,
 		},
 	},
