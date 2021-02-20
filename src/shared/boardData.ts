@@ -22,7 +22,7 @@ export class BaseTile {
 	}
 }
 
-export class GoldenKey extends BaseTile {
+export class GoldenKeyTile extends BaseTile {
 	constructor(public number: number) {
 		super(TileType.GOLDEN_KEY);
 	}
@@ -639,33 +639,33 @@ export const tileMatrix: BaseTile[][] = [
 	[
 		new BaseTile(TileType.STARTING_POINT),
 		cityAreaMap.get(TradableAreaIdEnum.TAIPEI) as CityArea,
-		new GoldenKey(1),
+		new GoldenKeyTile(1),
 		cityAreaMap.get(TradableAreaIdEnum.BEIJING) as CityArea,
 		cityAreaMap.get(TradableAreaIdEnum.MANILA) as CityArea,
 		touristAttractionMap.get(
 			TradableAreaIdEnum.JEJU_ISLAND,
 		) as TouristAttraction,
 		cityAreaMap.get(TradableAreaIdEnum.SINGAPORE) as CityArea,
-		new GoldenKey(2),
+		new GoldenKeyTile(2),
 		cityAreaMap.get(TradableAreaIdEnum.CAIRO) as CityArea,
 		cityAreaMap.get(TradableAreaIdEnum.ISTANBUL) as CityArea,
 	],
 	[
 		new BaseTile(TileType.DESERT_ISLAND),
 		cityAreaMap.get(TradableAreaIdEnum.ATHENES) as CityArea,
-		new GoldenKey(3),
+		new GoldenKeyTile(3),
 		cityAreaMap.get(TradableAreaIdEnum.COPENHAGEN) as CityArea,
 		cityAreaMap.get(TradableAreaIdEnum.STOCKHOLM) as CityArea,
 		touristAttractionMap.get(TradableAreaIdEnum.CONCORDE) as TouristAttraction,
 		cityAreaMap.get(TradableAreaIdEnum.BERN) as CityArea,
-		new GoldenKey(4),
+		new GoldenKeyTile(4),
 		cityAreaMap.get(TradableAreaIdEnum.BERLIN) as CityArea,
 		cityAreaMap.get(TradableAreaIdEnum.OTAWA) as CityArea,
 	],
 	[
 		new BaseTile(TileType.GET_WELFARE),
 		cityAreaMap.get(TradableAreaIdEnum.BUENOSAIRES) as CityArea,
-		new GoldenKey(5),
+		new GoldenKeyTile(5),
 		cityAreaMap.get(TradableAreaIdEnum.SAO_PAULO) as CityArea,
 		cityAreaMap.get(TradableAreaIdEnum.SYDNEY) as CityArea,
 		touristAttractionMap.get(TradableAreaIdEnum.BUSAN) as TouristAttraction,
@@ -682,7 +682,7 @@ export const tileMatrix: BaseTile[][] = [
 		touristAttractionMap.get(TradableAreaIdEnum.COLUMBIA) as TouristAttraction,
 		cityAreaMap.get(TradableAreaIdEnum.PARIS) as CityArea,
 		cityAreaMap.get(TradableAreaIdEnum.ROME) as CityArea,
-		new GoldenKey(6),
+		new GoldenKeyTile(6),
 		cityAreaMap.get(TradableAreaIdEnum.LONDON) as CityArea,
 		cityAreaMap.get(TradableAreaIdEnum.NEW_YORK) as CityArea,
 		new BaseTile(TileType.PAY_WELFARE),
