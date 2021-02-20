@@ -15,7 +15,7 @@ export class BaseTile {
 	// eslint-disable-next-line no-useless-constructor
 	constructor(public type: TileType) {}
 
-	isCornerTile() {
+	isCornerTile(): boolean {
 		return [
 			TileType.STARTING_POINT,
 			TileType.DESERT_ISLAND,
@@ -23,11 +23,23 @@ export class BaseTile {
 			TileType.SPACE_TRAVEL,
 		].includes(this.type);
 	}
+
+	compareTile(tile: BaseTile): boolean {
+		return this.type === tile.type;
+	}
 }
 
 export class GoldenKeyTile extends BaseTile {
 	constructor(public number: number) {
 		super(TileType.GOLDEN_KEY);
+	}
+
+	compareTile(tile: BaseTile): boolean {
+		if (tile.type === TileType.GOLDEN_KEY) {
+			return this.number === (tile as GoldenKeyTile).number;
+		}
+
+		return false;
 	}
 }
 
@@ -43,6 +55,17 @@ export class TradableTile extends BaseTile {
 
 	get englishName() {
 		return this.id as string;
+	}
+
+	compareTile(tile: BaseTile): boolean {
+		if (
+			tile.type === TileType.CITY ||
+			tile.type === TileType.TOURIST_ATTRACTION
+		) {
+			return this.id === (tile as TradableTile).id;
+		}
+
+		return false;
 	}
 }
 
