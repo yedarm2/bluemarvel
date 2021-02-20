@@ -1,15 +1,15 @@
 <template>
 	<div class="board-tourist-attraction-tile">
-		<div class="board-tourist-attraction-tile--name">
+		<div class="board-tourist-attraction-tile__name">
 			{{ name }}
 		</div>
-		<div class="board-tourist-attraction-tile--english-name">
+		<div class="board-tourist-attraction-tile__english-name">
 			{{ englishName }}
 		</div>
-		<div class="board-tourist-attraction-tile--price">
+		<div class="board-tourist-attraction-tile__price">
 			{{ price }}
 		</div>
-		<div class="board-tourist-attraction-tile--description">
+		<div class="board-tourist-attraction-tile__description">
 			{{ description }}
 		</div>
 	</div>

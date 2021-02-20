@@ -1,6 +1,6 @@
 <template>
 	<div class="board-corner-tile">
-		<div class="board-corner-tile--tile-name">
+		<div class="board-corner-tile__tile-name">
 			{{ tileName }}
 		</div>
 	</div>
@@ -62,7 +62,7 @@ export default defineComponent({
 .board-corner-tile {
 	@include tile-style(true);
 
-	&--tile-name {
+	&__tile-name {
 		position: absolute;
 		left: 50%;
 		top: 50%;

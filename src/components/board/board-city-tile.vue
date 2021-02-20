@@ -1,16 +1,16 @@
 <template>
 	<div class="board-city-tile">
-		<div :class="headerClass" class="board-city-tile--header" />
-		<div class="board-city-tile--name">
+		<div :class="headerClass" class="board-city-tile__header" />
+		<div class="board-city-tile__name">
 			{{ name }}
 		</div>
-		<div class="board-city-tile--english-name">
+		<div class="board-city-tile__english-name">
 			{{ englishName }}
 		</div>
-		<div class="board-city-tile--price">
+		<div class="board-city-tile__price">
 			{{ price }}
 		</div>
-		<div class="board-city-tile--description">
+		<div class="board-city-tile__description">
 			{{ description }}
 		</div>
 	</div>
@@ -50,7 +50,7 @@ export default defineComponent({
 		const headerClass = computed(() => {
 			const cityLineNumber = getBoardLineNumberByTile(tile.value);
 
-			return `board-city-tile--header__${getStringByNumber(
+			return `board-city-tile__header--${getStringByNumber(
 				cityLineNumber,
 			)}-line`;
 		});
@@ -67,25 +67,25 @@ export default defineComponent({
 .board-city-tile {
 	overflow: hidden;
 
-	&--header {
+	&__header {
 		box-sizing: border-box;
 		height: 40px;
 		border-bottom: 1px solid #000;
 
 		// TODO: 임시 색상
-		&__first-line {
+		&--first-line {
 			background-color: #ff2b2b;
 		}
 
-		&__second-line {
+		&--second-line {
 			background-color: #ff892b;
 		}
 
-		&__third-line {
+		&--third-line {
 			background-color: #2c7900;
 		}
 
-		&__fourth-line {
+		&--fourth-line {
 			background-color: #147dc1;
 		}
 	}

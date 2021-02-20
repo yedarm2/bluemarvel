@@ -1,9 +1,9 @@
 <template>
 	<div class="board-welfare-tile">
-		<div class="board-welfare-tile--name">사회복지기금</div>
-		<div class="board-welfare-tile--english-name">WELFARE FUND</div>
-		<div class="board-welfare-tile--price">15만원</div>
-		<div class="board-welfare-tile--description">접수처에 지불하세요.</div>
+		<div class="board-welfare-tile__name">사회복지기금</div>
+		<div class="board-welfare-tile__english-name">WELFARE FUND</div>
+		<div class="board-welfare-tile__price">15만원</div>
+		<div class="board-welfare-tile__description">접수처에 지불하세요.</div>
 	</div>
 </template>
 
