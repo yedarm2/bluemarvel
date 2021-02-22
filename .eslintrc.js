@@ -25,6 +25,9 @@ module.exports = {
 		'max-classes-per-file': 'off',
 		'no-useless-constructor': 'off',
 		'@typescript-eslint/no-useless-constructor': 'error',
+		'no-plusplus': ['error', {
+			allowForLoopAfterthoughts: true,
+		}],
 	},
 	overrides: [
 		{
