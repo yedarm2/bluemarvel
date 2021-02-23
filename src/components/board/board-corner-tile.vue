@@ -1,5 +1,8 @@
 <template>
 	<div class="board-corner-tile">
+		<div class="board-corner-tile__pin-wrapper">
+			<player-pin v-for="user in users" :key="user.id" :id="user.id" />
+		</div>
 		<div class="board-corner-tile__tile-name">
 			{{ tileName }}
 		</div>
@@ -8,7 +11,11 @@
 
 <script lang="ts">
 import { computed, defineComponent, PropType, Ref, toRefs } from 'vue';
+
 import { BaseTile, TileType } from '@/shared/boardData';
+import getUsersOnTile from '@/shared/getUsersOnTile';
+
+import PlayerPin from './player-pin.vue';
 
 const getTileContext = (tile: Ref<BaseTile>) => {
 	const isStartingPoint = computed(
@@ -39,6 +46,10 @@ const getTileContext = (tile: Ref<BaseTile>) => {
 export default defineComponent({
 	name: 'board-corner-tile',
 
+	components: {
+		PlayerPin,
+	},
+
 	props: {
 		tile: {
 			type: Object as PropType<BaseTile>,
@@ -51,6 +62,7 @@ export default defineComponent({
 
 		return {
 			...getTileContext(tile),
+			users: getUsersOnTile(tile),
 		};
 	},
 });
@@ -61,6 +73,16 @@ export default defineComponent({
 
 .board-corner-tile {
 	@include tile-style(true);
+
+	&__pin-wrapper {
+		display: flex;
+		justify-content: center;
+
+		position: absolute;
+		left: 50%;
+		top: calc(50%);
+		transform: translate(calc(-50% - 25px), calc(-50% - 25px)) rotate(-45deg);
+	}
 
 	&__tile-name {
 		position: absolute;
