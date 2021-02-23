@@ -13,8 +13,7 @@ export class Bank {
 	remainedMoney = 900000000;
 
 	allTiles: Tiles[] = [];
-
-	// eslint-disable-next-line no-useless-constructor
+	
 	constructor() {
 		this.init();
 	}

@@ -38,7 +38,6 @@ export default defineComponent({
 				return;
 			}
 			const users = [];
-			// eslint-disable-next-line no-plusplus
 			for (let i = 0; i < userCount.value; i++) {
 				users.push(new User(i));
 			}
