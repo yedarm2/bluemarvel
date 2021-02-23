@@ -24,20 +24,18 @@ export class Bank {
 	}
 
 	setTiles() {
-		boardMatrix.forEach((area) => {
-			area.forEach((tile) => {
-				if (tile instanceof TradableArea) {
-					this.allTiles.push({
-						tile,
-						owner: null,
-						properties: {
-							[propertyType.VILLA]: 0,
-							[propertyType.BUILDING]: 0,
-							[propertyType.HOTEL]: 0,
-						}
-					});
-				}
-			})
+		boardMatrix.flat().forEach((tile) => {
+			if (tile instanceof TradableArea) {
+				this.allTiles.push({
+					tile,
+					owner: null,
+					properties: {
+						[propertyType.VILLA]: 0,
+						[propertyType.BUILDING]: 0,
+						[propertyType.HOTEL]: 0,
+					}
+				});
+			}
 		});
 	}
 
