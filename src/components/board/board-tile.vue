@@ -57,11 +57,3 @@ export default defineComponent({
 	},
 });
 </script>
-
-<style lang="scss" scoped>
-@import './variables.scss';
-
-.board-tile {
-	@include tile-style(false);
-}
-</style>
