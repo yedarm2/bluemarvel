@@ -1,5 +1,5 @@
 <template>
-	<div class="board-tourist-attraction-tile">
+	<board-tile-template :users="users" class="board-tourist-attraction-tile">
 		<div class="board-tourist-attraction-tile__name">
 			{{ name }}
 		</div>
@@ -12,12 +12,16 @@
 		<div class="board-tourist-attraction-tile__description">
 			{{ description }}
 		</div>
-	</div>
+	</board-tile-template>
 </template>
 
 <script lang="ts">
 import { computed, defineComponent, PropType, Ref, toRefs } from 'vue';
+
 import { TouristAttractionTile } from '@/shared/boardData';
+import getUsersOnTile from '@/shared/getUsersOnTile';
+
+import BoardTileTemplate from './board-tile-template.vue';
 
 const getTouristAttractionContext = (tile: Ref<TouristAttractionTile>) => ({
 	name: computed(() => tile.value.name),
@@ -28,6 +32,10 @@ const getTouristAttractionContext = (tile: Ref<TouristAttractionTile>) => ({
 
 export default defineComponent({
 	name: 'board-tourist-attraction-tile',
+
+	components: {
+		BoardTileTemplate,
+	},
 
 	props: {
 		tile: {
@@ -41,6 +49,7 @@ export default defineComponent({
 
 		return {
 			...getTouristAttractionContext(tile),
+			users: getUsersOnTile(tile),
 		};
 	},
 });

@@ -1,5 +1,5 @@
 <template>
-	<div class="board-city-tile">
+	<board-tile-template :users="users" class="board-city-tile">
 		<div :class="headerClass" class="board-city-tile__header" />
 		<div class="board-city-tile__name">
 			{{ name }}
@@ -13,7 +13,7 @@
 		<div class="board-city-tile__description">
 			{{ description }}
 		</div>
-	</div>
+	</board-tile-template>
 </template>
 
 <script lang="ts">
@@ -24,6 +24,9 @@ import {
 	getBoardLineNumberByTile,
 	getStringByNumber,
 } from '@/shared/boardUtils';
+import getUsersOnTile from '@/shared/getUsersOnTile';
+
+import BoardTileTemplate from './board-tile-template.vue';
 
 const getCityContext = (tile: Ref<CityTile>) => ({
 	name: computed(() => tile.value.name),
@@ -36,6 +39,10 @@ const getCityContext = (tile: Ref<CityTile>) => ({
 
 export default defineComponent({
 	name: 'board-city-tile',
+
+	components: {
+		BoardTileTemplate,
+	},
 
 	props: {
 		tile: {
@@ -56,8 +63,9 @@ export default defineComponent({
 		});
 
 		return {
-			...getCityContext(tile),
 			headerClass,
+			...getCityContext(tile),
+			users: getUsersOnTile(tile),
 		};
 	},
 });
@@ -65,12 +73,11 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 .board-city-tile {
-	overflow: hidden;
-
 	&__header {
 		box-sizing: border-box;
 		height: 40px;
 		border-bottom: 1px solid #000;
+		border-radius: 2px 2px 0 0;
 
 		// TODO: 임시 색상
 		&--first-line {

@@ -1,18 +1,26 @@
 <template>
-	<div class="board-welfare-tile">
+	<board-tile-template :users="users" class="board-welfare-tile">
 		<div class="board-welfare-tile__name">사회복지기금</div>
 		<div class="board-welfare-tile__english-name">WELFARE FUND</div>
 		<div class="board-welfare-tile__price">15만원</div>
 		<div class="board-welfare-tile__description">접수처에 지불하세요.</div>
-	</div>
+	</board-tile-template>
 </template>
 
 <script lang="ts">
 import { defineComponent, PropType, toRefs } from 'vue';
+
 import { BaseTile } from '@/shared/boardData';
+import getUsersOnTile from '@/shared/getUsersOnTile';
+
+import BoardTileTemplate from './board-tile-template.vue';
 
 export default defineComponent({
 	name: 'board-welfare-tile',
+
+	components: {
+		BoardTileTemplate,
+	},
 
 	props: {
 		tile: {
@@ -24,7 +32,9 @@ export default defineComponent({
 	setup(props) {
 		const { tile } = toRefs(props);
 
-		return {};
+		return {
+			users: getUsersOnTile(tile),
+		};
 	},
 });
 </script>
