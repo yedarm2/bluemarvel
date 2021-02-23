@@ -20,7 +20,7 @@ export default (currentTile: Ref<BaseTile>) => {
 		},
 		{
 			id: 2,
-			currentPosition: tileList[5],
+			currentPosition: tileList[0],
 		},
 		{
 			id: 3,
