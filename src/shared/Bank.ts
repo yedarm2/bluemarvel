@@ -1,8 +1,8 @@
-import {boardMatrix, CityArea, SpecialArea, TradableArea} from '@/shared/boardData';
+import {tileMatrix, CityTile, TouristAttractionTile, TradableTile} from '@/shared/boardData';
 import {propertyType} from '@/shared/policy';
 
 interface Tiles {
-	tile: TradableArea;
+	tile: TradableTile;
 	owner: null | number;
 	properties: {
 		[property in propertyType]: number
@@ -23,8 +23,8 @@ export class Bank {
 	}
 
 	setTiles() {
-		boardMatrix.flat().forEach((tile) => {
-			if (tile instanceof TradableArea) {
+		tileMatrix.flat().forEach((tile) => {
+			if (tile instanceof TradableTile) {
 				this.allTiles.push({
 					tile,
 					owner: null,
@@ -47,7 +47,7 @@ export class Bank {
 		this.remainedMoney += value;
 	}
 
-	sellTilesToUser(tile: TradableArea, id: number) {
+	sellTilesToUser(tile: TradableTile, id: number) {
 		const selectedTile = this.allTiles.find((t) => t.tile.id === tile.id);
 		if (selectedTile) {
 			selectedTile.owner = id;
@@ -56,7 +56,7 @@ export class Bank {
 		}
 	}
 
-	sellProperties(tile: TradableArea, properties: propertyType[]) { // TODO 게임인터페이스 상에서 건물 구매를 구현하며 다듬어야 함.
+	sellProperties(tile: TradableTile, properties: propertyType[]) { // TODO 게임인터페이스 상에서 건물 구매를 구현하며 다듬어야 함.
 		const selectedTile = this.allTiles.find((t) => t.tile.id === tile.id);
 		if (selectedTile) {
 			properties.forEach((property) => {
@@ -65,7 +65,7 @@ export class Bank {
 		}
 	}
 
-	purchaseTiles(tile: TradableArea): number {
+	purchaseTiles(tile: TradableTile): number {
 		const selectedTile = this.allTiles.find((t) => t.tile.id === tile.id);
 		if (selectedTile) {
 			selectedTile.owner = null;
@@ -80,7 +80,7 @@ export class Bank {
 		return this.getTotalPropertyPrice(tile);
 	}
 
-	purchaseProperties(tile: TradableArea, properties: propertyType[]): number {
+	purchaseProperties(tile: TradableTile, properties: propertyType[]): number {
 		const selectedTile = this.allTiles.find((t) => t.tile.id === tile.id);
 		if (selectedTile) {
 			properties.forEach((property) => {
@@ -92,13 +92,13 @@ export class Bank {
 		return this.getSpecificPropertyPrice(tile, properties);
 	}
 
-	getTotalPropertyPrice(tile: TradableArea): number {
+	getTotalPropertyPrice(tile: TradableTile): number {
 		const selectedTile = this.allTiles.find((t) => t.tile.id === tile.id);
 		if (!selectedTile) return 0;
-		if (selectedTile.tile instanceof SpecialArea) {
+		if (selectedTile.tile instanceof TouristAttractionTile) {
 			return selectedTile.tile.price;
 		}
-		if (selectedTile.tile instanceof CityArea) {
+		if (selectedTile.tile instanceof CityTile) {
 			const priceOfVilla = selectedTile.properties.VILLA * selectedTile.tile.buildingPriceInfo.villaPrice;
 			const priceOfBuilding = selectedTile.properties.BUILDING * selectedTile.tile.buildingPriceInfo.buildingPrice;
 			const priceOfHotel = selectedTile.properties.HOTEL * selectedTile.tile.buildingPriceInfo.hotelPrice;
@@ -107,15 +107,15 @@ export class Bank {
 		return 0;
 	}
 
-	getSpecificPropertyPrice(tile: TradableArea, properties: propertyType[]): number {
+	getSpecificPropertyPrice(tile: TradableTile, properties: propertyType[]): number {
 		const selectedTile = this.allTiles.find((t) => t.tile.id === tile.id);
 		if (!selectedTile) return 0;
-		if (selectedTile.tile instanceof SpecialArea) {
+		if (selectedTile.tile instanceof TouristAttractionTile) {
 			return selectedTile.tile.price;
 		}
-		if (selectedTile.tile instanceof CityArea) {
+		if (selectedTile.tile instanceof CityTile) {
 			if (properties.length > 0) {
-				const t = selectedTile.tile as CityArea;
+				const t = selectedTile.tile as CityTile;
 				/* eslint-disable no-param-reassign */
 				return properties.reduce((prev, curr) => {
 					switch (curr) {
@@ -142,10 +142,10 @@ export class Bank {
 		return 0;
 	}
 
-	getTolls(tile: TradableArea): number {
+	getTolls(tile: TradableTile): number {
 		const selectedTile = this.allTiles.find((t) => t.tile.id === tile.id);
 		if (!selectedTile) return 0;
-		if (selectedTile.tile instanceof CityArea) {
+		if (selectedTile.tile instanceof CityTile) {
 			const priceOfVilla = selectedTile.properties.VILLA * selectedTile.tile.paymentInfo.villaPrice;
 			const priceOfBuilding = selectedTile.properties.BUILDING * selectedTile.tile.paymentInfo.buildingPrice;
 			const priceOfHotel = selectedTile.properties.HOTEL * selectedTile.tile.paymentInfo.hotelPrice;
@@ -153,7 +153,7 @@ export class Bank {
 
 			return totalPrice === 0 ? selectedTile.tile.paymentInfo.areaPrice : totalPrice;
 		}
-		if (selectedTile.tile instanceof SpecialArea) {
+		if (selectedTile.tile instanceof TouristAttractionTile) {
 			return selectedTile.tile.payment;
 		}
 		return 0;
