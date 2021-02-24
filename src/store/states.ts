@@ -4,4 +4,6 @@ import { User } from "@/shared/User";
 export interface GameInterfaceState {
 	currentState: GameState;
 	users: User[];
+	currentTurnUser: User | null;
+	currentTurnDiceResult: number[];
 }
