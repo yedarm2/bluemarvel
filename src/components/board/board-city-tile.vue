@@ -24,7 +24,7 @@ import {
 	getBoardLineNumberByTile,
 	getStringByNumber,
 } from '@/shared/boardUtils';
-import getUsersOnTile from '@/shared/getUsersOnTile';
+import useUsersOnTile from '@/shared/useUsersOnTile';
 
 import BoardTileTemplate from './board-tile-template.vue';
 
@@ -65,7 +65,7 @@ export default defineComponent({
 		return {
 			headerClass,
 			...getCityContext(tile),
-			users: getUsersOnTile(tile),
+			users: useUsersOnTile(tile),
 		};
 	},
 });

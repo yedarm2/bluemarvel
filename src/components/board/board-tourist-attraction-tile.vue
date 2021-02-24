@@ -19,7 +19,7 @@
 import { computed, defineComponent, PropType, Ref, toRefs } from 'vue';
 
 import { TouristAttractionTile } from '@/shared/boardData';
-import getUsersOnTile from '@/shared/getUsersOnTile';
+import useUsersOnTile from '@/shared/useUsersOnTile';
 
 import BoardTileTemplate from './board-tile-template.vue';
 
@@ -49,7 +49,7 @@ export default defineComponent({
 
 		return {
 			...getTouristAttractionContext(tile),
-			users: getUsersOnTile(tile),
+			users: useUsersOnTile(tile),
 		};
 	},
 });

@@ -13,7 +13,7 @@
 import { computed, defineComponent, PropType, Ref, toRefs } from 'vue';
 
 import { BaseTile, TileType } from '@/shared/boardData';
-import getUsersOnTile from '@/shared/getUsersOnTile';
+import useUsersOnTile from '@/shared/useUsersOnTile';
 
 import PlayerPin from './player-pin.vue';
 
@@ -62,7 +62,7 @@ export default defineComponent({
 
 		return {
 			...getTileContext(tile),
-			users: getUsersOnTile(tile),
+			users: useUsersOnTile(tile),
 		};
 	},
 });
