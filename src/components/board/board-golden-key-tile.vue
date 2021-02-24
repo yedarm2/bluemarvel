@@ -8,7 +8,7 @@
 import { defineComponent, PropType, toRefs } from 'vue';
 
 import { GoldenKeyTile } from '@/shared/boardData';
-import getUsersOnTile from '@/shared/getUsersOnTile';
+import useUsersOnTile from '@/shared/useUsersOnTile';
 
 import BoardTileTemplate from './board-tile-template.vue';
 
@@ -30,7 +30,7 @@ export default defineComponent({
 		const { tile } = toRefs(props);
 
 		return {
-			users: getUsersOnTile(tile),
+			users: useUsersOnTile(tile),
 		};
 	},
 });
