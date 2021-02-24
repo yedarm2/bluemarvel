@@ -1,10 +1,10 @@
 <template>
-	<div class="game-interface" :class="{
-		'game-interface--hide': !show
-	}">
+	<div v-if="show" class="game-interface">
 		<template v-if="currentState === GameState.BEFORE_USER_CREATE">
-			<input id="user-count" v-model="userCount" placeholder="유저 수를 설정하세요."/>
-			<button @click="init">시작</button>
+			<before-user-create @start-game="init" />
+		</template>
+		<template v-if="currentState === GameState.BEFORE_USER_COMMAND">
+			<before-user-command @hide-game-interface="hideGameInterface" />
 		</template>
 	</div>
 </template>
@@ -13,10 +13,14 @@
 import { defineComponent, computed, watch, ref } from 'vue';
 import { useStore } from "vuex";
 import { GameState } from "@/shared/policy";
-import {User} from "@/shared/User";
+import { User } from "@/shared/User";
+import { Bank } from "@/shared/Bank";
+import BeforeUserCreate from '@/components/game-interface/before-user-create.vue';
+import BeforeUserCommand from '@/components/game-interface/before-user-command.vue';
 
 export default defineComponent({
 	name: 'GameInterface',
+	components: { BeforeUserCreate, BeforeUserCommand },
 	props: {
 		users: {
 			type: Array,
@@ -26,24 +30,27 @@ export default defineComponent({
 		}
 	},
 	setup() {
+		const bank = new Bank();
 		const show = ref(true);
-		const userCount = ref(0);
 		const {
 			state: { gameInterface },
 			commit
 		} = useStore();
-		const init = () => {
-			if (userCount.value <= 0) {
-				alert('유저 수가 제대로 설정 되지 않았습니다.');
-				return;
-			}
-			const users = [];
-			for (let i = 0; i < userCount.value; i++) {
-				users.push(new User(i));
-			}
-			commit('gameInterface/setUser', users);
-			commit('gameInterface/change', GameState.USER_CREATED);
-		};
+
+		function hideGameInterface() {
+			show.value = false;
+		}
+
+		function allocationMoney() {
+			gameInterface.users.forEach((user: User) => {
+				user.setMoney(bank.toGiveALoan(5000000));
+			});
+		}
+
+		function init() {
+			allocationMoney();
+			commit('gameInterface/changeCurrentState', GameState.USER_CREATED);
+		}
 
 		watch(
 			() => JSON.parse(JSON.stringify(gameInterface)),
@@ -51,7 +58,7 @@ export default defineComponent({
 				console.info(curr, prev);
 				switch (curr.currentState) {
 					case GameState.USER_CREATED:
-						show.value = false;
+						commit('gameInterface/changeCurrentState', GameState.BEFORE_USER_COMMAND);
 						break;
 					default:
 						break;
@@ -64,8 +71,8 @@ export default defineComponent({
 			GameState,
 			currentState: computed(() => gameInterface.currentState),
 			show,
-			userCount,
-			init
+			init,
+			hideGameInterface
 		};
 	},
 });
@@ -81,9 +88,5 @@ export default defineComponent({
 		background-color: pink;
 
 		z-index: 10;
-
-		&--hide {
-			z-index: -1;
-		}
 	}
 </style>
