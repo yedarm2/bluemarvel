@@ -6,12 +6,16 @@ const store: Module<GameInterfaceState, object> = {
 	namespaced: true,
 
 	state: {
-		currentState: GameState.BEFORE_USER_CREATE
+		currentState: GameState.BEFORE_USER_CREATE,
+		users: [],
 	},
 
 	mutations: {
 		change(state, value) {
 			state.currentState = value;
+		},
+		setUser(state, value) {
+			state.users = value;
 		}
 	}
 };

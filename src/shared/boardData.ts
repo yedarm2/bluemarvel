@@ -1,3 +1,5 @@
+/* eslint-disable max-classes-per-file */
+
 export enum TileType {
 	STARTING_POINT,
 	CITY,
@@ -10,6 +12,7 @@ export enum TileType {
 }
 
 export class BaseTile {
+	// eslint-disable-next-line no-useless-constructor
 	constructor(public type: TileType) {}
 
 	isCornerTile() {
