@@ -8,14 +8,36 @@ const store: Module<GameInterfaceState, object> = {
 	state: {
 		currentState: GameState.BEFORE_USER_CREATE,
 		users: [],
+		currentTurnUser: null,
+		currentTurnDiceResult: [],
+	},
+
+	getters: {
+		nextTurnUser(state) {
+			const currentTurnUserIndex = state.users.findIndex((user) => user.id === state.currentTurnUser?.id);
+			if (currentTurnUserIndex !== -1) {
+				return state.users[currentTurnUserIndex + 1] ? state.users[currentTurnUserIndex + 1] : state.users[0];
+			}
+			throw new Error('유저가 없는 상태에서 호출 되었습니다.')
+		},
+		isDouble(state) {
+			const set = new Set(state.currentTurnDiceResult);
+			return !set.has(0) && set.size === 1;
+		}
 	},
 
 	mutations: {
-		change(state, value) {
+		changeCurrentState(state, value) {
 			state.currentState = value;
 		},
 		setUser(state, value) {
 			state.users = value;
+		},
+		setCurrentTurnUser(state, value) {
+			state.currentTurnUser = value;
+		},
+		setCurrentTurnDiceResult(state, value) {
+			state.currentTurnDiceResult = value;
 		}
 	}
 };
