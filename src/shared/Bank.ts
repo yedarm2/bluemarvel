@@ -13,7 +13,7 @@ export class Bank {
 	remainedMoney = 900000000;
 
 	allTiles: Tiles[] = [];
-	
+
 	constructor() {
 		this.init();
 	}
@@ -102,9 +102,7 @@ export class Bank {
 			const priceOfVilla = selectedTile.properties.VILLA * selectedTile.tile.buildingPriceInfo.villaPrice;
 			const priceOfBuilding = selectedTile.properties.BUILDING * selectedTile.tile.buildingPriceInfo.buildingPrice;
 			const priceOfHotel = selectedTile.properties.HOTEL * selectedTile.tile.buildingPriceInfo.hotelPrice;
-			const totalPrice = priceOfVilla + priceOfBuilding + priceOfHotel + selectedTile.tile.buildingPriceInfo.areaPrice;
-
-			return totalPrice === 0 ? selectedTile.tile.buildingPriceInfo.areaPrice : totalPrice;
+			return priceOfVilla + priceOfBuilding + priceOfHotel + selectedTile.tile.buildingPriceInfo.areaPrice;
 		}
 		return 0;
 	}
@@ -117,19 +115,20 @@ export class Bank {
 		}
 		if (selectedTile.tile instanceof CityArea) {
 			if (properties.length > 0) {
+				const t = selectedTile.tile as CityArea;
 				/* eslint-disable no-param-reassign */
 				return properties.reduce((prev, curr) => {
 					switch (curr) {
 						case propertyType.VILLA:
-							prev += selectedTile.tile instanceof CityArea ? selectedTile.tile.buildingPriceInfo.villaPrice : 0; // 새로운 블록스코프에 들어와서 그런지... 타입 검사를 다시 해야함...
+							prev += t.buildingPriceInfo.villaPrice;
 							break;
 
 						case propertyType.BUILDING:
-							prev += selectedTile.tile instanceof CityArea ? selectedTile.tile.buildingPriceInfo.buildingPrice : 0;
+							prev += t.buildingPriceInfo.buildingPrice;
 							break;
 
 						case propertyType.HOTEL:
-							prev += selectedTile.tile instanceof CityArea ? selectedTile.tile.buildingPriceInfo.hotelPrice : 0;
+							prev += t.buildingPriceInfo.hotelPrice;
 							break;
 						default:
 							break;
