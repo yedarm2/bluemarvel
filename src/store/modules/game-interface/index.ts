@@ -1,6 +1,9 @@
 import { Module } from 'vuex';
 import { GameState } from '@/shared/policy';
 import { GameInterfaceState } from "@/store/states";
+import { getTileForDistance, getTileListBetweenFromtAndTo } from '@/shared/boardUtils';
+import { User } from '@/shared/User';
+import { sleep } from '@/shared/sleep';
 
 const store: Module<GameInterfaceState, object> = {
 	namespaced: true,
@@ -39,7 +42,32 @@ const store: Module<GameInterfaceState, object> = {
 		setCurrentTurnDiceResult(state, value) {
 			state.currentTurnDiceResult = value;
 		}
-	}
+	},
+
+	actions: {
+		async rolledDice({ state, commit }, diceResult: number[]) {
+			console.info(diceResult);
+			commit('setCurrentTurnDiceResult', diceResult);
+
+			const currentTurnUser = state.currentTurnUser as User;
+			const { currentPositionTile } = currentTurnUser;
+			const distance = diceResult[0] + diceResult[1];
+			const destinationTile = getTileForDistance(currentPositionTile, distance);
+
+			const routeTiles = [
+				...getTileListBetweenFromtAndTo(currentPositionTile, destinationTile),
+				destinationTile,
+			];
+
+			let nextRouteTile = routeTiles.shift();
+			while (nextRouteTile) {
+				await sleep(100);
+				console.info({...nextRouteTile});
+				currentTurnUser.setPositionTile(nextRouteTile);
+				nextRouteTile = routeTiles.shift();
+			}
+		},
+	},
 };
 
 export default store;
