@@ -10,6 +10,7 @@ const store: Module<GameInterfaceState, object> = {
 		users: [],
 		currentTurnUser: null,
 		currentTurnDiceResult: [],
+		selectedTile: null,
 	},
 
 	getters: {
@@ -38,6 +39,9 @@ const store: Module<GameInterfaceState, object> = {
 		},
 		setCurrentTurnDiceResult(state, value) {
 			state.currentTurnDiceResult = value;
+		},
+		setSelectedTile(state, value) {
+			state.selectedTile = value;
 		}
 	}
 };
