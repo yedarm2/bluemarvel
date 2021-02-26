@@ -136,7 +136,7 @@ export const CityTileMap: Map<TradableTileIdEnum, CityTile> = new Map([
 	[
 		TradableTileIdEnum.TAIPEI,
 		new CityTile(
-			TradableTileIdEnum.BEIJING,
+			TradableTileIdEnum.TAIPEI,
 			'타이페이',
 			'타이완(대만)의 수도',
 			{
@@ -661,9 +661,11 @@ export const touristAttractionTileMap: Map<
 	],
 ]);
 
+export const startingPointTile = new BaseTile(TileType.STARTING_POINT);
+
 export const tileMatrix: BaseTile[][] = [
 	[
-		new BaseTile(TileType.STARTING_POINT),
+		startingPointTile,
 		CityTileMap.get(TradableTileIdEnum.TAIPEI) as CityTile,
 		new GoldenKeyTile(1),
 		CityTileMap.get(TradableTileIdEnum.BEIJING) as CityTile,
