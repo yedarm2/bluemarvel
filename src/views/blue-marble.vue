@@ -1,6 +1,5 @@
 <template>
 	<div class="blue-marble">
-		{{ helloWorld }}
 		<blue-marble-board />
 		<game-interface />
 	</div>

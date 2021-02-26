@@ -1,5 +1,5 @@
 <template>
-	<app-nav />
+	<app-nav v-if="false" />
 	<router-view />
 </template>
 
