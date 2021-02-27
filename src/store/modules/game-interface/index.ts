@@ -45,8 +45,7 @@ const store: Module<GameInterfaceState, object> = {
 	},
 
 	actions: {
-		async rolledDice({ state, commit }, diceResult: number[]) {
-			console.info(diceResult);
+		async rolledDice({ state, getters, commit }, diceResult: number[]) {
 			commit('setCurrentTurnDiceResult', diceResult);
 
 			const currentTurnUser = state.currentTurnUser as User;
@@ -65,6 +64,10 @@ const store: Module<GameInterfaceState, object> = {
 				console.info({...nextRouteTile});
 				currentTurnUser.setPositionTile(nextRouteTile);
 				nextRouteTile = routeTiles.shift();
+			}
+
+			if (!getters.isDouble) {
+				commit('setCurrentTurnUser', getters.nextTurnUser);
 			}
 		},
 	},
