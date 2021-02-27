@@ -1,7 +1,10 @@
 <template>
+	<p v-if="isDisplayingDiceResult">
+		주사위 결과: {{ currentTurnDiceResult[0] }} + {{ currentTurnDiceResult[1] }} = {{ currentTurnDiceResult[0] + currentTurnDiceResult[1] }}
+	</p>
 	<p>
 		<strong v-if="isDouble">더블이 나왔습니다.</strong>
-		{{ currentTurnUser.id }} 유저의 턴 입니다. 거래를 하거나 주사위를 굴려서 게임을 진행 해주세요.
+		{{ currentTurnUserId }} 유저의 턴 입니다. 거래를 하거나 주사위를 굴려서 게임을 진행 해주세요.
 		거래를 먼저 진행한 후 주사위를 굴려주세요.
 	</p>
 	<button>내 토지 팔기</button>
@@ -9,8 +12,40 @@
 </template>
 
 <script lang="ts">
-import {computed, defineComponent} from 'vue';
+import {computed, defineComponent, toRefs} from 'vue';
 import {useStore} from "vuex";
+
+const getRandomNumber = (): number => Math.ceil(Math.random() * 6);
+
+const useBoardContext = () => {
+	const {
+		state: { gameInterface },
+		getters,
+	} = useStore();
+
+	const {
+		currentTurnDiceResult,
+		currentTurnUser,
+	} = toRefs(gameInterface);
+
+	return {
+		isDisplayingDiceResult: computed(() => currentTurnDiceResult.value.length > 0),
+		currentTurnUserId: computed(() => currentTurnUser.value.id),
+		currentTurnDiceResult: computed(() => currentTurnDiceResult.value),
+		isDouble: computed(() => getters['gameInterface/isDouble']),
+	};
+};
+
+const useRollDice = (emit: (event: 'rolled-dice') => void) => {
+	const {
+		dispatch
+	} = useStore();
+
+	return async () => {
+		await dispatch('gameInterface/rolledDice', [getRandomNumber(), getRandomNumber()]);
+		emit('rolled-dice');
+	};
+};
 
 export default defineComponent({
 	name: 'BeforeUserCommand',
@@ -22,24 +57,11 @@ export default defineComponent({
 			}
 		}
 	},
-	emits: ['hide-game-interface'],
+	emits: ['hide-game-interface', 'rolled-dice'],
 	setup(_, { emit }) {
-		const {
-			state: { gameInterface },
-			getters,
-			commit
-		} = useStore();
-
-		function rollDice() {
-			const getRandomNumber = (): number => Math.ceil(Math.random() * 6);
-			commit('gameInterface/setCurrentTurnDiceResult', [getRandomNumber(), getRandomNumber()]);
-			emit('hide-game-interface');
-		}
-
 		return {
-			isDouble: computed(() => getters.isDouble),
-			currentTurnUser: computed(() => gameInterface.currentTurnUser),
-			rollDice,
+			...useBoardContext(),
+			rollDice: useRollDice(emit),
 		};
 	},
 });
