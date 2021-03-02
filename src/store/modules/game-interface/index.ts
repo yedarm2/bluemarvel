@@ -74,6 +74,7 @@ const store: Module<GameInterfaceState, object> = {
 			}
 
 			commit('setCurrentState', GameState.USER_MOVED);
+			commit('setSelectedTile', destinationTile);
 		},
 	},
 };
