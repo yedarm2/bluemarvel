@@ -28,6 +28,7 @@ module.exports = {
 		'no-plusplus': ['error', {
 			allowForLoopAfterthoughts: true,
 		}],
+		'no-await-in-loop': 'off',
 	},
 	overrides: [
 		{
