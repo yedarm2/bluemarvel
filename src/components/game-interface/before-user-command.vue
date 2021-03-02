@@ -7,7 +7,7 @@
 		{{ currentTurnUserId }} 유저의 턴 입니다. 거래를 하거나 주사위를 굴려서 게임을 진행 해주세요.
 		거래를 먼저 진행한 후 주사위를 굴려주세요.
 	</p>
-	<button>내 토지 팔기</button>
+	<button @click="$emit('trade-with-bank')">내 토지 팔기</button>
 	<button @click="rollDice">주사위 굴리기(즉시 실행됩니다.)</button>
 </template>
 
@@ -57,7 +57,7 @@ export default defineComponent({
 			}
 		}
 	},
-	emits: ['hide-game-interface', 'rolled-dice'],
+	emits: ['hide-game-interface', 'rolled-dice', 'trade-with-bank'],
 	setup(_, { emit }) {
 		return {
 			...useBoardContext(),
