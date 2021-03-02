@@ -7,7 +7,7 @@
 			<before-user-command @hide-game-interface="hideGameInterface" @trade-with-bank="changeState(GameState.TRADE_WITH_BANK)" />
 		</template>
 		<template v-else-if="currentState === GameState.TRADE_WITH_BANK">
-			<trade-with-bank :bank-instance="bank" @end-trade="changeState(prevGameState)"/>
+			<trade-with-bank :bank-instance="bank" @end-trade="changeState(prevState)"/>
 		</template>
 	</div>
 </template>
@@ -40,7 +40,6 @@ export default defineComponent({
 			state: { gameInterface },
 			commit
 		} = useStore();
-		const prevGameState = ref(GameState.BEFORE_USER_CREATE);
 
 		function hideGameInterface() {
 			show.value = false;
@@ -54,21 +53,21 @@ export default defineComponent({
 
 		function init() {
 			allocationMoney();
-			commit('gameInterface/changeCurrentState', GameState.USER_CREATED);
+			commit('gameInterface/setCurrentState', GameState.USER_CREATED);
 		}
 
 		function changeState(state: GameState) {
-			commit('gameInterface/changeCurrentState', state);
+			commit('gameInterface/setCurrentState', state);
 		}
 
 		watch(
 			() => JSON.parse(JSON.stringify(gameInterface)),
 			(curr, prev) => {
 				console.info(prev, curr);
-				prevGameState.value = prev.currentState as GameState;
+				commit('gameInterface/setPrevState', prev.currentState as GameState);
 				switch (curr.currentState) {
 					case GameState.USER_CREATED:
-						commit('gameInterface/changeCurrentState', GameState.BEFORE_USER_COMMAND);
+						commit('gameInterface/setCurrentState', GameState.BEFORE_USER_COMMAND);
 						break;
 					case GameState.TRADE_WITH_BANK:
 						break;
@@ -81,7 +80,7 @@ export default defineComponent({
 
 		return {
 			GameState,
-			prevGameState,
+			prevState: computed(() => gameInterface.prevState),
 			currentState: computed(() => gameInterface.currentState),
 			show,
 			bank,
