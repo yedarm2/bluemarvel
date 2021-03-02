@@ -69,14 +69,11 @@ const store: Module<GameInterfaceState, object> = {
 			let nextRouteTile = routeTiles.shift();
 			while (nextRouteTile) {
 				await sleep(100);
-				console.info({...nextRouteTile});
 				currentTurnUser.setPositionTile(nextRouteTile);
 				nextRouteTile = routeTiles.shift();
 			}
 
-			if (!getters.isDouble) {
-				commit('setCurrentTurnUser', getters.nextTurnUser);
-			}
+			commit('setCurrentState', GameState.USER_MOVED);
 		},
 	},
 };

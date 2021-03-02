@@ -38,6 +38,7 @@ export default defineComponent({
 		const show = ref(true);
 		const {
 			state: { gameInterface },
+			getters,
 			commit
 		} = useStore();
 
@@ -63,13 +64,20 @@ export default defineComponent({
 		watch(
 			() => JSON.parse(JSON.stringify(gameInterface)),
 			(curr, prev) => {
-				console.info(prev, curr);
+				// console.info(prev, curr);
 				commit('gameInterface/setPrevState', prev.currentState as GameState);
 				switch (curr.currentState) {
 					case GameState.USER_CREATED:
 						commit('gameInterface/setCurrentState', GameState.BEFORE_USER_COMMAND);
 						break;
 					case GameState.TRADE_WITH_BANK:
+						break;
+					case GameState.USER_MOVED:
+						if (!getters['gameInterface/isDouble']) {
+							commit('gameInterface/setCurrentTurnUser', getters['gameInterface/nextTurnUser']);
+						}
+
+						commit('gameInterface/setCurrentState', GameState.BEFORE_USER_COMMAND);
 						break;
 					default:
 						break;
