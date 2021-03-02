@@ -12,7 +12,6 @@ export default (currentTile: Ref<BaseTile>) => {
 
 	return computed(() =>
 		users.value.filter(({ currentPositionTile }) =>
-			// TODO: User interface는 임시용이어서 optional chaining 사용
 			currentPositionTile.compareTile(currentTile.value),
 		),
 	);
