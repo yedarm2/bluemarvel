@@ -104,8 +104,9 @@ export default defineComponent({
 	.game-interface {
 		position: fixed;
 		top: 0;
-		left: 0;
-		width: 100vw;
+		left: 1040px;
+		right: 0;
+		// width: 100vw;
 		height: 100vh;
 		background-color: pink;
 
