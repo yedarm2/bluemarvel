@@ -21,10 +21,10 @@ export const getTileListBetweenFromtAndTo = (
 	fromTile: BaseTile,
 	toTile: BaseTile,
 ) => {
-	let startIndex = tileList.indexOf(fromTile);
+	let startIndex = tileList.findIndex(tile => tile.compareTile(fromTile));
 	if (startIndex === tileList.length - 1) startIndex = 0;
 
-	const endIndex = tileList.indexOf(toTile);
+	const endIndex = tileList.findIndex(tile => tile.compareTile(toTile));
 
 	if (startIndex < endIndex) {
 		return tileList.slice(startIndex + 1, endIndex);
@@ -38,7 +38,7 @@ export const getTileListBetweenFromtAndTo = (
 };
 
 export const getTileForDistance = (fromTile: BaseTile, distance: number) => {
-	const fromIndex = tileList.indexOf(fromTile);
+	const fromIndex = tileList.findIndex(tile => tile.compareTile(fromTile));
 	let toIndex = fromIndex + distance;
 
 	if (toIndex >= tileList.length) {
