@@ -13,6 +13,15 @@ export enum GameState {
 	BEFORE_END = 'BEFORE_END'
 }
 
+export enum BankState {
+	NONE = 'NONE',
+	BUY_TILE = 'BUY_TILE',
+	SELL_TILES = 'SELL_TILES',
+	BUY_PROPERTIES = 'BUY_PROPERTIES',
+	SELL_PROPERTIES = 'SELL_PROPERTIES',
+	SELL_ALL = 'SELL_ALL'
+}
+
 export enum foreclosuresValue {
 	PAY_WELFARE = 150000,
 	GOLDEN_KEY_FINE = 100000,

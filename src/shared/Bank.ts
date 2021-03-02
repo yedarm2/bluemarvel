@@ -158,4 +158,24 @@ export class Bank {
 		}
 		return 0;
 	}
+
+	checkOwnerOfTile(tile: TradableTile, id: number): boolean {
+		const selectedTile = this.allTiles.find((t) => t.tile.id === tile.id);
+		if (selectedTile) {
+			return selectedTile.owner === id;
+		}
+		throw new Error('주인 없는 땅입니다.');
+	}
+
+	checkOwnerHasProperties(tile: TradableTile, id: number): boolean {
+		const selectedTile = this.allTiles.find((t) => t.tile.id === tile.id);
+		if (selectedTile) {
+			if (selectedTile.owner === id) {
+				const keys = Object.keys(selectedTile.properties) as propertyType[];
+				return keys.some((key) => selectedTile.properties[key] > 0);
+			}
+			throw new Error('다른 유저의 땅입니다.');
+		}
+		throw new Error('주인 없는 땅입니다.');
+	}
 }

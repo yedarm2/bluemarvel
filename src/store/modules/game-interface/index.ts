@@ -6,10 +6,12 @@ const store: Module<GameInterfaceState, object> = {
 	namespaced: true,
 
 	state: {
+		prevState: GameState.BEFORE_USER_CREATE,
 		currentState: GameState.BEFORE_USER_CREATE,
 		users: [],
 		currentTurnUser: null,
 		currentTurnDiceResult: [],
+		selectedTile: null,
 	},
 
 	getters: {
@@ -27,7 +29,10 @@ const store: Module<GameInterfaceState, object> = {
 	},
 
 	mutations: {
-		changeCurrentState(state, value) {
+		setPrevState(state, value) {
+			state.prevState = value;
+		},
+		setCurrentState(state, value) {
 			state.currentState = value;
 		},
 		setUser(state, value) {
@@ -38,6 +43,9 @@ const store: Module<GameInterfaceState, object> = {
 		},
 		setCurrentTurnDiceResult(state, value) {
 			state.currentTurnDiceResult = value;
+		},
+		setSelectedTile(state, value) {
+			state.selectedTile = value;
 		}
 	}
 };
