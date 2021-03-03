@@ -1,10 +1,10 @@
 <template>
-	<div v-if="show" class="game-interface">
+	<div class="game-interface">
 		<template v-if="currentState === GameState.BEFORE_USER_CREATE">
 			<before-user-create @start-game="init" />
 		</template>
 		<template v-else-if="currentState === GameState.BEFORE_USER_COMMAND">
-			<before-user-command @hide-game-interface="hideGameInterface" @trade-with-bank="changeState(GameState.TRADE_WITH_BANK)" />
+			<before-user-command @trade-with-bank="changeState(GameState.TRADE_WITH_BANK)" />
 		</template>
 		<template v-else-if="currentState === GameState.TRADE_WITH_BANK">
 			<trade-with-bank @end-trade="changeState(prevState)"/>
@@ -16,26 +16,20 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, computed, watch, ref, reactive } from 'vue';
+import { defineComponent, computed, watch, ref } from 'vue';
 import { useStore } from "vuex";
 import { GameState } from "@/shared/policy";
 import { User } from "@/shared/User";
-import { Bank } from "@/shared/Bank";
 import BeforeUserCreate from '@/components/game-interface/before-user-create.vue';
 import BeforeUserCommand from '@/components/game-interface/before-user-command.vue';
 import TradeWithBank from '@/components/game-interface/trade-with-bank.vue';
 
 const useInstanceMethods = () => {
-	const show = ref(true);
 	const {
 		state: { gameInterface },
 		getters,
 		commit
 	} = useStore();
-
-	function hideGameInterface() {
-		show.value = false;
-	}
 
 	function allocationMoney() {
 		gameInterface.users.forEach((user: User) => {
@@ -62,9 +56,7 @@ const useInstanceMethods = () => {
 	return {
 		prevState: computed(() => gameInterface.prevState),
 		currentState: computed(() => gameInterface.currentState),
-		show,
 		init,
-		hideGameInterface,
 		changeState,
 		nextTurn
 	};
