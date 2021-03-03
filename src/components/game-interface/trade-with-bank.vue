@@ -52,7 +52,7 @@ export default defineComponent({
 		bankInstance: {
 			type: Object as PropType<Bank>,
 			required: true,
-		}
+		},
 	},
 	emits: ['end-trade'],
 	setup(props) {
@@ -64,10 +64,16 @@ export default defineComponent({
 		const isTileBelongToUser = ref(false);
 		const isUserHasProperties = ref(false);
 
-		if (gameInterface.selectedTile) {
-			isTileBelongToUser.value = bankInstance.value.checkOwnerOfTile(gameInterface.selectedTile, gameInterface.currentTurnUser.id);
-			isUserHasProperties.value = bankInstance.value.checkOwnerHasProperties(gameInterface.selectedTile, gameInterface.currentTurnUser.id);
+		try {
+			if (gameInterface.selectedTile) {
+				isTileBelongToUser.value = bankInstance.value.checkOwnerOfTile(gameInterface.selectedTile, gameInterface.currentTurnUser.id);
+				isUserHasProperties.value = bankInstance.value.checkOwnerHasProperties(gameInterface.selectedTile, gameInterface.currentTurnUser.id);
+			}
+		} catch (error) {
+			isTileBelongToUser.value = false;
+			isUserHasProperties.value = false;
 		}
+
 
 		function changeBankState(newState: BankState) {
 			currentBankState.value = newState;
