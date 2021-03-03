@@ -8,7 +8,8 @@
 	<button @click="$emit('end-trade')">거래 종료</button>
 	<section v-if="currentBankState !== BankState.NONE" class="bank-view">
 		<template v-if="currentBankState === BankState.BUY_TILE">
-			선택된 토지 사기
+			<p>{{ selectedTile.name }}를 {{ formatMoney(getAreaPrice()) }}원에 구매하시겠습니까?</p>
+			<button @click="buySelectedTile">예</button>
 		</template>
 		<template v-else-if="currentBankState === BankState.SELL_TILES">
 			<template v-if="selectedTile">
@@ -42,9 +43,10 @@
 
 <script lang="ts">
 import {computed, defineComponent, PropType, ref, toRefs} from 'vue';
+import { useStore } from "vuex";
 import { Bank } from '@/shared/Bank';
 import { BankState } from '@/shared/policy';
-import { useStore } from "vuex";
+import { formatMoney } from "@/shared/utils";
 
 export default defineComponent({
 	name: 'TradeWithBank',
@@ -79,6 +81,26 @@ export default defineComponent({
 			currentBankState.value = newState;
 		}
 
+		function getAreaPrice() {
+			return bankInstance.value.getAreaPrice(gameInterface.selectedTile);
+		}
+
+		function buySelectedTile() {
+			const areaPrice = getAreaPrice();
+			if (areaPrice > gameInterface.currentTurnUser.getMoney()) {
+				alert('잔액이 부족하여 타일을 구매할 수 없습니다.');
+			} else {
+				try {
+					bankInstance.value.sellTilesToUser(gameInterface.selectedTile, gameInterface.currentTurnUser.id);
+					gameInterface.currentTurnUser.setMoney(-areaPrice);
+					alert('구매 성공하였습니다.');
+				} catch (error) {
+					console.info(error);
+					alert('이미 자신의 소유이거나 타인의 땅 입니다.');
+				}
+			}
+		}
+
 		return {
 			BankState,
 			selectedTile: computed(() => gameInterface.selectedTile),
@@ -86,6 +108,9 @@ export default defineComponent({
 			isTileBelongToUser,
 			isUserHasProperties,
 			changeBankState,
+			getAreaPrice,
+			formatMoney,
+			buySelectedTile
 		};
 	},
 });

@@ -49,7 +49,7 @@ export class Bank {
 
 	sellTilesToUser(tile: TradableTile, id: number) {
 		const selectedTile = this.allTiles.find((t) => t.tile.id === tile.id);
-		if (selectedTile) {
+		if (selectedTile && !this.checkOwnerOfTile(tile, id)) {
 			selectedTile.owner = id;
 		} else {
 			throw new Error('거래가 가능한 타일이 아닙니다.');
@@ -90,6 +90,18 @@ export class Bank {
 			throw new Error('타일에 건물이 없습니다.');
 		}
 		return this.getSpecificPropertyPrice(tile, properties);
+	}
+
+	getAreaPrice(tile: TradableTile): number {
+		const selectedTile = this.allTiles.find((t) => t.tile.id === tile.id);
+		if (!selectedTile) return 0;
+		if (selectedTile.tile instanceof TouristAttractionTile) {
+			return selectedTile.tile.price;
+		}
+		if (selectedTile.tile instanceof CityTile) {
+			return selectedTile.tile.buildingPriceInfo.areaPrice;
+		}
+		return 0;
 	}
 
 	getTotalPropertyPrice(tile: TradableTile): number {
