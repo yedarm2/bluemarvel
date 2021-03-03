@@ -8,7 +8,7 @@
 	<button @click="$emit('end-trade')">거래 종료</button>
 	<section v-if="currentBankState !== BankState.NONE" class="bank-view">
 		<template v-if="currentBankState === BankState.BUY_TILE">
-			<p>{{ selectedTile.name }}를 {{ formatMoney(getAreaPrice()) }}원에 구매하시겠습니까?</p>
+			<p>{{ selectedTile.name }}를 {{ tilePrice }}원에 구매하시겠습니까?</p>
 			<button @click="buySelectedTile">예</button>
 		</template>
 		<template v-else-if="currentBankState === BankState.SELL_TILES">
@@ -96,12 +96,11 @@ export default defineComponent({
 		return {
 			BankState,
 			selectedTile: computed(() => gameInterface.selectedTile),
+			tilePrice: computed(() => formatMoney(getAreaPrice())),
 			currentBankState,
 			isTileBelongToUser,
 			isUserHasProperties,
 			changeBankState,
-			getAreaPrice,
-			formatMoney,
 			buySelectedTile
 		};
 	},
