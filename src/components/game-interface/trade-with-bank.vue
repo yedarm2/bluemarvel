@@ -73,18 +73,18 @@ export default defineComponent({
 			currentBankState.value = newState;
 		}
 
-		function getAreaPrice() {
-			return gameInterface.bank.getAreaPrice(gameInterface.selectedTile);
+		function getTilePrice() {
+			return gameInterface.bank.getTilePrice(gameInterface.selectedTile);
 		}
 
 		function buySelectedTile() {
-			const areaPrice = getAreaPrice();
-			if (areaPrice > gameInterface.currentTurnUser.getMoney()) {
+			const tilePrice = getTilePrice();
+			if (tilePrice > gameInterface.currentTurnUser.getMoney()) {
 				alert('잔액이 부족하여 타일을 구매할 수 없습니다.');
 			} else {
 				try {
 					gameInterface.bank.sellTilesToUser(gameInterface.selectedTile, gameInterface.currentTurnUser.id);
-					gameInterface.currentTurnUser.setMoney(-areaPrice);
+					gameInterface.currentTurnUser.setMoney(-tilePrice);
 					alert('구매 성공하였습니다.');
 				} catch (error) {
 					console.info(error);
@@ -96,7 +96,7 @@ export default defineComponent({
 		return {
 			BankState,
 			selectedTile: computed(() => gameInterface.selectedTile),
-			tilePrice: computed(() => formatMoney(getAreaPrice())),
+			tilePrice: computed(() => formatMoney(getTilePrice())),
 			currentBankState,
 			isTileBelongToUser,
 			isUserHasProperties,

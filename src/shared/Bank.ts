@@ -92,14 +92,14 @@ export class Bank {
 		return this.getSpecificPropertyPrice(tile, properties);
 	}
 
-	getAreaPrice(tile: TradableTile): number {
+	getTilePrice(tile: TradableTile): number {
 		const selectedTile = this.allTiles.find((t) => t.tile.id === tile.id);
 		if (!selectedTile) return 0;
 		if (selectedTile.tile instanceof TouristAttractionTile) {
 			return selectedTile.tile.price;
 		}
 		if (selectedTile.tile instanceof CityTile) {
-			return selectedTile.tile.buildingPriceInfo.areaPrice;
+			return selectedTile.tile.buildingPriceInfo.tilePrice;
 		}
 		return 0;
 	}
@@ -114,7 +114,7 @@ export class Bank {
 			const priceOfVilla = selectedTile.properties.VILLA * selectedTile.tile.buildingPriceInfo.villaPrice;
 			const priceOfBuilding = selectedTile.properties.BUILDING * selectedTile.tile.buildingPriceInfo.buildingPrice;
 			const priceOfHotel = selectedTile.properties.HOTEL * selectedTile.tile.buildingPriceInfo.hotelPrice;
-			return priceOfVilla + priceOfBuilding + priceOfHotel + selectedTile.tile.buildingPriceInfo.areaPrice;
+			return priceOfVilla + priceOfBuilding + priceOfHotel + selectedTile.tile.buildingPriceInfo.tilePrice;
 		}
 		return 0;
 	}
@@ -149,7 +149,7 @@ export class Bank {
 				}, 0);
 				/* eslint-enable no-param-reassign */
 			}
-			return selectedTile.tile.buildingPriceInfo.areaPrice;
+			return selectedTile.tile.buildingPriceInfo.tilePrice;
 		}
 		return 0;
 	}
@@ -163,7 +163,7 @@ export class Bank {
 			const priceOfHotel = selectedTile.properties.HOTEL * selectedTile.tile.paymentInfo.hotelPrice;
 			const totalPrice = priceOfVilla + priceOfBuilding + priceOfHotel;
 
-			return totalPrice === 0 ? selectedTile.tile.paymentInfo.areaPrice : totalPrice;
+			return totalPrice === 0 ? selectedTile.tile.paymentInfo.tilePrice : totalPrice;
 		}
 		if (selectedTile.tile instanceof TouristAttractionTile) {
 			return selectedTile.tile.payment;

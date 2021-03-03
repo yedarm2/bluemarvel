@@ -32,7 +32,7 @@ const getCityContext = (tile: Ref<CityTile>) => ({
 	name: computed(() => tile.value.name),
 	englishName: computed(() => tile.value.englishName),
 	price: computed(
-		() => `${tile.value.buildingPriceInfo.areaPrice / 10000}만원`,
+		() => `${tile.value.buildingPriceInfo.tilePrice / 10000}만원`,
 	),
 	description: computed(() => tile.value.description),
 });

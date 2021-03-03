@@ -1,16 +1,16 @@
 import { BaseTile, startingPointTile } from '@/shared/boardData';
-// import { CityArea, SpecialArea, TradableAreaIdEnum } from '@/shared/boardData';
+// import { CityTile, SpecialTile, TradableTileIdEnum } from '@/shared/boardData';
 // import { propertyType } from '@/shared/policy';
 
-// type tradableArea = CityArea | SpecialArea;
+// type tradableTile = CityTile | SpecialTile;
 // type propertySkeleton = {
-// 	tile: tradableArea;
+// 	tile: tradableTile;
 // 	properties: {
 // 		[property in propertyType]: number
 // 	};
 // }
 // type tileSkeleton = {
-// 	[id in TradableAreaIdEnum]?: propertySkeleton;
+// 	[id in TradableTileIdEnum]?: propertySkeleton;
 // };
 
 export class User {
