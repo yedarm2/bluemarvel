@@ -16,7 +16,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, computed, watch, ref } from 'vue';
+import { defineComponent, computed, watch } from 'vue';
 import { useStore } from "vuex";
 import { GameState } from "@/shared/policy";
 import { User } from "@/shared/User";
