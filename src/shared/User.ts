@@ -1,17 +1,4 @@
 import { BaseTile, startingPointTile } from '@/shared/boardData';
-// import { CityTile, SpecialTile, TradableTileIdEnum } from '@/shared/boardData';
-// import { propertyType } from '@/shared/policy';
-
-// type tradableTile = CityTile | SpecialTile;
-// type propertySkeleton = {
-// 	tile: tradableTile;
-// 	properties: {
-// 		[property in propertyType]: number
-// 	};
-// }
-// type tileSkeleton = {
-// 	[id in TradableTileIdEnum]?: propertySkeleton;
-// };
 
 export class User {
 	id: number;
@@ -21,8 +8,6 @@ export class User {
 	items = []; // TODO 현재는 any의 배열이나 추후 황금열쇠 객체가 될 듯.
 
 	currentPositionTile: BaseTile;
-
-	// tiles: tileSkeleton = {};
 
 	constructor(id: number) {
 		this.id = id;
