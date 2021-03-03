@@ -1,6 +1,6 @@
 <template>
-	<p v-if="isDisplayingDiceResult">
-		주사위 결과: {{ currentTurnDiceResult[0] }} + {{ currentTurnDiceResult[1] }} = {{ currentTurnDiceResult[0] + currentTurnDiceResult[1] }}
+	<p v-if="hasDiceResult">
+		주사위 결과: {{ currentTurnDiceResult[0] }} + {{ currentTurnDiceResult[1] }} = {{ distanceToMove }}
 	</p>
 	<p>
 		<strong v-if="isDouble">더블이 나왔습니다.</strong>
@@ -15,8 +15,6 @@
 import {computed, defineComponent, toRefs} from 'vue';
 import {useStore} from "vuex";
 
-const getRandomNumber = (): number => Math.ceil(Math.random() * 6);
-
 const useBoardContext = () => {
 	const {
 		state: { gameInterface },
@@ -29,21 +27,21 @@ const useBoardContext = () => {
 	} = toRefs(gameInterface);
 
 	return {
-		isDisplayingDiceResult: computed(() => currentTurnDiceResult.value.length > 0),
+		hasDiceResult: computed(() => currentTurnDiceResult.value.length > 0),
 		currentTurnUserId: computed(() => currentTurnUser.value.id),
 		currentTurnDiceResult: computed(() => currentTurnDiceResult.value),
 		isDouble: computed(() => getters['gameInterface/isDouble']),
+		distanceToMove: computed(() => getters['gameInterface/distanceToMove']),
 	};
 };
 
-const useRollDice = (emit: (event: 'rolled-dice') => void) => {
+const useRollDice = () => {
 	const {
 		dispatch
 	} = useStore();
 
 	return async () => {
-		await dispatch('gameInterface/rolledDice', [getRandomNumber(), getRandomNumber()]);
-		emit('rolled-dice');
+		await dispatch('gameInterface/rollDice');
 	};
 };
 
@@ -57,11 +55,11 @@ export default defineComponent({
 			}
 		}
 	},
-	emits: ['hide-game-interface', 'rolled-dice', 'trade-with-bank'],
+	emits: ['hide-game-interface', 'trade-with-bank'],
 	setup(_, { emit }) {
 		return {
 			...useBoardContext(),
-			rollDice: useRollDice(emit),
+			rollDice: useRollDice(),
 		};
 	},
 });

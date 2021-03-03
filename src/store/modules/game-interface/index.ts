@@ -5,6 +5,8 @@ import { getTileForDistance, getTileListBetweenFromtAndTo } from '@/shared/board
 import { User } from '@/shared/User';
 import { sleep } from '@/shared/sleep';
 
+const getDiceNumber = (): number => Math.ceil(Math.random() * 6);
+
 const store: Module<GameInterfaceState, object> = {
 	namespaced: true,
 
@@ -28,7 +30,10 @@ const store: Module<GameInterfaceState, object> = {
 		isDouble(state) {
 			const set = new Set(state.currentTurnDiceResult);
 			return !set.has(0) && set.size === 1;
-		}
+		},
+		distanceToMove({ currentTurnDiceResult }) {
+			return currentTurnDiceResult[0] + currentTurnDiceResult[1];
+		},
 	},
 
 	mutations: {
@@ -53,7 +58,8 @@ const store: Module<GameInterfaceState, object> = {
 	},
 
 	actions: {
-		async rolledDice({ state, getters, commit }, diceResult: number[]) {
+		async rollDice({ state, getters, commit }) {
+			const diceResult = [getDiceNumber(), getDiceNumber()];
 			commit('setCurrentTurnDiceResult', diceResult);
 
 			const currentTurnUser = state.currentTurnUser as User;
