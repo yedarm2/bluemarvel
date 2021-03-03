@@ -7,10 +7,10 @@
 			<before-user-command @hide-game-interface="hideGameInterface" @trade-with-bank="changeState(GameState.TRADE_WITH_BANK)" />
 		</template>
 		<template v-else-if="currentState === GameState.TRADE_WITH_BANK">
-			<trade-with-bank :bank-instance="bank" @end-trade="changeState(prevState)"/>
+			<trade-with-bank @end-trade="changeState(prevState)"/>
 		</template>
 		<template v-else-if="currentState === GameState.USER_MOVED">
-			<trade-with-bank :bank-instance="bank" @end-trade="nextTurn(GameState.BEFORE_USER_COMMAND)"/>
+			<trade-with-bank @end-trade="nextTurn(GameState.BEFORE_USER_COMMAND)"/>
 		</template>
 	</div>
 </template>
@@ -26,7 +26,6 @@ import BeforeUserCommand from '@/components/game-interface/before-user-command.v
 import TradeWithBank from '@/components/game-interface/trade-with-bank.vue';
 
 const useInstanceMethods = () => {
-	const bank = reactive(new Bank());
 	const show = ref(true);
 	const {
 		state: { gameInterface },
@@ -40,7 +39,7 @@ const useInstanceMethods = () => {
 
 	function allocationMoney() {
 		gameInterface.users.forEach((user: User) => {
-			user.setMoney(bank.toGiveALoan(5000000));
+			user.setMoney(gameInterface.bank.toGiveALoan(5000000));
 		});
 	}
 
@@ -61,7 +60,6 @@ const useInstanceMethods = () => {
 	}
 
 	return {
-		bank,
 		prevState: computed(() => gameInterface.prevState),
 		currentState: computed(() => gameInterface.currentState),
 		show,

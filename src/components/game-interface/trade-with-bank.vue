@@ -42,23 +42,15 @@
 </template>
 
 <script lang="ts">
-import {computed, defineComponent, PropType, ref, toRefs} from 'vue';
+import {computed, defineComponent, ref} from 'vue';
 import { useStore } from "vuex";
-import { Bank } from '@/shared/Bank';
 import { BankState } from '@/shared/policy';
 import { formatMoney } from "@/shared/utils";
 
 export default defineComponent({
 	name: 'TradeWithBank',
-	props: {
-		bankInstance: {
-			type: Object as PropType<Bank>,
-			required: true,
-		},
-	},
 	emits: ['end-trade'],
-	setup(props) {
-		const { bankInstance } = toRefs(props);
+	setup() {
 		const {
 			state: { gameInterface },
 		} = useStore();
@@ -68,8 +60,8 @@ export default defineComponent({
 
 		try {
 			if (gameInterface.selectedTile) {
-				isTileBelongToUser.value = bankInstance.value.checkOwnerOfTile(gameInterface.selectedTile, gameInterface.currentTurnUser.id);
-				isUserHasProperties.value = bankInstance.value.checkOwnerHasProperties(gameInterface.selectedTile, gameInterface.currentTurnUser.id);
+				isTileBelongToUser.value = gameInterface.bank.checkOwnerOfTile(gameInterface.selectedTile, gameInterface.currentTurnUser.id);
+				isUserHasProperties.value = gameInterface.bank.checkOwnerHasProperties(gameInterface.selectedTile, gameInterface.currentTurnUser.id);
 			}
 		} catch (error) {
 			isTileBelongToUser.value = false;
@@ -82,7 +74,7 @@ export default defineComponent({
 		}
 
 		function getAreaPrice() {
-			return bankInstance.value.getAreaPrice(gameInterface.selectedTile);
+			return gameInterface.bank.getAreaPrice(gameInterface.selectedTile);
 		}
 
 		function buySelectedTile() {
@@ -91,7 +83,7 @@ export default defineComponent({
 				alert('잔액이 부족하여 타일을 구매할 수 없습니다.');
 			} else {
 				try {
-					bankInstance.value.sellTilesToUser(gameInterface.selectedTile, gameInterface.currentTurnUser.id);
+					gameInterface.bank.sellTilesToUser(gameInterface.selectedTile, gameInterface.currentTurnUser.id);
 					gameInterface.currentTurnUser.setMoney(-areaPrice);
 					alert('구매 성공하였습니다.');
 				} catch (error) {
