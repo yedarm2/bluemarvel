@@ -58,7 +58,7 @@ const store: Module<GameInterfaceState, object> = {
 	},
 
 	actions: {
-		async rollDice({ state, getters, commit }) {
+		async rollDice({ state, commit }) {
 			const diceResult = [getDiceNumber(), getDiceNumber()];
 			commit('setCurrentTurnDiceResult', diceResult);
 
