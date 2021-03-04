@@ -22,12 +22,12 @@
 		</template>
 		<template v-else-if="currentBankState === BankState.BUY_PROPERTIES">
 			<div>
-				<input type="checkbox" id="hotel" :value="propertyType.HOTEL" v-model="checkedProperties" />
-				<label for="hotel">호텔</label>
-				<input type="checkbox" id="building" :value="propertyType.BUILDING" v-model="checkedProperties" />
-				<label for="building">빌딩</label>
-				<input type="checkbox" id="villa" :value="propertyType.VILLA" v-model="checkedProperties" />
-				<label for="villa">빌라</label>
+				<input type="checkbox" id="buy-hotel" :value="propertyType.HOTEL" v-model="checkedProperties" />
+				<label for="buy-hotel">{{ propertyType.HOTEL }}</label>
+				<input type="checkbox" id="buy-building" :value="propertyType.BUILDING" v-model="checkedProperties" />
+				<label for="buy-building">{{ propertyType.BUILDING }}</label>
+				<input type="checkbox" id="buy-villa" :value="propertyType.VILLA" v-model="checkedProperties" />
+				<label for="buy-villa">{{ propertyType.VILLA }}</label>
 			</div>
 			선택된 부동산 ({{ checkedProperties.join(', ') }})을(를) {{ propertiesPrice }}원에 구매 하시겠습니까?
 			<button @click="buySelectedProperties">예</button>
@@ -35,6 +35,14 @@
 		<template v-else-if="currentBankState === BankState.SELL_PROPERTIES">
 			<template v-if="selectedTile && isUserHasTileProperties">
 				선택된 토지의 건물 팔기
+				<div>
+					<template v-for="(item, index) in purchasedPropertiesOnSelectedTile" :key="index">
+						<input type="checkbox" :id="'sell-' + item.property.toLowerCase()" :value="item.property" v-model="checkedProperties" />
+						<label :for="'sell-' + item.property.toLowerCase()">{{ item.property }} {{ item.count }}개</label>
+					</template>
+				</div>
+				선택된 부동산 ({{ checkedProperties.join(', ') }})을(를) {{ propertiesPrice }}원에 판매 하시겠습니까?
+				<button @click="sellSelectedProperties">예</button>
 			</template>
 			<template v-else-if="isUserHasProperties">
 				토지 선택한 뒤 건물 팔기
@@ -53,9 +61,9 @@
 
 <script lang="ts">
 import {computed, defineComponent, ref} from 'vue';
-import { useStore } from "vuex";
-import { BankState, propertyType } from '@/shared/policy';
-import { formatMoney } from "@/shared/utils";
+import {useStore} from "vuex";
+import {BankState, propertyType} from '@/shared/policy';
+import {formatMoney} from "@/shared/utils";
 
 export default defineComponent({
 	name: 'TradeWithBank',
@@ -79,6 +87,7 @@ export default defineComponent({
 				try {
 					gameInterface.bank.sellTilesToUser(gameInterface.selectedTile, gameInterface.currentTurnUser.id);
 					gameInterface.currentTurnUser.setMoney(-tilePrice);
+					currentBankState.value = BankState.NONE;
 					alert('타일 구매를를 성공하였습니다.');
 				} catch (error) {
 					console.info(error);
@@ -90,10 +99,11 @@ export default defineComponent({
 		function sellSelectedTile() {
 			try {
 				gameInterface.currentTurnUser.setMoney(gameInterface.bank.purchaseTiles(gameInterface.selectedTile));
-				alert('매각에 성공하였습니다.');
+				currentBankState.value = BankState.NONE;
+				alert('타일 매각에 성공하였습니다.');
 			} catch (error) {
 				console.info(error);
-				alert('주인없는 땅 입니다.');
+				alert('주인없는 타일 입니다.');
 			}
 		}
 
@@ -102,14 +112,22 @@ export default defineComponent({
 			if (propertiesPrice > gameInterface.currentTurnUser.getMoney()) {
 				alert('잔액이 부족하여 건물을 구매할 수 없습니다.');
 			} else {
-				try {
-					gameInterface.bank.sellProperties(gameInterface.selectedTile, checkedProperties.value);
-					gameInterface.currentTurnUser.setMoney(-propertiesPrice);
-					alert('건물 구매 성공하였습니다.');
-				} catch (error) {
-					console.info(error);
-					alert('이미 자신의 소유이거나 타인의 땅 입니다.');
-				}
+				gameInterface.bank.sellProperties(gameInterface.selectedTile, checkedProperties.value);
+				gameInterface.currentTurnUser.setMoney(-propertiesPrice);
+				checkedProperties.value = [];
+				currentBankState.value = BankState.NONE;
+				alert('건물 구매 성공하였습니다.');
+			}
+		}
+
+		function sellSelectedProperties() {
+			try {
+				gameInterface.currentTurnUser.setMoney(gameInterface.bank.purchaseProperties(gameInterface.selectedTile, checkedProperties.value));
+				currentBankState.value = BankState.NONE;
+				alert('건물 매각에 성공하였습니다.');
+			} catch (error) {
+				console.info(error);
+				alert('건물없는 타일 입니다.');
 			}
 		}
 
@@ -118,6 +136,7 @@ export default defineComponent({
 			propertyType,
 			currentBankState,
 			checkedProperties,
+			purchasedPropertiesOnSelectedTile: computed(() => gameInterface.bank.getPurchasedProperties(gameInterface.selectedTile)),
 			selectedTile: computed(() => gameInterface.selectedTile),
 			tilePrice: computed(() => formatMoney(gameInterface.bank.getTilePrice(gameInterface.selectedTile))),
 			propertiesPrice: computed(() => formatMoney(gameInterface.bank.getSpecificPropertyPrice(gameInterface.selectedTile, checkedProperties.value))),
@@ -129,6 +148,7 @@ export default defineComponent({
 			buySelectedTile,
 			sellSelectedTile,
 			buySelectedProperties,
+			sellSelectedProperties,
 		};
 	},
 });

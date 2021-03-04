@@ -9,6 +9,11 @@ interface Tiles {
 	};
 }
 
+interface PropertyResponse {
+	property: propertyType;
+	count: number;
+}
+
 export class Bank {
 	remainedMoney = 900000000;
 
@@ -90,6 +95,20 @@ export class Bank {
 			throw new Error('타일에 건물이 없습니다.');
 		}
 		return this.getSpecificPropertyPrice(tile, properties);
+	}
+
+	getPurchasedProperties(tile: TradableTile): PropertyResponse[] {
+		const selectedTile = this.allTiles.find((t) => t.tile.id === tile.id);
+		if (selectedTile) {
+			return Object.keys(selectedTile.properties).reduce((acc, property) => {
+				const key = property as propertyType;
+				if (selectedTile.properties[key] > 0) {
+					acc.push({ property: key, count: selectedTile.properties[key]});
+				}
+				return acc;
+			}, [] as PropertyResponse[]);
+		}
+		return [];
 	}
 
 	getTilePrice(tile: TradableTile): number {
