@@ -126,7 +126,7 @@ export enum TradableTileIdEnum {
 }
 
 export interface PriceInfo {
-	areaPrice: number;
+	tilePrice: number;
 	villaPrice: number;
 	buildingPrice: number;
 	hotelPrice: number;
@@ -140,13 +140,13 @@ export const CityTileMap: Map<TradableTileIdEnum, CityTile> = new Map([
 			'타이페이',
 			'타이완(대만)의 수도',
 			{
-				areaPrice: 50000,
+				tilePrice: 50000,
 				villaPrice: 50000,
 				buildingPrice: 150000,
 				hotelPrice: 250000,
 			},
 			{
-				areaPrice: 2000,
+				tilePrice: 2000,
 				villaPrice: 50000,
 				buildingPrice: 90000,
 				hotelPrice: 250000,
@@ -160,13 +160,13 @@ export const CityTileMap: Map<TradableTileIdEnum, CityTile> = new Map([
 			'베이징',
 			'중국의 수도',
 			{
-				areaPrice: 80000,
+				tilePrice: 80000,
 				villaPrice: 50000,
 				buildingPrice: 150000,
 				hotelPrice: 250000,
 			},
 			{
-				areaPrice: 4000,
+				tilePrice: 4000,
 				villaPrice: 50000,
 				buildingPrice: 180000,
 				hotelPrice: 450000,
@@ -180,13 +180,13 @@ export const CityTileMap: Map<TradableTileIdEnum, CityTile> = new Map([
 			'마닐라',
 			'필리핀의 수도',
 			{
-				areaPrice: 80000,
+				tilePrice: 80000,
 				villaPrice: 50000,
 				buildingPrice: 150000,
 				hotelPrice: 250000,
 			},
 			{
-				areaPrice: 4000,
+				tilePrice: 4000,
 				villaPrice: 50000,
 				buildingPrice: 180000,
 				hotelPrice: 250000,
@@ -200,13 +200,13 @@ export const CityTileMap: Map<TradableTileIdEnum, CityTile> = new Map([
 			'싱가포르',
 			'싱가포르의 수도',
 			{
-				areaPrice: 100000,
+				tilePrice: 100000,
 				villaPrice: 50000,
 				buildingPrice: 150000,
 				hotelPrice: 250000,
 			},
 			{
-				areaPrice: 6000,
+				tilePrice: 6000,
 				villaPrice: 50000,
 				buildingPrice: 270000,
 				hotelPrice: 550000,
@@ -220,13 +220,13 @@ export const CityTileMap: Map<TradableTileIdEnum, CityTile> = new Map([
 			'카이로',
 			'이집트의 수도',
 			{
-				areaPrice: 100000,
+				tilePrice: 100000,
 				villaPrice: 50000,
 				buildingPrice: 150000,
 				hotelPrice: 250000,
 			},
 			{
-				areaPrice: 6000,
+				tilePrice: 6000,
 				villaPrice: 50000,
 				buildingPrice: 270000,
 				hotelPrice: 550000,
@@ -240,13 +240,13 @@ export const CityTileMap: Map<TradableTileIdEnum, CityTile> = new Map([
 			'이스탄불',
 			'동서양의 교차로',
 			{
-				areaPrice: 100000,
+				tilePrice: 100000,
 				villaPrice: 50000,
 				buildingPrice: 150000,
 				hotelPrice: 250000,
 			},
 			{
-				areaPrice: 8000,
+				tilePrice: 8000,
 				villaPrice: 50000,
 				buildingPrice: 300000,
 				hotelPrice: 600000,
@@ -260,13 +260,13 @@ export const CityTileMap: Map<TradableTileIdEnum, CityTile> = new Map([
 			'아테네',
 			'그리스의 수도',
 			{
-				areaPrice: 140000,
+				tilePrice: 140000,
 				villaPrice: 100000,
 				buildingPrice: 300000,
 				hotelPrice: 500000,
 			},
 			{
-				areaPrice: 10000,
+				tilePrice: 10000,
 				villaPrice: 100000,
 				buildingPrice: 450000,
 				hotelPrice: 750000,
@@ -280,13 +280,13 @@ export const CityTileMap: Map<TradableTileIdEnum, CityTile> = new Map([
 			'코펜하겐',
 			'덴마크의 수도',
 			{
-				areaPrice: 160000,
+				tilePrice: 160000,
 				villaPrice: 100000,
 				buildingPrice: 300000,
 				hotelPrice: 500000,
 			},
 			{
-				areaPrice: 12000,
+				tilePrice: 12000,
 				villaPrice: 100000,
 				buildingPrice: 500000,
 				hotelPrice: 900000,
@@ -300,13 +300,13 @@ export const CityTileMap: Map<TradableTileIdEnum, CityTile> = new Map([
 			'스톡홀름',
 			'스웨덴의 수도',
 			{
-				areaPrice: 160000,
+				tilePrice: 160000,
 				villaPrice: 100000,
 				buildingPrice: 300000,
 				hotelPrice: 500000,
 			},
 			{
-				areaPrice: 12000,
+				tilePrice: 12000,
 				villaPrice: 100000,
 				buildingPrice: 500000,
 				hotelPrice: 900000,
@@ -320,13 +320,13 @@ export const CityTileMap: Map<TradableTileIdEnum, CityTile> = new Map([
 			'베른',
 			'스위스의 수도',
 			{
-				areaPrice: 180000,
+				tilePrice: 180000,
 				villaPrice: 100000,
 				buildingPrice: 300000,
 				hotelPrice: 500000,
 			},
 			{
-				areaPrice: 14000,
+				tilePrice: 14000,
 				villaPrice: 100000,
 				buildingPrice: 550000,
 				hotelPrice: 950000,
@@ -340,13 +340,13 @@ export const CityTileMap: Map<TradableTileIdEnum, CityTile> = new Map([
 			'베를린',
 			'독일의 수도',
 			{
-				areaPrice: 180000,
+				tilePrice: 180000,
 				villaPrice: 100000,
 				buildingPrice: 300000,
 				hotelPrice: 500000,
 			},
 			{
-				areaPrice: 14000,
+				tilePrice: 14000,
 				villaPrice: 100000,
 				buildingPrice: 550000,
 				hotelPrice: 950000,
@@ -360,13 +360,13 @@ export const CityTileMap: Map<TradableTileIdEnum, CityTile> = new Map([
 			'오타와',
 			'캐나다의 수도',
 			{
-				areaPrice: 200000,
+				tilePrice: 200000,
 				villaPrice: 100000,
 				buildingPrice: 300000,
 				hotelPrice: 500000,
 			},
 			{
-				areaPrice: 16000,
+				tilePrice: 16000,
 				villaPrice: 100000,
 				buildingPrice: 600000,
 				hotelPrice: 1000000,
@@ -380,13 +380,13 @@ export const CityTileMap: Map<TradableTileIdEnum, CityTile> = new Map([
 			'부에노스 아이레스',
 			'아르헨티나의 수도',
 			{
-				areaPrice: 220000,
+				tilePrice: 220000,
 				villaPrice: 150000,
 				buildingPrice: 450000,
 				hotelPrice: 750000,
 			},
 			{
-				areaPrice: 10000,
+				tilePrice: 10000,
 				villaPrice: 150000,
 				buildingPrice: 750000,
 				hotelPrice: 1100000,
@@ -400,13 +400,13 @@ export const CityTileMap: Map<TradableTileIdEnum, CityTile> = new Map([
 			'상파울로',
 			'브라질의 수도',
 			{
-				areaPrice: 240000,
+				tilePrice: 240000,
 				villaPrice: 150000,
 				buildingPrice: 450000,
 				hotelPrice: 750000,
 			},
 			{
-				areaPrice: 20000,
+				tilePrice: 20000,
 				villaPrice: 150000,
 				buildingPrice: 750000,
 				hotelPrice: 1100000,
@@ -420,13 +420,13 @@ export const CityTileMap: Map<TradableTileIdEnum, CityTile> = new Map([
 			'시드니',
 			'호주의 수도',
 			{
-				areaPrice: 240000,
+				tilePrice: 240000,
 				villaPrice: 150000,
 				buildingPrice: 450000,
 				hotelPrice: 750000,
 			},
 			{
-				areaPrice: 20000,
+				tilePrice: 20000,
 				villaPrice: 150000,
 				buildingPrice: 750000,
 				hotelPrice: 1100000,
@@ -440,13 +440,13 @@ export const CityTileMap: Map<TradableTileIdEnum, CityTile> = new Map([
 			'하와이',
 			'미국의 휴양지',
 			{
-				areaPrice: 260000,
+				tilePrice: 260000,
 				villaPrice: 150000,
 				buildingPrice: 450000,
 				hotelPrice: 750000,
 			},
 			{
-				areaPrice: 22000,
+				tilePrice: 22000,
 				villaPrice: 150000,
 				buildingPrice: 800000,
 				hotelPrice: 1150000,
@@ -460,13 +460,13 @@ export const CityTileMap: Map<TradableTileIdEnum, CityTile> = new Map([
 			'리스본',
 			'포르투갈의 수도',
 			{
-				areaPrice: 260000,
+				tilePrice: 260000,
 				villaPrice: 150000,
 				buildingPrice: 450000,
 				hotelPrice: 750000,
 			},
 			{
-				areaPrice: 24000,
+				tilePrice: 24000,
 				villaPrice: 150000,
 				buildingPrice: 850000,
 				hotelPrice: 1200000,
@@ -480,13 +480,13 @@ export const CityTileMap: Map<TradableTileIdEnum, CityTile> = new Map([
 			'마드리드',
 			'스페인의 수도',
 			{
-				areaPrice: 280000,
+				tilePrice: 280000,
 				villaPrice: 150000,
 				buildingPrice: 450000,
 				hotelPrice: 750000,
 			},
 			{
-				areaPrice: 24000,
+				tilePrice: 24000,
 				villaPrice: 150000,
 				buildingPrice: 850000,
 				hotelPrice: 1200000,
@@ -500,13 +500,13 @@ export const CityTileMap: Map<TradableTileIdEnum, CityTile> = new Map([
 			'도쿄',
 			'일본의 수도',
 			{
-				areaPrice: 300000,
+				tilePrice: 300000,
 				villaPrice: 200000,
 				buildingPrice: 600000,
 				hotelPrice: 1000000,
 			},
 			{
-				areaPrice: 26000,
+				tilePrice: 26000,
 				villaPrice: 200000,
 				buildingPrice: 900000,
 				hotelPrice: 1270000,
@@ -520,13 +520,13 @@ export const CityTileMap: Map<TradableTileIdEnum, CityTile> = new Map([
 			'파리',
 			'프랑스의 수도',
 			{
-				areaPrice: 320000,
+				tilePrice: 320000,
 				villaPrice: 200000,
 				buildingPrice: 600000,
 				hotelPrice: 1000000,
 			},
 			{
-				areaPrice: 28000,
+				tilePrice: 28000,
 				villaPrice: 200000,
 				buildingPrice: 1000000,
 				hotelPrice: 1270000,
@@ -540,13 +540,13 @@ export const CityTileMap: Map<TradableTileIdEnum, CityTile> = new Map([
 			'로마',
 			'이탈리아의 수도',
 			{
-				areaPrice: 320000,
+				tilePrice: 320000,
 				villaPrice: 200000,
 				buildingPrice: 600000,
 				hotelPrice: 1000000,
 			},
 			{
-				areaPrice: 28000,
+				tilePrice: 28000,
 				villaPrice: 200000,
 				buildingPrice: 1000000,
 				hotelPrice: 1400000,
@@ -560,13 +560,13 @@ export const CityTileMap: Map<TradableTileIdEnum, CityTile> = new Map([
 			'런던',
 			'영국의 수도',
 			{
-				areaPrice: 350000,
+				tilePrice: 350000,
 				villaPrice: 200000,
 				buildingPrice: 600000,
 				hotelPrice: 1000000,
 			},
 			{
-				areaPrice: 35000,
+				tilePrice: 35000,
 				villaPrice: 200000,
 				buildingPrice: 1100000,
 				hotelPrice: 1500000,
@@ -580,13 +580,13 @@ export const CityTileMap: Map<TradableTileIdEnum, CityTile> = new Map([
 			'뉴욕',
 			'미국 최대의 도시',
 			{
-				areaPrice: 350000,
+				tilePrice: 350000,
 				villaPrice: 200000,
 				buildingPrice: 600000,
 				hotelPrice: 1000000,
 			},
 			{
-				areaPrice: 35000,
+				tilePrice: 35000,
 				villaPrice: 200000,
 				buildingPrice: 1100000,
 				hotelPrice: 1500000,

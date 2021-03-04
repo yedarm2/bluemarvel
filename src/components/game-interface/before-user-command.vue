@@ -55,8 +55,8 @@ export default defineComponent({
 			}
 		}
 	},
-	emits: ['hide-game-interface', 'trade-with-bank'],
-	setup(_, { emit }) {
+	emits: ['trade-with-bank'],
+	setup() {
 		return {
 			...useBoardContext(),
 			rollDice: useRollDice(),

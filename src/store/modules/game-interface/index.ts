@@ -3,6 +3,7 @@ import { GameState } from '@/shared/policy';
 import { GameInterfaceState } from "@/store/states";
 import { getTileForDistance, getTileListBetweenFromtAndTo } from '@/shared/boardUtils';
 import { User } from '@/shared/User';
+import { Bank } from '@/shared/Bank';
 import { sleep } from '@/shared/sleep';
 
 const getDiceNumber = (): number => Math.ceil(Math.random() * 6);
@@ -14,6 +15,7 @@ const store: Module<GameInterfaceState, object> = {
 		prevState: GameState.BEFORE_USER_CREATE,
 		currentState: GameState.BEFORE_USER_CREATE,
 		users: [],
+		bank: new Bank(),
 		currentTurnUser: null,
 		currentTurnDiceResult: [],
 		selectedTile: null,
@@ -58,7 +60,7 @@ const store: Module<GameInterfaceState, object> = {
 	},
 
 	actions: {
-		async rollDice({ state, getters, commit }) {
+		async rollDice({ state, commit }) {
 			const diceResult = [getDiceNumber(), getDiceNumber()];
 			commit('setCurrentTurnDiceResult', diceResult);
 
