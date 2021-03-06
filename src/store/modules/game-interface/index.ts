@@ -8,6 +8,12 @@ import { sleep } from '@/shared/sleep';
 
 const getDiceNumber = (): number => Math.ceil(Math.random() * 6);
 
+declare global  {
+	interface Window {
+		injectedDice: number[];
+	}
+}
+
 const store: Module<GameInterfaceState, object> = {
 	namespaced: true,
 
@@ -60,8 +66,8 @@ const store: Module<GameInterfaceState, object> = {
 	},
 
 	actions: {
-		async rollDice({ state, commit }) {
-			const diceResult = [getDiceNumber(), getDiceNumber()];
+		async rollDice({ state, commit }, diceResult = [getDiceNumber(), getDiceNumber()] || window.injectedDice) {
+			// const diceResult = !window.injectedDice ? [getDiceNumber(), getDiceNumber()] : window.injectedDice;
 			commit('setCurrentTurnDiceResult', diceResult);
 
 			const currentTurnUser = state.currentTurnUser as User;
@@ -83,6 +89,19 @@ const store: Module<GameInterfaceState, object> = {
 
 			commit('setCurrentState', GameState.USER_MOVED);
 			commit('setSelectedTile', destinationTile);
+		},
+
+		async rollDiceOnDesertIsland({ getters, commit, dispatch }) {
+			const diceResult = [getDiceNumber(), getDiceNumber()];
+			commit('setCurrentTurnDiceResult', diceResult);
+
+			if (getters.isDouble) {
+				await dispatch('rollDice', diceResult);
+			} else {
+				await sleep(1000);
+				commit('setCurrentState', getters.nextTurnUser);
+				commit('setCurrentState', GameState.BEFORE_USER_COMMAND);
+			}
 		},
 	},
 };
