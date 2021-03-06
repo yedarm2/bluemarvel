@@ -108,6 +108,4 @@ declare global  {
 	}
 }
 
-window.injectedDice = [6, 4];
-
 export default store;
