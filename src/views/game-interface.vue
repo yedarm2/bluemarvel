@@ -17,30 +17,22 @@
 
 <script lang="ts">
 import { defineComponent, computed, watch } from 'vue';
-import { useStore } from "vuex";
+import { useStore } from 'vuex';
+
 import { GameState } from "@/shared/policy";
 import { User } from "@/shared/User";
+import { BaseTile, TileType } from '@/shared/boardData';
+import useGameInterfaceState from '@/shared/useGameInterfaceState';
+
 import BeforeUserCreate from '@/components/game-interface/before-user-create.vue';
 import BeforeUserCommand from '@/components/game-interface/before-user-command.vue';
 import TradeWithBank from '@/components/game-interface/trade-with-bank.vue';
 
-const useInstanceMethods = () => {
+const useBoardController = () => {
 	const {
-		state: { gameInterface },
 		getters,
-		commit
+		commit,
 	} = useStore();
-
-	function allocationMoney() {
-		gameInterface.users.forEach((user: User) => {
-			user.setMoney(gameInterface.bank.toGiveALoan(5000000));
-		});
-	}
-
-	function init() {
-		allocationMoney();
-		commit('gameInterface/setCurrentState', GameState.USER_CREATED);
-	}
 
 	function changeState(state: GameState) {
 		commit('gameInterface/setCurrentState', state);
@@ -54,11 +46,68 @@ const useInstanceMethods = () => {
 	}
 
 	return {
+		changeState,
+		nextTurn,
+	};
+};
+
+const useInstanceMethods = () => {
+	const {
+		state: { gameInterface },
+		commit,
+	} = useStore();
+
+	function allocationMoney() {
+		gameInterface.users.forEach((user: User) => {
+			user.setMoney(gameInterface.bank.toGiveALoan(5000000));
+		});
+	}
+
+	function init() {
+		allocationMoney();
+		commit('gameInterface/setCurrentState', GameState.USER_CREATED);
+	}
+
+	return {
 		prevState: computed(() => gameInterface.prevState),
 		currentState: computed(() => gameInterface.currentState),
 		init,
+	};
+};
+
+const useChangeStateAfterUserCommand = () => {
+	const {
+		currentTurnUser,
+	} = useGameInterfaceState();
+
+	const {
 		changeState,
-		nextTurn
+		nextTurn,
+	} = useBoardController();
+
+	return () => {
+		const arrivedTile = currentTurnUser.value?.currentPositionTile as BaseTile;
+		const arrivedTileType = arrivedTile.type;
+
+		const tileTypesToTrade = [TileType.CITY, TileType.TOURIST_ATTRACTION];
+
+		if (arrivedTileType === TileType.STARTING_POINT) {
+			nextTurn(GameState.BEFORE_USER_COMMAND);
+		} else if (arrivedTileType === TileType.DESERT_ISLAND) {
+			// ? action으로 옮길까??
+			(currentTurnUser.value as User).bindOnDesertIsland();
+			nextTurn(GameState.BEFORE_USER_COMMAND);
+		} else if (tileTypesToTrade.includes(arrivedTileType)) {
+			changeState(GameState.TRADE_WITH_BANK);
+		} else if (arrivedTileType === TileType.GOLDEN_KEY) {
+			// TODO: 추후에 추가
+		} else if (arrivedTileType === TileType.GET_WELFARE) {
+			// TODO: 추후에 추가
+		} else if (arrivedTileType === TileType.PAY_WELFARE) {
+			// TODO: 추후에 추가
+		} else if (arrivedTileType === TileType.SPACE_TRAVEL) {
+			changeState(GameState.TRAVEL_IN_SPACE);
+		}
 	};
 };
 
@@ -78,7 +127,7 @@ export default defineComponent({
 			state: { gameInterface },
 			commit
 		} = useStore();
-
+		const changeStateAfterUserCommand = useChangeStateAfterUserCommand();
 
 		watch(
 			() => JSON.parse(JSON.stringify(gameInterface)),
@@ -87,6 +136,9 @@ export default defineComponent({
 				switch (curr.currentState) {
 					case GameState.USER_CREATED:
 						commit('gameInterface/setCurrentState', GameState.BEFORE_USER_COMMAND);
+						break;
+					case GameState.USER_MOVED:
+						changeStateAfterUserCommand();
 						break;
 					default:
 						break;
@@ -98,6 +150,7 @@ export default defineComponent({
 		return {
 			GameState,
 			...useInstanceMethods(),
+			...useBoardController(),
 		};
 	},
 });
