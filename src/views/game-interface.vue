@@ -7,7 +7,7 @@
 			<before-user-command @trade-with-bank="changeState(GameState.TRADE_WITH_BANK)" />
 		</template>
 		<template v-else-if="currentState === GameState.TRADE_WITH_BANK">
-			<trade-with-bank @end-trade="changeState(prevState)"/>
+			<trade-with-bank @end-trade="nextTurn(GameState.BEFORE_USER_COMMAND)"/>
 		</template>
 		<template v-else-if="currentState === GameState.USER_MOVED">
 			<trade-with-bank @end-trade="nextTurn(GameState.BEFORE_USER_COMMAND)"/>

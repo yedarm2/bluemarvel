@@ -45,4 +45,8 @@ export class User {
 		const TURN_COUNT_TO_BIND = 3;
 		this.bindingTurnCountOnDesert = TURN_COUNT_TO_BIND;
 	}
+
+	decreaseBindingTurnCountOnDesert() {
+		this.bindingTurnCountOnDesert -= 1;
+	}
 }
