@@ -4,7 +4,7 @@ import { GameInterfaceState } from "@/store/states";
 import { getTileForDistance, getTileListBetweenFromtAndTo } from '@/shared/boardUtils';
 import { User } from '@/shared/User';
 import { Bank } from '@/shared/Bank';
-import { sleep } from '@/shared/sleep';
+import { sleep } from '@/shared/index';
 
 const getDiceNumber = (): number => Math.ceil(Math.random() * 6);
 
