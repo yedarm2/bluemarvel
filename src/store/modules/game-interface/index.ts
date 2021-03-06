@@ -85,7 +85,7 @@ const store: Module<GameInterfaceState, object> = {
 		},
 
 		async rollDiceOnDesertIsland({ state, getters, commit, dispatch }) {
-			const diceResult = [getDiceNumber(), getDiceNumber()];
+			const diceResult = window.injectedDice || [getDiceNumber(), getDiceNumber()];
 			commit('setCurrentTurnDiceResult', diceResult);
 
 			if (getters.isDouble) {
