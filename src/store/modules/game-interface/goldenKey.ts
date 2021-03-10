@@ -21,9 +21,19 @@ const store: Module<GoldenKeyState, object> = {
 	},
 
 	actions: {
-		async drawGoldenKey({ commit }) {
-			const goldenKey = drawGoldenKey;
+		async drawGoldenKey({ commit, dispatch }) {
+			const goldenKey = drawGoldenKey();
 			commit('setGoldenKey', goldenKey);
+
+			await dispatch(goldenKey.actionToTrigger, goldenKey.actionPayload);
+		},
+
+		async moveToUser({ commit, dispatch }, distanceToMove: number) {
+			await dispatch('gameInterface/moveUser', distanceToMove, {
+				root: true,
+			});
+
+			commit('removeGoldenKey');
 		},
 	},
 };
