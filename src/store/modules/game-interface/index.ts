@@ -62,13 +62,16 @@ const store: Module<GameInterfaceState, object> = {
 	},
 
 	actions: {
-		async rollDice({ state, commit }, diceResult = window.injectedDice || [getDiceNumber(), getDiceNumber()]) {
+		async rollDice({ getters, commit, dispatch }, diceResult = window.injectedDice || [getDiceNumber(), getDiceNumber()]) {
 			commit('setCurrentTurnDiceResult', diceResult);
 
+			await dispatch('moveUser', getters.distanceToMove);
+		},
+
+		async moveUser({ state, commit }, distanceValue: number) {
 			const currentTurnUser = state.currentTurnUser as User;
 			const { currentPositionTile } = currentTurnUser;
-			const distance = diceResult[0] + diceResult[1];
-			const destinationTile = getTileForDistance(currentPositionTile, distance);
+			const destinationTile = getTileForDistance(currentPositionTile, distanceValue);
 
 			const routeTiles = [
 				...getTileListBetweenFromtAndTo(currentPositionTile, destinationTile),
@@ -113,5 +116,7 @@ declare global  {
 		injectedDice: number[];
 	}
 }
+
+window.injectedDice = [4, 3];
 
 export default store;
