@@ -35,7 +35,7 @@ const store: Module<GameInterfaceState, object> = {
 			const set = new Set(state.currentTurnDiceResult);
 			return !set.has(0) && set.size === 1;
 		},
-		distanceToMove({ currentTurnDiceResult }) {
+		diceSum({ currentTurnDiceResult }) {
 			return currentTurnDiceResult[0] + currentTurnDiceResult[1];
 		},
 	},
@@ -65,7 +65,7 @@ const store: Module<GameInterfaceState, object> = {
 		async rollDice({ getters, commit, dispatch }, diceResult = window.injectedDice || [getDiceNumber(), getDiceNumber()]) {
 			commit('setCurrentTurnDiceResult', diceResult);
 
-			await dispatch('moveUser', getters.distanceToMove);
+			await dispatch('moveUser', getters.diceSum);
 		},
 
 		async moveUser({ state, commit }, distanceValue: number) {

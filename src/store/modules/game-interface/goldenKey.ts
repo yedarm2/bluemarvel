@@ -11,7 +11,6 @@ const store: Module<GoldenKeyState, object> = {
 
 	mutations: {
 		setGoldenKey(state, goldenKey: GoldenKey) {
-			console.info(goldenKey);
 			state.drawedGoldenKey = goldenKey;
 		},
 
