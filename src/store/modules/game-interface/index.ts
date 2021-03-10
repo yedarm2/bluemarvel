@@ -6,6 +6,8 @@ import { User } from '@/shared/User';
 import { Bank } from '@/shared/Bank';
 import { sleep } from '@/shared/index';
 
+import goldenKeyModule from './goldenKey';
+
 const getDiceNumber = (): number => Math.ceil(Math.random() * 6);
 
 const store: Module<GameInterfaceState, object> = {
@@ -99,6 +101,10 @@ const store: Module<GameInterfaceState, object> = {
 				commit('setCurrentState', GameState.BEFORE_USER_COMMAND);
 			}
 		},
+	},
+
+	modules: {
+		goldenKey: goldenKeyModule,
 	},
 };
 
