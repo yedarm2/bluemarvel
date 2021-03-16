@@ -9,6 +9,8 @@ export class User {
 
 	currentPositionTile: BaseTile;
 
+	bindingTurnCountOnDesert = 0;
+
 	constructor(id: number) {
 		this.id = id;
 		this.currentPositionTile = startingPointTile;
@@ -37,5 +39,14 @@ export class User {
 
 	useItem(index: number) {
 		this.items.splice(index, 1);
+	}
+
+	bindOnDesertIsland() {
+		const TURN_COUNT_TO_BIND = 3;
+		this.bindingTurnCountOnDesert = TURN_COUNT_TO_BIND;
+	}
+
+	decreaseBindingTurnCountOnDesert() {
+		this.bindingTurnCountOnDesert -= 1;
 	}
 }

@@ -4,7 +4,7 @@ import { GameInterfaceState } from "@/store/states";
 import { getTileForDistance, getTileListBetweenFromtAndTo } from '@/shared/boardUtils';
 import { User } from '@/shared/User';
 import { Bank } from '@/shared/Bank';
-import { sleep } from '@/shared/sleep';
+import { sleep } from '@/shared/index';
 
 const getDiceNumber = (): number => Math.ceil(Math.random() * 6);
 
@@ -60,8 +60,7 @@ const store: Module<GameInterfaceState, object> = {
 	},
 
 	actions: {
-		async rollDice({ state, commit }) {
-			const diceResult = [getDiceNumber(), getDiceNumber()];
+		async rollDice({ state, commit }, diceResult = window.injectedDice || [getDiceNumber(), getDiceNumber()]) {
 			commit('setCurrentTurnDiceResult', diceResult);
 
 			const currentTurnUser = state.currentTurnUser as User;
@@ -84,7 +83,29 @@ const store: Module<GameInterfaceState, object> = {
 			commit('setCurrentState', GameState.USER_MOVED);
 			commit('setSelectedTile', destinationTile);
 		},
+
+		async rollDiceOnDesertIsland({ state, getters, commit, dispatch }) {
+			const diceResult = window.injectedDice || [getDiceNumber(), getDiceNumber()];
+			commit('setCurrentTurnDiceResult', diceResult);
+
+			if (getters.isDouble) {
+				await dispatch('rollDice', diceResult);
+			} else {
+				const currentTurnUser = state.currentTurnUser as User;
+				currentTurnUser.decreaseBindingTurnCountOnDesert();
+
+				await sleep(1000);
+				commit('setCurrentTurnUser', getters.nextTurnUser);
+				commit('setCurrentState', GameState.BEFORE_USER_COMMAND);
+			}
+		},
 	},
 };
+
+declare global  {
+	interface Window {
+		injectedDice: number[];
+	}
+}
 
 export default store;
