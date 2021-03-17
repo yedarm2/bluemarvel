@@ -84,9 +84,10 @@ const store: Module<GameInterfaceState, object> = {
 			const currentTurnUser = state.currentTurnUser as User;
 			const { currentPositionTile } = currentTurnUser;
 			const destinationTile = getTileForDistance(currentPositionTile, distanceValue);
+			const isReverse = distanceValue < 0;
 
 			const routeTiles = [
-				...getTileListBetweenFromtAndTo(currentPositionTile, destinationTile),
+				...getTileListBetweenFromtAndTo(currentPositionTile, destinationTile, isReverse),
 				destinationTile,
 			];
 
