@@ -9,16 +9,20 @@
 	<button @click="$emit('end-trade')">거래 종료</button>
 	<section v-if="currentBankState !== BankState.NONE" class="bank-view">
 		<template v-if="currentBankState === BankState.BUY_TILE">
-			<p>{{ selectedTile.name }}을(를) {{ tilePrice }}원에 구매 하시겠습니까?</p>
+			<p>{{ selectedTile.name }}을(를) {{ getTilePrice([selectedTile]) }}원에 구매 하시겠습니까?</p>
 			<button @click="buySelectedTile">예</button>
 		</template>
 		<template v-else-if="currentBankState === BankState.SELL_TILES">
 			<template v-if="selectedTile && isTileBelongToUser">
-				<p>{{ selectedTile.name }}을(를) {{ tilePrice }}원에 매각 하시겠습니까?</p>
+				<p>{{ selectedTile.name }}을(를) {{ getTilePrice([selectedTile]) }}원에 매각 하시겠습니까?</p>
 				<button @click="sellSelectedTile">예</button>
 			</template>
 			<template v-else-if="isUserHasTile">
-				토지 선택한 뒤 팔기
+				<span v-for="(tile, index) in userTiles" :key="index">
+					<input type="checkbox" :id="`tile-${index}`" :value="tile" v-model="checkedUserTiles" />
+					<label :for="`tile-${index}`">{{ tile.tile.name }}</label>
+				</span>
+				<p>선택된 타일들을 {{ getTilePrice(checkedUserTiles) }}원에 매각 하시겠습니까?</p>
 			</template>
 		</template>
 		<template v-else-if="currentBankState === BankState.BUY_PROPERTIES">
@@ -30,7 +34,7 @@
 				<input type="checkbox" id="buy-villa" :value="propertyType.VILLA" v-model="checkedProperties" />
 				<label for="buy-villa">{{ propertyType.VILLA }}</label>
 			</div>
-			선택된 부동산 ({{ checkedProperties.join(', ') }})을(를) {{ propertiesPrice }}원에 구매 하시겠습니까?
+			선택된 부동산 ({{ checkedProperties.join(', ') }})을(를) {{ getPropertiesPrice(selectedTile) }}원에 구매 하시겠습니까?
 			<button @click="buySelectedProperties">예</button>
 		</template>
 		<template v-else-if="currentBankState === BankState.SELL_PROPERTIES">
@@ -42,7 +46,7 @@
 						<label :for="'sell-' + item.property.toLowerCase()">{{ item.property }} {{ item.count }}개</label>
 					</template>
 				</div>
-				선택된 부동산 ({{ checkedProperties.join(', ') }})을(를) {{ propertiesPrice }}원에 판매 하시겠습니까?
+				선택된 부동산 ({{ checkedProperties.join(', ') }})을(를) {{ getPropertiesPrice(selectedTile) }}원에 판매 하시겠습니까?
 				<button @click="sellSelectedProperties">예</button>
 			</template>
 			<template v-else-if="isUserHasProperties">
@@ -63,6 +67,7 @@
 <script lang="ts">
 import {computed, defineComponent, ref} from 'vue';
 import {useStore} from "vuex";
+import {Tiles} from '@/shared/Bank';
 import {BankState, propertyType} from '@/shared/policy';
 import {formatMoney} from "@/shared/utils";
 
@@ -75,6 +80,7 @@ export default defineComponent({
 		} = useStore();
 		const currentBankState = ref(BankState.NONE);
 		const checkedProperties = ref([]);
+		const checkedUserTiles = ref([]);
 
 		function changeBankState(newState: BankState) {
 			currentBankState.value = newState;
@@ -132,26 +138,42 @@ export default defineComponent({
 			}
 		}
 
+		function getTilePrice(tiles: Tiles[]) {
+			return formatMoney(tiles.reduce((acc, tile) => {
+				console.info(gameInterface.bank.getTilePrice(tile));
+				// eslint-disable-next-line no-param-reassign
+				acc += gameInterface.bank.getTilePrice(tile);
+				return acc;
+			}, 0));
+		}
+
+		function getPropertiesPrice(tile: Tiles) {
+			return formatMoney(gameInterface.bank.getSpecificPropertyPrice(tile, checkedProperties.value));
+		}
+
 		return {
 			BankState,
 			propertyType,
 			currentBankState,
 			checkedProperties,
+			checkedUserTiles,
 			currentTurnUser: computed(() => gameInterface.currentTurnUser.id),
 			currentTurnUsersRemainedMoney: computed(() => formatMoney(gameInterface.currentTurnUser.getMoney())),
 			purchasedPropertiesOnSelectedTile: computed(() => gameInterface.bank.getPurchasedProperties(gameInterface.selectedTile)),
 			selectedTile: computed(() => gameInterface.selectedTile),
-			tilePrice: computed(() => formatMoney(gameInterface.bank.getTilePrice(gameInterface.selectedTile))),
-			propertiesPrice: computed(() => formatMoney(gameInterface.bank.getSpecificPropertyPrice(gameInterface.selectedTile, checkedProperties.value))),
 			isTileBelongToUser: computed(() => gameInterface.bank.checkOwnerOfTile(gameInterface.selectedTile, gameInterface.currentTurnUser.id)),
 			isUserHasTileProperties: computed(() => gameInterface.bank.checkOwnerHasProperties(gameInterface.selectedTile, gameInterface.currentTurnUser.id)),
 			isUserHasTile: computed(() => gameInterface.bank.checkUserHasTile(gameInterface.currentTurnUser.id)),
 			isUserHasProperties: computed(() => gameInterface.bank.checkUserHasProperties(gameInterface.currentTurnUser.id)),
+			userTiles: computed(() => gameInterface.bank.getUsersTile(gameInterface.currentTurnUser.id)),
+			userTileAndProperties: computed(() => gameInterface.bank.getUsersTileAndProperties(gameInterface.selectedTile, gameInterface.currentTurnUser.id)),
 			changeBankState,
 			buySelectedTile,
 			sellSelectedTile,
 			buySelectedProperties,
 			sellSelectedProperties,
+			getTilePrice,
+			getPropertiesPrice
 		};
 	},
 });

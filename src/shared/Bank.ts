@@ -1,7 +1,7 @@
 import {tileMatrix, CityTile, TouristAttractionTile, TradableTile} from '@/shared/boardData';
 import {propertyType} from '@/shared/policy';
 
-interface Tiles {
+export interface Tiles {
 	tile: TradableTile;
 	owner: null | number;
 	properties: {
@@ -113,6 +113,7 @@ export class Bank {
 
 	getTilePrice(tile: TradableTile): number {
 		const selectedTile = this.allTiles.find((t) => t.tile.id === tile.id);
+		console.info(selectedTile);
 		if (!selectedTile) return 0;
 		if (selectedTile.tile instanceof TouristAttractionTile) {
 			return selectedTile.tile.price;
@@ -214,5 +215,21 @@ export class Bank {
 	checkUserHasProperties(id: number): boolean {
 		const isUserHasTile = this.checkUserHasTile(id);
 		return isUserHasTile && this.allTiles.some((t) => t.properties.HOTEL + t.properties.BUILDING + t.properties.VILLA > 0);
+	}
+
+	getUsersTile(id: number): Tiles[] {
+		return this.allTiles.filter((t) => t.owner === id);
+	}
+
+	getUsersTileAndProperties(tile: TradableTile, id: number): propertyType[] {
+		const selectedTile = this.allTiles.find((t) => t.tile.id === tile.id);
+		if (selectedTile) {
+			if (selectedTile.owner === id) {
+				const keys = Object.keys(selectedTile.properties) as propertyType[];
+				return keys.filter((key) => selectedTile.properties[key] > 0);
+			}
+			return [];
+		}
+		return [];
 	}
 }
