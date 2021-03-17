@@ -80,7 +80,7 @@ const store: Module<GameInterfaceState, object> = {
 			await dispatch('moveUser', getters.diceSum);
 		},
 
-		async moveUser({ state, commit }, distanceValue: number) {
+		async moveUser({ state, getters, commit }, distanceValue: number) {
 			const currentTurnUser = state.currentTurnUser as User;
 			const { currentPositionTile } = currentTurnUser;
 			const destinationTile = getTileForDistance(currentPositionTile, distanceValue);
@@ -95,6 +95,11 @@ const store: Module<GameInterfaceState, object> = {
 				await sleep(100);
 				currentTurnUser.setPositionTile(nextRouteTile);
 				nextRouteTile = routeTiles.shift();
+			}
+
+			if (currentTurnUser.currentPositionTile.type === TileType.DESERT_ISLAND) {
+				commit('setCurrentTurnUser', getters.nextTurnUser);
+				commit('setCurrentState', GameState.BEFORE_USER_COMMAND);
 			}
 
 			commit('setCurrentState', GameState.USER_MOVED);
