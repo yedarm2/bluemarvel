@@ -1,8 +1,8 @@
 <template>
 	<div class="golden-key-processor">
-		<tempalte v-if="drawedGoldenKey === null">
+		<template v-if="drawedGoldenKey === null">
 			황금열쇠를 뽑고 있습니다.
-		</tempalte>
+		</template>
 		<template v-else>
 			<div class="golden-key-processor__golden-key-title">
 				{{ drawedGoldenKey.title }}
