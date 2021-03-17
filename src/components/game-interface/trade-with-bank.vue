@@ -1,5 +1,6 @@
 <template>
 	<p>은행과 거래할 항목을 선택하세요.</p>
+	<p>{{currentTurnUser}}유저의 잔액은{{ currentTurnUsersRemainedMoney }}원 입니다.</p>
 	<button v-if="!isTileBelongToUser && selectedTile" @click="changeBankState(BankState.BUY_TILE)">토지 사기</button>
 	<button v-if="isTileBelongToUser || isUserHasTile" @click="changeBankState(BankState.SELL_TILES)">토지 팔기</button>
 	<button v-if="isTileBelongToUser && !isUserHasTileProperties && selectedTile" @click="changeBankState(BankState.BUY_PROPERTIES)">건물 사기</button>
@@ -136,6 +137,8 @@ export default defineComponent({
 			propertyType,
 			currentBankState,
 			checkedProperties,
+			currentTurnUser: computed(() => gameInterface.currentTurnUser.id),
+			currentTurnUsersRemainedMoney: computed(() => formatMoney(gameInterface.currentTurnUser.getMoney())),
 			purchasedPropertiesOnSelectedTile: computed(() => gameInterface.bank.getPurchasedProperties(gameInterface.selectedTile)),
 			selectedTile: computed(() => gameInterface.selectedTile),
 			tilePrice: computed(() => formatMoney(gameInterface.bank.getTilePrice(gameInterface.selectedTile))),
