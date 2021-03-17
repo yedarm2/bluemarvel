@@ -5,10 +5,22 @@ import { getTileForDistance, getTileListBetweenFromtAndTo } from '@/shared/board
 import { User } from '@/shared/User';
 import { Bank } from '@/shared/Bank';
 import { sleep } from '@/shared/index';
+import { TileType } from '@/shared/boardData';
 
 import goldenKeyModule from './goldenKey';
 
 const getDiceNumber = (): number => Math.ceil(Math.random() * 6);
+
+const getDiceResult = () => {
+	if (window.injectedDice && window.injectedDice.length > 1) {
+		const result = window.injectedDice;
+		window.injectedDice = [];
+
+		return result;
+	}
+
+	return [getDiceNumber(), getDiceNumber()];
+};
 
 const store: Module<GameInterfaceState, object> = {
 	namespaced: true,
@@ -62,7 +74,7 @@ const store: Module<GameInterfaceState, object> = {
 	},
 
 	actions: {
-		async rollDice({ getters, commit, dispatch }, diceResult = window.injectedDice || [getDiceNumber(), getDiceNumber()]) {
+		async rollDice({ getters, commit, dispatch }, diceResult = getDiceResult()) {
 			commit('setCurrentTurnDiceResult', diceResult);
 
 			await dispatch('moveUser', getters.diceSum);
@@ -90,7 +102,7 @@ const store: Module<GameInterfaceState, object> = {
 		},
 
 		async rollDiceOnDesertIsland({ state, getters, commit, dispatch }) {
-			const diceResult = window.injectedDice || [getDiceNumber(), getDiceNumber()];
+			const diceResult = getDiceResult();
 			commit('setCurrentTurnDiceResult', diceResult);
 
 			if (getters.isDouble) {
