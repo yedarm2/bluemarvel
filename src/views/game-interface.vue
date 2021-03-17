@@ -7,7 +7,7 @@
 			<before-user-command @trade-with-bank="changeState(GameState.TRADE_WITH_BANK)" />
 		</template>
 		<template v-else-if="currentState === GameState.TRADE_WITH_BANK">
-			<trade-with-bank @end-trade="nextTurn(GameState.BEFORE_USER_COMMAND)"/>
+			<trade-with-bank @end-trade="changeState(GameState.BEFORE_USER_COMMAND)"/>
 		</template>
 		<template v-else-if="currentState === GameState.USER_MOVED">
 			<trade-with-bank @end-trade="nextTurn(GameState.BEFORE_USER_COMMAND)"/>
@@ -98,7 +98,7 @@ const useChangeStateAfterUserCommand = () => {
 			(currentTurnUser.value as User).bindOnDesertIsland();
 			nextTurn(GameState.BEFORE_USER_COMMAND);
 		} else if (tileTypesToTrade.includes(arrivedTileType)) {
-			changeState(GameState.TRADE_WITH_BANK);
+			// changeState(GameState.TRADE_WITH_BANK);
 		} else if (arrivedTileType === TileType.GOLDEN_KEY) {
 			// TODO: 추후에 추가
 		} else if (arrivedTileType === TileType.GET_WELFARE) {
