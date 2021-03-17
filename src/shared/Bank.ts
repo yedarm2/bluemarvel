@@ -9,6 +9,11 @@ interface Tiles {
 	};
 }
 
+interface PropertyResponse {
+	property: propertyType;
+	count: number;
+}
+
 export class Bank {
 	remainedMoney = 900000000;
 
@@ -92,6 +97,20 @@ export class Bank {
 		return this.getSpecificPropertyPrice(tile, properties);
 	}
 
+	getPurchasedProperties(tile: TradableTile): PropertyResponse[] {
+		const selectedTile = this.allTiles.find((t) => t.tile.id === tile.id);
+		if (selectedTile) {
+			return Object.keys(selectedTile.properties).reduce((acc, property) => {
+				const key = property as propertyType;
+				if (selectedTile.properties[key] > 0) {
+					acc.push({ property: key, count: selectedTile.properties[key]});
+				}
+				return acc;
+			}, [] as PropertyResponse[]);
+		}
+		return [];
+	}
+
 	getTilePrice(tile: TradableTile): number {
 		const selectedTile = this.allTiles.find((t) => t.tile.id === tile.id);
 		if (!selectedTile) return 0;
@@ -122,9 +141,6 @@ export class Bank {
 	getSpecificPropertyPrice(tile: TradableTile, properties: propertyType[]): number {
 		const selectedTile = this.allTiles.find((t) => t.tile.id === tile.id);
 		if (!selectedTile) return 0;
-		if (selectedTile.tile instanceof TouristAttractionTile) {
-			return selectedTile.tile.price;
-		}
 		if (selectedTile.tile instanceof CityTile) {
 			if (properties.length > 0) {
 				const t = selectedTile.tile as CityTile;
@@ -149,7 +165,7 @@ export class Bank {
 				}, 0);
 				/* eslint-enable no-param-reassign */
 			}
-			return selectedTile.tile.buildingPriceInfo.tilePrice;
+			return 0;
 		}
 		return 0;
 	}
@@ -176,7 +192,7 @@ export class Bank {
 		if (selectedTile) {
 			return selectedTile.owner === id;
 		}
-		throw new Error('주인 없는 땅입니다.');
+		return false;
 	}
 
 	checkOwnerHasProperties(tile: TradableTile, id: number): boolean {
@@ -186,8 +202,17 @@ export class Bank {
 				const keys = Object.keys(selectedTile.properties) as propertyType[];
 				return keys.some((key) => selectedTile.properties[key] > 0);
 			}
-			throw new Error('다른 유저의 땅입니다.');
+			return false;
 		}
-		throw new Error('주인 없는 땅입니다.');
+		return false;
+	}
+
+	checkUserHasTile(id: number): boolean {
+		return this.allTiles.some((t) => t.owner === id);
+	}
+
+	checkUserHasProperties(id: number): boolean {
+		const isUserHasTile = this.checkUserHasTile(id);
+		return isUserHasTile && this.allTiles.some((t) => t.properties.HOTEL + t.properties.BUILDING + t.properties.VILLA > 0);
 	}
 }
