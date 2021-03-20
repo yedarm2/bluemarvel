@@ -5,7 +5,7 @@ import { getTileForDistance, getTileListBetweenFromtAndTo } from '@/shared/board
 import { User } from '@/shared/User';
 import { Bank } from '@/shared/Bank';
 import { sleep } from '@/shared/index';
-import { TileType } from '@/shared/boardData';
+import { BaseTile, TileType } from '@/shared/boardData';
 
 import goldenKeyModule from './goldenKey';
 
@@ -77,14 +77,21 @@ const store: Module<GameInterfaceState, object> = {
 		async rollDice({ getters, commit, dispatch }, diceResult = getDiceResult()) {
 			commit('setCurrentTurnDiceResult', diceResult);
 
-			await dispatch('moveUser', getters.diceSum);
+			await dispatch('moveUserByDistance', getters.diceSum);
 		},
 
-		async moveUser({ state, getters, commit }, distanceValue: number) {
+		async moveUserByDistance({ state, dispatch }, distanceValue: number) {
 			const currentTurnUser = state.currentTurnUser as User;
 			const { currentPositionTile } = currentTurnUser;
 			const destinationTile = getTileForDistance(currentPositionTile, distanceValue);
 			const isReverse = distanceValue < 0;
+
+			await dispatch('moveUserByTile', { destinationTile, isReverse });
+		},
+
+		async moveUserByTile({ state, getters, commit }, { destinationTile, isReverse = false }: {destinationTile: BaseTile; isReverse: boolean}) {
+			const currentTurnUser = state.currentTurnUser as User;
+			const { currentPositionTile } = currentTurnUser;
 
 			const routeTiles = [
 				...getTileListBetweenFromtAndTo(currentPositionTile, destinationTile, isReverse),
