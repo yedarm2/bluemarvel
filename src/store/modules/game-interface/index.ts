@@ -130,6 +130,20 @@ const store: Module<GameInterfaceState, object> = {
 				commit('setCurrentState', GameState.BEFORE_USER_COMMAND);
 			}
 		},
+
+		nextTurn({ state, getters, commit }, {
+			stateToChange = GameState.BEFORE_USER_COMMAND,
+			forceSkip = false,
+		} = {}) {
+			const currentTurnUser = state.currentTurnUser as User;
+			currentTurnUser.resetTurnState();
+
+			if (!getters.isDouble && !forceSkip) {
+				commit('setCurrentTurnUser', getters.nextTurnUser);
+			}
+
+			commit('setCurrentState', stateToChange);
+		},
 	},
 
 	modules: {
