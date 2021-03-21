@@ -112,12 +112,6 @@ const store: Module<GameInterfaceState, object> = {
 				nextRouteTile = routeTiles.shift();
 			}
 
-			if (currentTurnUser.currentPositionTile.type === TileType.DESERT_ISLAND) {
-				commit('setCurrentTurnUser', getters.nextTurnUser);
-				commit('setCurrentState', GameState.BEFORE_USER_COMMAND);
-				return;
-			}
-
 			commit('setCurrentState', GameState.USER_MOVED);
 			commit('setSelectedTile', destinationTile);
 		},
