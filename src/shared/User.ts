@@ -1,5 +1,10 @@
 import { BaseTile, startingPointTile } from '@/shared/boardData';
 
+type UserTurnStateKey = 'enableToDrawGoldenCard';
+type UserTurnState = {
+	[k in UserTurnStateKey]: boolean;
+}
+
 export class User {
 	id: number;
 
@@ -10,6 +15,10 @@ export class User {
 	currentPositionTile: BaseTile;
 
 	bindingTurnCountOnDesert = 0;
+
+	turnState: UserTurnState = {
+		enableToDrawGoldenCard: true,
+	};
 
 	constructor(id: number) {
 		this.id = id;
@@ -48,5 +57,15 @@ export class User {
 
 	decreaseBindingTurnCountOnDesert() {
 		this.bindingTurnCountOnDesert -= 1;
+	}
+
+	resetTurnState() {
+		this.turnState = {
+			enableToDrawGoldenCard: true,
+		};
+	};
+
+	setTurnState(turnStateToSet: UserTurnStateKey, value: boolean) {
+		this.turnState[turnStateToSet] = value;
 	}
 }
