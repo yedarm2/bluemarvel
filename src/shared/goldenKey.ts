@@ -1,4 +1,4 @@
-import { startingPointTile } from "./boardData";
+import { desertIslandTile, spaceTravleTile, startingPointTile } from "./boardData";
 
 export interface GoldenKey {
 	actionToTrigger: string;
@@ -63,10 +63,28 @@ export const goldenKeys: GoldenKey[] = [
 		actionPayload: 300000,
 	},
 	{
+		actionToTrigger: 'tradeWithBank',
+		title: '장학금 혜택',
+		description: '노벨 평화상을 수상하게 되셨습니다. 상금 30만원을 받으세요.',
+		actionPayload: 100000,
+	},
+	{
 		actionToTrigger: 'moveUserByTile',
 		title: '고속도로',
 		description: '고속도로로 이동을 합니다 출발지까지 이동하겠습니다.',
 		actionPayload: startingPointTile,
+	},
+	{
+		actionToTrigger: 'moveUserByTile',
+		title: '우주여행 초청장',
+		description: '우주여행에 초청을 받으셨습니다. 우주정류장으로 이동하겠습니다.',
+		actionPayload: spaceTravleTile,
+	},
+	{
+		actionToTrigger: 'warpUserByTile',
+		title: '무인도',
+		description: '무인도에 표류하게 되었습니다. 무인도로 이동하겠습니다...',
+		actionPayload: desertIslandTile,
 	},
 	{
 		actionToTrigger: 'circumnavigation',

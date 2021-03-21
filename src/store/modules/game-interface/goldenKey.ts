@@ -49,6 +49,17 @@ const store: Module<GoldenKeyState, any> = {
 			commit('removeGoldenKey');
 		},
 
+		async warpUserByTile({ commit, dispatch }, destinationTile: BaseTile) {
+			await dispatch('gameInterface/moveUserByTile', {
+				isDirect: true,
+				destinationTile,
+			}, {
+				root: true,
+			});
+
+			commit('removeGoldenKey');
+		},
+
 		// TODO: 다시 돌아온 뒤에 어떻게 해야되지??? 스킵시키는 게 맞을 텐데 어떻게 해야할까...
 		async circumnavigation({ rootState, dispatch }) {
 			const currentTurnUser = rootState.gameInterface.currentTurnUser as User;
