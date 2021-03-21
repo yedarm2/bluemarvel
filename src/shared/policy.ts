@@ -36,3 +36,5 @@ export enum propertyType {
 	BUILDING = 'BUILDING',
 	HOTEL = 'HOTEL'
 }
+
+export const SALARY_MONEY = 200000;

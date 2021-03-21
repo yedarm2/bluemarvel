@@ -1,5 +1,5 @@
 import { Module } from 'vuex';
-import { GameState } from '@/shared/policy';
+import { GameState, SALARY_MONEY } from '@/shared/policy';
 import { GameInterfaceState } from "@/store/states";
 import { getTileForDistance, getTileListBetweenFromtAndTo } from '@/shared/boardUtils';
 import { User } from '@/shared/User';
@@ -90,6 +90,7 @@ const store: Module<GameInterfaceState, object> = {
 		},
 
 		async moveUserByTile({ state, getters, commit }, { destinationTile, isReverse = false }: {destinationTile: BaseTile; isReverse: boolean}) {
+			const bank = state.bank as Bank;
 			const currentTurnUser = state.currentTurnUser as User;
 			const { currentPositionTile } = currentTurnUser;
 
@@ -102,6 +103,12 @@ const store: Module<GameInterfaceState, object> = {
 			while (nextRouteTile) {
 				await sleep(100);
 				currentTurnUser.setPositionTile(nextRouteTile);
+
+				if (nextRouteTile.type === TileType.STARTING_POINT) {
+					bank.setMoney(-SALARY_MONEY);
+					currentTurnUser.setMoney(SALARY_MONEY);
+				}
+
 				nextRouteTile = routeTiles.shift();
 			}
 
