@@ -19,10 +19,11 @@
 			</template>
 			<template v-else-if="isUserHasTile">
 				<span v-for="(tile, index) in userTiles" :key="index">
-					<input type="checkbox" :id="`tile-${index}`" :value="tile" v-model="checkedUserTiles" />
+					<input type="checkbox" :id="`tile-${index}`" :value="tile.tile" v-model="checkedUserTiles" />
 					<label :for="`tile-${index}`">{{ tile.tile.name }}</label>
 				</span>
 				<p>선택된 타일들을 {{ getTilePrice(checkedUserTiles) }}원에 매각 하시겠습니까?</p>
+				<button @click="sellCheckedUserTile">예</button>
 			</template>
 		</template>
 		<template v-else-if="currentBankState === BankState.BUY_PROPERTIES">
@@ -65,11 +66,12 @@
 </template>
 
 <script lang="ts">
-import {computed, defineComponent, ref} from 'vue';
-import {useStore} from "vuex";
-import {Tiles} from '@/shared/Bank';
-import {BankState, propertyType} from '@/shared/policy';
-import {formatMoney} from "@/shared/utils";
+import { computed, defineComponent, ref } from 'vue';
+import { useStore } from "vuex";
+import { Tiles } from '@/shared/Bank';
+import { TradableTile } from '@/shared/boardData';
+import { BankState, propertyType } from '@/shared/policy';
+import { formatMoney } from "@/shared/utils";
 
 export default defineComponent({
 	name: 'TradeWithBank',
@@ -114,6 +116,21 @@ export default defineComponent({
 			}
 		}
 
+		function sellCheckedUserTile() {
+			try {
+				gameInterface.currentTurnUser.setMoney(checkedUserTiles.value.reduce((prev, tile) => {
+					/* eslint-disable no-param-reassign */
+					prev += gameInterface.bank.purchaseTiles(tile);
+					return prev
+				}, 0));
+				currentBankState.value = BankState.NONE;
+				alert('타일 매각에 성공하였습니다.');
+			} catch (error) {
+				console.info(error);
+				alert('주인없는 타일 입니다.');
+			}
+		}
+
 		function buySelectedProperties() {
 			const propertiesPrice = gameInterface.bank.getSpecificPropertyPrice(gameInterface.selectedTile, checkedProperties.value);
 			if (propertiesPrice > gameInterface.currentTurnUser.getMoney()) {
@@ -138,10 +155,9 @@ export default defineComponent({
 			}
 		}
 
-		function getTilePrice(tiles: Tiles[]) {
-			return formatMoney(tiles.reduce((acc, tile) => {
-				console.info(gameInterface.bank.getTilePrice(tile));
-				// eslint-disable-next-line no-param-reassign
+		function getTilePrice(tiles: TradableTile[]) {
+			return formatMoney(tiles.reduce((acc: number, tile: TradableTile) => {
+				/* eslint-disable no-param-reassign */
 				acc += gameInterface.bank.getTilePrice(tile);
 				return acc;
 			}, 0));
@@ -170,6 +186,7 @@ export default defineComponent({
 			changeBankState,
 			buySelectedTile,
 			sellSelectedTile,
+			sellCheckedUserTile,
 			buySelectedProperties,
 			sellSelectedProperties,
 			getTilePrice,
