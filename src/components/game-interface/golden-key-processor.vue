@@ -15,6 +15,7 @@
 </template>
 
 <script lang="ts">
+import { User } from '@/shared/User';
 import { computed, defineComponent, onUnmounted } from 'vue';
 import { useStore } from 'vuex';
 
@@ -28,9 +29,12 @@ export default defineComponent({
 			dispatch,
 		} = useStore();
 
+		const currentTurnUser = state.gameInterface.currentTurnUser as User;
 		const drawedGoldenKey = computed(() => state.gameInterface.goldenKey.drawedGoldenKey);
 
-		dispatch('gameInterface/goldenKey/drawGoldenKey');
+		if (currentTurnUser.turnState.enableToDrawGoldenCard) {
+			dispatch('gameInterface/goldenKey/drawGoldenKey');
+		}
 
 		onUnmounted(() => {
 			commit('gameInterface/goldenKey/removeGoldenKey');
