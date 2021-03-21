@@ -52,10 +52,18 @@ const store: Module<GoldenKeyState, any> = {
 		// TODO: 다시 돌아온 뒤에 어떻게 해야되지??? 스킵시키는 게 맞을 텐데 어떻게 해야할까...
 		async circumnavigation({ rootState, dispatch }) {
 			const currentTurnUser = rootState.gameInterface.currentTurnUser as User;
+			currentTurnUser.setTurnState('enableToDrawGoldenCard', false);
+
+			const bank = rootState.gameInterface.bank as Bank;
+			currentTurnUser.setMoney(bank.giveWelfareMoney());
+
 			await dispatch('moveUserByTile', currentTurnUser.currentPositionTile);
+			await dispatch('gameInterface/nextTurn', {}, {
+				root: true,
+			});
 		},
 
-		async tradeWithBank({ rootState, commit }, tradingPrice: number) {
+		async tradeWithBank({ rootState }, tradingPrice: number) {
 			const bank = rootState.gameInterface.bank as Bank;
 			const currentTurnUser = rootState.gameInterface.currentTurnUser as User;
 
