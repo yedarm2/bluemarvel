@@ -89,12 +89,12 @@ const store: Module<GameInterfaceState, object> = {
 			await dispatch('moveUserByTile', { destinationTile, isReverse });
 		},
 
-		async moveUserByTile({ state, getters, commit }, { destinationTile, isReverse = false }: {destinationTile: BaseTile; isReverse: boolean}) {
+		async moveUserByTile({ state, getters, commit }, { destinationTile, isDirect = false, isReverse = false }: {destinationTile: BaseTile; isDirect: boolean; isReverse: boolean}) {
 			const bank = state.bank as Bank;
 			const currentTurnUser = state.currentTurnUser as User;
 			const { currentPositionTile } = currentTurnUser;
 
-			const routeTiles = [
+			const routeTiles = isDirect ? [destinationTile] : [
 				...getTileListBetweenFromtAndTo(currentPositionTile, destinationTile, isReverse),
 				destinationTile,
 			];
