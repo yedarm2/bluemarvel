@@ -10,7 +10,7 @@
 	<p v-if="currentTurnUserIsBindedDesertIsland">
 		현재 무인도에 갇힌 상태입니다. 더블이 나오거나 {{ bindingTurnCountOnDesert }} 턴 뒤에 나올 수 있습니다.
 	</p>
-	<button @click="$emit('trade-with-bank')">내 토지 팔기</button>
+	<button v-if="isUserHasTile" @click="$emit('trade-with-bank')">내 토지 팔기</button>
 	<button @click="rollDice">주사위 굴리기(즉시 실행됩니다.)</button>
 </template>
 
@@ -32,6 +32,7 @@ const useDiceData = () => {
 	} = toRefs(gameInterface);
 
 	return {
+		isUserHasTile: computed(() => gameInterface.bank.checkUserHasTile(gameInterface.currentTurnUser.id)),
 		hasDiceResult: computed(() => currentTurnDiceResult.value.length > 0),
 		currentTurnDiceResult: computed(() => currentTurnDiceResult.value),
 		isDouble: computed(() => getters['gameInterface/isDouble']),
