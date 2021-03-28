@@ -1,6 +1,6 @@
 <template>
 	<p v-if="hasDiceResult">
-		주사위 결과: {{ currentTurnDiceResult[0] }} + {{ currentTurnDiceResult[1] }} = {{ distanceToMove }}
+		주사위 결과: {{ currentTurnDiceResult[0] }} + {{ currentTurnDiceResult[1] }} = {{ diceSum }}
 	</p>
 	<p>
 		<strong v-if="isDouble">더블이 나왔습니다.</strong>
@@ -36,7 +36,7 @@ const useDiceData = () => {
 		hasDiceResult: computed(() => currentTurnDiceResult.value.length > 0),
 		currentTurnDiceResult: computed(() => currentTurnDiceResult.value),
 		isDouble: computed(() => getters['gameInterface/isDouble']),
-		distanceToMove: computed(() => getters['gameInterface/distanceToMove']),
+		diceSum: computed(() => getters['gameInterface/diceSum']),
 	};
 };
 

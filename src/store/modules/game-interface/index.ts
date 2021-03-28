@@ -1,12 +1,26 @@
 import { Module } from 'vuex';
-import { GameState } from '@/shared/policy';
+import { GameState, SALARY_MONEY } from '@/shared/policy';
 import { GameInterfaceState } from "@/store/states";
 import { getTileForDistance, getTileListBetweenFromtAndTo } from '@/shared/boardUtils';
 import { User } from '@/shared/User';
 import { Bank } from '@/shared/Bank';
 import { sleep } from '@/shared/index';
+import { BaseTile, TileType } from '@/shared/boardData';
+
+import goldenKeyModule from './goldenKey';
 
 const getDiceNumber = (): number => Math.ceil(Math.random() * 6);
+
+const getDiceResult = () => {
+	if (window.injectedDice && window.injectedDice.length > 1) {
+		const result = window.injectedDice;
+		window.injectedDice = [];
+
+		return result;
+	}
+
+	return [getDiceNumber(), getDiceNumber()];
+};
 
 const store: Module<GameInterfaceState, object> = {
 	namespaced: true,
@@ -33,7 +47,7 @@ const store: Module<GameInterfaceState, object> = {
 			const set = new Set(state.currentTurnDiceResult);
 			return !set.has(0) && set.size === 1;
 		},
-		distanceToMove({ currentTurnDiceResult }) {
+		diceSum({ currentTurnDiceResult }) {
 			return currentTurnDiceResult[0] + currentTurnDiceResult[1];
 		},
 	},
@@ -60,16 +74,28 @@ const store: Module<GameInterfaceState, object> = {
 	},
 
 	actions: {
-		async rollDice({ state, commit }, diceResult = window.injectedDice || [getDiceNumber(), getDiceNumber()]) {
+		async rollDice({ getters, commit, dispatch }, diceResult = getDiceResult()) {
 			commit('setCurrentTurnDiceResult', diceResult);
 
+			await dispatch('moveUserByDistance', getters.diceSum);
+		},
+
+		async moveUserByDistance({ state, dispatch }, distanceValue: number) {
 			const currentTurnUser = state.currentTurnUser as User;
 			const { currentPositionTile } = currentTurnUser;
-			const distance = diceResult[0] + diceResult[1];
-			const destinationTile = getTileForDistance(currentPositionTile, distance);
+			const destinationTile = getTileForDistance(currentPositionTile, distanceValue);
+			const isReverse = distanceValue < 0;
 
-			const routeTiles = [
-				...getTileListBetweenFromtAndTo(currentPositionTile, destinationTile),
+			await dispatch('moveUserByTile', { destinationTile, isReverse });
+		},
+
+		async moveUserByTile({ state, getters, commit }, { destinationTile, isDirect = false, isReverse = false }: {destinationTile: BaseTile; isDirect: boolean; isReverse: boolean}) {
+			const bank = state.bank as Bank;
+			const currentTurnUser = state.currentTurnUser as User;
+			const { currentPositionTile } = currentTurnUser;
+
+			const routeTiles = isDirect ? [destinationTile] : [
+				...getTileListBetweenFromtAndTo(currentPositionTile, destinationTile, isReverse),
 				destinationTile,
 			];
 
@@ -77,6 +103,12 @@ const store: Module<GameInterfaceState, object> = {
 			while (nextRouteTile) {
 				await sleep(100);
 				currentTurnUser.setPositionTile(nextRouteTile);
+
+				if (nextRouteTile.type === TileType.STARTING_POINT) {
+					bank.setMoney(-SALARY_MONEY);
+					currentTurnUser.setMoney(SALARY_MONEY);
+				}
+
 				nextRouteTile = routeTiles.shift();
 			}
 
@@ -85,7 +117,7 @@ const store: Module<GameInterfaceState, object> = {
 		},
 
 		async rollDiceOnDesertIsland({ state, getters, commit, dispatch }) {
-			const diceResult = window.injectedDice || [getDiceNumber(), getDiceNumber()];
+			const diceResult = getDiceResult();
 			commit('setCurrentTurnDiceResult', diceResult);
 
 			if (getters.isDouble) {
@@ -99,6 +131,24 @@ const store: Module<GameInterfaceState, object> = {
 				commit('setCurrentState', GameState.BEFORE_USER_COMMAND);
 			}
 		},
+
+		nextTurn({ state, getters, commit }, {
+			stateToChange = GameState.BEFORE_USER_COMMAND,
+			forceSkip = false,
+		} = {}) {
+			const currentTurnUser = state.currentTurnUser as User;
+			currentTurnUser.resetTurnState();
+
+			if (!getters.isDouble && !forceSkip) {
+				commit('setCurrentTurnUser', getters.nextTurnUser);
+			}
+
+			commit('setCurrentState', stateToChange);
+		},
+	},
+
+	modules: {
+		goldenKey: goldenKeyModule,
 	},
 };
 

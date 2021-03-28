@@ -662,6 +662,10 @@ export const touristAttractionTileMap: Map<
 ]);
 
 export const startingPointTile = new BaseTile(TileType.STARTING_POINT);
+export const desertIslandTile = new BaseTile(TileType.DESERT_ISLAND);
+export const getWelfareTile = new BaseTile(TileType.GET_WELFARE);
+export const spaceTravleTile = new BaseTile(TileType.SPACE_TRAVEL);
+export const payWelfareTile = new BaseTile(TileType.PAY_WELFARE);
 
 export const tileMatrix: BaseTile[][] = [
 	[
@@ -679,7 +683,7 @@ export const tileMatrix: BaseTile[][] = [
 		CityTileMap.get(TradableTileIdEnum.ISTANBUL) as CityTile,
 	],
 	[
-		new BaseTile(TileType.DESERT_ISLAND),
+		desertIslandTile,
 		CityTileMap.get(TradableTileIdEnum.ATHENES) as CityTile,
 		new GoldenKeyTile(3),
 		CityTileMap.get(TradableTileIdEnum.COPENHAGEN) as CityTile,
@@ -693,7 +697,7 @@ export const tileMatrix: BaseTile[][] = [
 		CityTileMap.get(TradableTileIdEnum.OTAWA) as CityTile,
 	],
 	[
-		new BaseTile(TileType.GET_WELFARE),
+		getWelfareTile,
 		CityTileMap.get(TradableTileIdEnum.BUENOSAIRES) as CityTile,
 		new GoldenKeyTile(5),
 		CityTileMap.get(TradableTileIdEnum.SAO_PAULO) as CityTile,
@@ -709,7 +713,7 @@ export const tileMatrix: BaseTile[][] = [
 		CityTileMap.get(TradableTileIdEnum.MADRID) as CityTile,
 	],
 	[
-		new BaseTile(TileType.SPACE_TRAVEL),
+		spaceTravleTile,
 		CityTileMap.get(TradableTileIdEnum.TOKYO) as CityTile,
 		touristAttractionTileMap.get(
 			TradableTileIdEnum.COLUMBIA,
@@ -719,7 +723,7 @@ export const tileMatrix: BaseTile[][] = [
 		new GoldenKeyTile(6),
 		CityTileMap.get(TradableTileIdEnum.LONDON) as CityTile,
 		CityTileMap.get(TradableTileIdEnum.NEW_YORK) as CityTile,
-		new BaseTile(TileType.PAY_WELFARE),
+		payWelfareTile,
 		touristAttractionTileMap.get(
 			TradableTileIdEnum.SEOUL,
 		) as TouristAttractionTile,

@@ -17,6 +17,8 @@ interface PropertyResponse {
 export class Bank {
 	remainedMoney = 900000000;
 
+	stackedWelfareMoney = 0;
+
 	allTiles: Tiles[] = [];
 
 	constructor() {
@@ -25,6 +27,17 @@ export class Bank {
 
 	init() {
 		this.setTiles();
+	}
+
+	setWelfareMoney(money: number) {
+		this.stackedWelfareMoney += money;
+	}
+
+	giveWelfareMoney() {
+		const result = this.stackedWelfareMoney;
+		this.stackedWelfareMoney = 0;
+
+		return result;
 	}
 
 	setTiles() {

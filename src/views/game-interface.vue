@@ -9,8 +9,8 @@
 		<template v-else-if="currentState === GameState.TRADE_WITH_BANK">
 			<trade-with-bank @end-trade="changeState(GameState.BEFORE_USER_COMMAND)"/>
 		</template>
-		<template v-else-if="currentState === GameState.USER_MOVED">
-			<trade-with-bank @end-trade="nextTurn(GameState.BEFORE_USER_COMMAND)"/>
+		<template v-else-if="currentState === GameState.OPENING_GOLDEN_KEY">
+			<golden-key-processor />
 		</template>
 	</div>
 </template>
@@ -27,6 +27,7 @@ import useGameInterfaceState from '@/shared/useGameInterfaceState';
 import BeforeUserCreate from '@/components/game-interface/before-user-create.vue';
 import BeforeUserCommand from '@/components/game-interface/before-user-command.vue';
 import TradeWithBank from '@/components/game-interface/trade-with-bank.vue';
+import GoldenKeyProcessor from '@/components/game-interface/golden-key-processor.vue';
 
 const useBoardController = () => {
 	const {
@@ -100,7 +101,7 @@ const useChangeStateAfterUserCommand = () => {
 		} else if (tileTypesToTrade.includes(arrivedTileType)) {
 			// changeState(GameState.TRADE_WITH_BANK);
 		} else if (arrivedTileType === TileType.GOLDEN_KEY) {
-			// TODO: 추후에 추가
+			changeState(GameState.OPENING_GOLDEN_KEY);
 		} else if (arrivedTileType === TileType.GET_WELFARE) {
 			// TODO: 추후에 추가
 		} else if (arrivedTileType === TileType.PAY_WELFARE) {
@@ -113,7 +114,7 @@ const useChangeStateAfterUserCommand = () => {
 
 export default defineComponent({
 	name: 'GameInterface',
-	components: { BeforeUserCreate, BeforeUserCommand, TradeWithBank },
+	components: { BeforeUserCreate, BeforeUserCommand, TradeWithBank, GoldenKeyProcessor },
 	props: {
 		users: {
 			type: Array,
