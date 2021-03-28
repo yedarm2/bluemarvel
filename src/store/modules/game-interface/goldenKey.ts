@@ -74,7 +74,7 @@ const store: Module<GoldenKeyState, any> = {
 			});
 		},
 
-		async tradeWithBank({ rootState }, tradingPrice: number) {
+		async tradeWithBank({ commit, rootState }, tradingPrice: number) {
 			const bank = rootState.gameInterface.bank as Bank;
 			const currentTurnUser = rootState.gameInterface.currentTurnUser as User;
 
@@ -87,6 +87,7 @@ const store: Module<GoldenKeyState, any> = {
 			currentTurnUser.setMoney(tradingPrice);
 
 			await sleep(2000);
+			commit('removeGoldenKey');
 		},
 	},
 };
